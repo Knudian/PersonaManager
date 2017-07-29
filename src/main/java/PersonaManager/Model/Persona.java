@@ -2,8 +2,6 @@ package PersonaManager.Model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -59,12 +57,12 @@ public class Persona implements Serializable {
     @Setter
     private Timestamp lastUpdate;
 
-    @OneToOne(targetEntity = Media.class,
+    @OneToOne(targetEntity = MediaFile.class,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "mediaId")
     @Getter
     @Setter
-    private Media image;
+    private MediaFile image;
 
     @Column(name = "gender", nullable = false)
     @Getter

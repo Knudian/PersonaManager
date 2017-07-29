@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "media")
-public class Media  implements Serializable {
+public class MediaFile implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +28,5 @@ public class Media  implements Serializable {
     @Setter
     private Timestamp uploadTime;
 
-    public Media() {}
+    public MediaFile() {}
 }

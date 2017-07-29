@@ -33,12 +33,12 @@ public class GameSystem implements Serializable {
     @Setter
     private String webSite;
 
-    @OneToOne(targetEntity = Media.class,
+    @OneToOne(targetEntity = MediaFile.class,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "mediaId")
     @Getter
     @Setter
-    private Media illustration;
+    private MediaFile illustration;
 
     @OneToMany(mappedBy = "gameSystem", fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
