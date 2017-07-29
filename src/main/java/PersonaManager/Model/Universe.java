@@ -19,12 +19,12 @@ public class Universe implements Serializable {
     @Setter
     private long id;
 
-    @OneToOne(targetEntity = Media.class,
+    @OneToOne(targetEntity = MediaFile.class,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "mediaId")
     @Getter
     @Setter
-    private Media illustration;
+    private MediaFile illustration;
 
     @Column(name = "name", nullable = false)
     @Getter
