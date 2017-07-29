@@ -40,8 +40,8 @@
       </nav>
 
       <!-- Page Content -->
-      <div class="container" style="margin-top: 65px;">
-          <h1 class="page-header">Persona Manager</h1
+      <div class="container">
+          <h1 class="page-header">Persona Manager</h1>
       </div>
       <!-- jQuery & Bootstrap -->
       <spring:url value="/resources/js/jquery.js" var="jqueryJs" />
