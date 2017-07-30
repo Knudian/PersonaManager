@@ -7,24 +7,22 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class MediaFileDAO extends AbstractDAO implements IMediaFileDAO {
 
-    public MediaFileDAO(){
-        super();
-    }
+
 
     @Override
     public MediaFile create(MediaFile mediaFile) {
-        this.currentSession.save(mediaFile);
-        this.currentSession.refresh(mediaFile);
+        objectId = sessionFactory.getCurrentSession().save(mediaFile);
+        sessionFactory.getCurrentSession().refresh(mediaFile);
         return mediaFile;
     }
 
     @Override
     public MediaFile getById(long id) {
-        return this.currentSession.get(MediaFile.class, id);
+        return sessionFactory.getCurrentSession().get(MediaFile.class, id);
     }
 
     @Override
     public void delete(MediaFile mediaFile) {
-        this.currentSession.remove(mediaFile);
+        sessionFactory.getCurrentSession().remove(mediaFile);
     }
 }

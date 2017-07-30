@@ -8,20 +8,18 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PersonaDAO extends AbstractDAO implements IPersonaDAO {
 
-    public PersonaDAO(){
-        super();
-    }
+
 
     @Override
     public Persona create(Persona persona) {
-        this.currentSession.save(persona);
-        this.currentSession.refresh(persona);
+        objectId = sessionFactory.getCurrentSession().save(persona);
+        sessionFactory.getCurrentSession().refresh(persona);
         return persona;
     }
 
     @Override
     public Persona getById(long id, boolean lazy) {
-        Persona persona = this.currentSession.get(Persona.class, id);
+        Persona persona = sessionFactory.getCurrentSession().get(Persona.class, id);
         if( lazy ){
             Hibernate.initialize(persona.getCaracteristicList());
         }
@@ -30,12 +28,12 @@ public class PersonaDAO extends AbstractDAO implements IPersonaDAO {
 
     @Override
     public void update(Persona persona) {
-        this.currentSession.update(persona);
-        this.currentSession.refresh(persona);
+        sessionFactory.getCurrentSession().update(persona);
+        sessionFactory.getCurrentSession().refresh(persona);
     }
 
     @Override
     public void delete(Persona persona) {
-        this.currentSession.remove(persona);
+        sessionFactory.getCurrentSession().remove(persona);
     }
 }

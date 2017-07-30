@@ -13,10 +13,6 @@ public abstract class AbstractDAO {
 
     protected Serializable objectId;
 
-    protected Session currentSession;
-
-    public AbstractDAO(){
-        this.currentSession = sessionFactory.getCurrentSession();
-    }
+    public AbstractDAO(){ }
 
 }

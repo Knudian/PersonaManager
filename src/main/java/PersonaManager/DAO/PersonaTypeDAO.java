@@ -7,30 +7,28 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class PersonaTypeDAO extends AbstractDAO implements IPersonaTypeDAO {
 
-    public PersonaTypeDAO() {
-        super();
-    }
+
 
     @Override
     public PersonaType create(PersonaType personaType) {
-        this.currentSession.save(personaType);
-        this.currentSession.refresh(personaType);
+        sessionFactory.getCurrentSession().save(personaType);
+        sessionFactory.getCurrentSession().refresh(personaType);
         return personaType;
     }
 
     @Override
     public PersonaType getById(long id) {
-        return this.currentSession.get(PersonaType.class, id);
+        return sessionFactory.getCurrentSession().get(PersonaType.class, id);
     }
 
     @Override
     public void update(PersonaType personaType) {
-        this.currentSession.update(personaType);
-        this.currentSession.refresh(personaType);
+        sessionFactory.getCurrentSession().update(personaType);
+        sessionFactory.getCurrentSession().refresh(personaType);
     }
 
     @Override
     public void delete(PersonaType personaType) {
-        this.currentSession.remove(personaType);
+        sessionFactory.getCurrentSession().remove(personaType);
     }
 }

@@ -14,6 +14,9 @@ public class CaracteristicService implements ICaracteristicService {
     @Autowired
     private CaracteristicDAO caracteristicDAO;
 
+    public CaracteristicService() {
+    }
+
     @Override
     /**
      * @InheritDoc
