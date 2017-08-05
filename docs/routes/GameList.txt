@@ -1,0 +1,12 @@
+Liste des Systèmes de Jeu et des Univers supportés par le site
+Liste claire de quel Univers est supporté par quel Système de jeu
+
+Lien vers
+- Infos sur un système de jeu précis (SystemInfo)
+- Infos sur un univers de jeu précis (UniverseInfo)
+- Formulaire de proposition d'un nouveau système (SystemNew)
+- Formulaire de proposition d'un nouvel univers (UniverseNew)
+
+$ récupérer les informations liées aux systèmes de jeu
+$ récupérer les informations liées aux univers
+$ récupérer les informations liées aux portages

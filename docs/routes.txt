@@ -1,0 +1,28 @@
+Home                Accueil                         /
+Register            Inscription                     /signup                     /register
+Connexion           Connexion                       /signin                     /connexion
+About               Info Site                       /about
+
+GameList            Liste des Uni et GS             /game
+SystemInfo          Info sur GS X                   /game/system/X
+SystemNew           Proposer un Système de jeu      /game/system/new
+UniverseInfo        Info sur Univers A              /game/univers/A
+UniverseNew         Proposer un Univers             /game/univers/new
+
+PersonaList         Liste des personnages           /game/personas
+
+UserList            Liste Utilisateurs              /player/all                 /players
+UserInfo            Info Utilisateur N              /player/N
+
+(UserInfo)          Gestion de compte               /player/M                   /account
+Persona             Personnage P                    /game/persona/P             /mypersona/P
+NewPersona          Nouveau personnage              /game/persona/new           /mypersona/new
+
+----------------------------------------
+ADMIN (routes à définir)
+- Enregistrement des "news" du site
+- Validation d'un univers
+- Validation d'un portage
+- Validation d'un système
+- Surveillance statistiques (nombre d'inscrits, nombre de fiches, etc)
+-

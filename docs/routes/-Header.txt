@@ -1,0 +1,16 @@
+[Non Connecté]
+- Home
+- About
+- Connexion
+- Inscription
+- GameList
+- PersonaList
+
+[Connecté]
+- Home
+- About
+- MyAccount (UserInfo: me)
+- (Deconnexion)
+- GameList
+- PersonaList
+- UserList

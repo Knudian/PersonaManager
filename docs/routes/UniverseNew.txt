@@ -1,0 +1,10 @@
+Formulaire de proposition d'un nouvel univers (lié à un système pré-existant)
+- Choix du système de jeu existant
+- Choix d'un univers existant ou nouveau
+- Liste des noms des champs de ce système selon l'univers
+- Liste des règles spécifiques à la création de personnage dans cet univers
+- (si nouvel univers) Nom, description et image
+
+$ vérification de l'entièreté du formulaire
+$ vérification de la propreté du formulaire
+$ enregistrement des informations au statut "non confirmé"

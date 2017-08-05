@@ -1,0 +1,9 @@
+Page d'enregistrement de nouveau compte
+Formulaire
+- Pseudo
+- Adresse Mail
+- Password
+
+$ vérification de l'unicité des informations
+$ encodage du password
+$ envoi d'un mail de confirmation

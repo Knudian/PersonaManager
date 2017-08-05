@@ -1,0 +1,13 @@
+-Formulaire de connexion
+    Pseudo
+    Password
+
+$ vérifier les identifiants de connexion
+$ définir le compte en question comme session courante
+
+
+- Formulaire Mot de passe oublié
+    Email
+
+$ générer un nouveau mdp
+$ envoyer un nouveau mdp sur l'adresse email

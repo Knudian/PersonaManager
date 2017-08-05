@@ -1,0 +1,11 @@
+Visualisation d'une fiche de personnage choisie
+
+$ récupérer les infos
+
+- Modifier (si créateur)
+
+$ génération d'une page NewPersona pré-remplie avec une ID déjà existante
+
+- Supprimer (si créateur)
+
+$ après confirmation, delete

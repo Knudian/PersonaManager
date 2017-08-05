@@ -1,0 +1,7 @@
+Formulaire de proposition d'un nouveau système de jeu
+- Liste des champs requis pour la création d'un nouveau personnage
+- Liste des règles de création d'un nouveau personnage
+
+$ vérification de l'entièreté du formulaire
+$ vérification de la propreté du formulaire
+$ enregistrement des informations au statut "non confirmé"
