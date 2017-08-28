@@ -9,7 +9,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name = "universe")
+@Table(name = "portage")
 public class Portage implements Serializable {
 
     @Id

@@ -2,6 +2,8 @@ package PersonaManager.Service.Interface;
 
 import PersonaManager.Model.Universe;
 
+import java.util.Collection;
+
 public interface IUniverseService {
 
     /**
@@ -34,4 +36,9 @@ public interface IUniverseService {
      * @param universe Universe : the entry to delete
      */
     public void delete(Universe universe);
+
+    /**
+     * Calculates the Amount of personas per Universe
+     */
+    public Collection<Universe> getAll();
 }
