@@ -1,6 +1,5 @@
 package PersonaManager.Controller;
 
-import PersonaManager.Service.CaracteristicService;
 import PersonaManager.Service.Interface.ICaracteristicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
