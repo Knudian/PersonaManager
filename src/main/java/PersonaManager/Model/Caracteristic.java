@@ -41,4 +41,16 @@ public class Caracteristic implements Serializable {
     private String maximum;
 
     public Caracteristic() { }
+    
+    public String toJson(boolean complete){
+        String str = "{";
+        str += "'id':" + this.getId() + ",";
+        str += "'type':" + this.getType()+ ",";
+        str += "'defaultLabel':" + this.getDefaultLabel()+ ",";
+        str += "'value' : { 'min':'"+ this.getMinimum() + "', 'max':'"+ this.getMaximum()+"'},";
+        if (complete)
+            str += "'gameSystem':" + this.getGameSystem()+ ",";
+        str += "}";
+        return str;
+    }
 }
