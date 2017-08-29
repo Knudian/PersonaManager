@@ -84,14 +84,28 @@ public class Persona implements Serializable {
 
     public Persona() {}
 
-    public String toString(){
+    public String getCaracsJson(boolean complete){
+        String str = "[";
+        for(PersonaCaracteristic p : this.getCaracteristicList()){
+            str += p.toJson(complete);
+        }
+        str += "]";
+        return str;
+    }
+    
+    public String toJson(boolean complete){
         String str = "{";
         str += "'id':" + this.getId() + ",";
+        str += "'gameSystem':" + this.getPortage().getGameSystem().getId() + ",";
+        str += "'univers':" + this.getPortage().getUniverse().getId() + ",";
         str += "'lastUpdate':" + this.getLastUpdate().getTime() + ",";
         str += "'name' : { 'first':'"+ this.getFirstName() + "', 'last':'"+ this.getLastname() +"'},";
-        str += "'gender':'" + this.getGender() +"',";
-        str += "'typeId':"+ this.getPersonaType().getId() +",";
-        str += "'media':" + (this.getImage() != null ? this.getImage().getFilename() : null );
+        str += "'media':" + (this.getImage() != null ? this.getImage().getFilename() : null ) +",";
+        if (complete){
+            str += "'typeId':"+ this.getPersonaType().getId() +",";
+            str += "'gender':'" + this.getGender() +"',";
+            str += "'caracteristicList':" + this.getCaracsJson(false);
+        }
         str += "}";
         return str;
     }

@@ -37,4 +37,15 @@ public class PersonaCaracteristic implements Serializable {
     private String value;
 
     public PersonaCaracteristic(){}
+    
+    public String toJson(boolean complete){
+        String str = "{";
+        str += "'id':" + this.getId() + ",";
+        str += "'caracteristicModified':" + this.getCaracteristicModified().toJson(complete)+ ",";
+        str += "'value':" + this.getValue() + ",";
+        if (complete)
+            str += "'persona':" + this.getPersona().getId()+ ",";
+        str += "}";
+        return str;
+    }
 }
