@@ -1,14 +1,44 @@
 package PersonaManager.Factory;
 
+import PersonaManager.Factory.Interface.IHumanFactory;
 import PersonaManager.Model.Human;
+import org.springframework.stereotype.Service;
 
-public class HumanFactory {
+import javax.json.Json;
+import javax.json.JsonObject;
 
-    public static Human fromJson(String inputDatas){
-        Human human = new Human();
+@Service
+public class HumanFactory extends BaseFactory implements IHumanFactory{
 
-        return human;
+    public HumanFactory(){
+        super();
     }
 
-    public static String toJson(Human human, )
+    @Override
+    public String toJson(Human human){
+
+        JsonObject humanModel = Json.createObjectBuilder()
+                .add("id", human.getId())
+                .add("nick", human.getNick())
+                .add("lastConnection", human.getLastConnection().getTime())
+                .build();
+
+        return this.write(humanModel);
+    }
+
+    /**
+     * Used for Matching a SignIn, a Registration.
+     *
+     * @param inputDatas String
+     * @return Human
+     */
+    @Override
+    public Human fromJson(String inputDatas){
+        Human human = new Human();
+        JsonObject jsonObject = this.getStructure(inputDatas);
+        human.setEmail(jsonObject.getString("email"));
+        human.setNick(jsonObject.getString("nick"));
+        human.setPassword(jsonObject.getString("password"));
+        return human;
+    }
 }

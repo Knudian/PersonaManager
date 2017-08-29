@@ -7,12 +7,11 @@ import java.util.List;
 public interface IHumanService {
 
     /**
-     * Allows to create a Human Entry
      *
-     * @param human Human : the entry to save
-     * @return Human : the saved entry
+     * @param inputDatas
+     * @return
      */
-    public Human create(Human human);
+    public Human create(String inputDatas);
 
     /**
      * Allows to get a Human Entry by its ID

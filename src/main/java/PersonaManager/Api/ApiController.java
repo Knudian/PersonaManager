@@ -43,13 +43,13 @@ public class ApiController {
         try {
             switch (entity) {
                 case "caracteristic":
-                    apiResponse.addContent(caracteristicService.getById(id).toString());
+                    apiResponse.addContent(caracteristicService.getById(id).toJson(true));
                     break;
                 case "caracteristicmodified":
-                    apiResponse.addContent(caracteristicModifiedService.getById(id).toString());
+                    apiResponse.addContent(caracteristicModifiedService.getById(id).toJson(true));
                     break;
                 case "gamesystem":
-                    apiResponse.addContent(gameSystemService.getById(id, false).toString());
+                    apiResponse.addContent(gameSystemService.getById(id, false).toJson(true));
                     break;
                 case "human":
                     apiResponse.addContent(humanService.getById(id, false).toString());

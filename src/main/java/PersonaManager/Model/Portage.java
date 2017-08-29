@@ -37,7 +37,7 @@ public class Portage implements Serializable {
     private Timestamp creationTime;
 
     
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner",
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "portage",
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @Getter
     @Setter
