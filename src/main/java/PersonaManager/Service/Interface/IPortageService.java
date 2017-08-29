@@ -2,6 +2,8 @@ package PersonaManager.Service.Interface;
 
 import PersonaManager.Model.Portage;
 
+import java.util.List;
+
 public interface IPortageService {
 
     /**
@@ -33,4 +35,6 @@ public interface IPortageService {
      * @param portage Portage : the entry to delete
      */
     public void delete(Portage portage);
+
+    public List<Portage> getAll();
 }

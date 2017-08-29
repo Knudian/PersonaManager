@@ -43,4 +43,6 @@ public interface IPersonaService {
      * @return
      */
     public List<Persona> getLastPublicPersonnas(Integer quantity);
+
+    public List<Persona> getAll();
 }

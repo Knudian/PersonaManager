@@ -15,4 +15,6 @@ public interface IPersonaDAO {
     public void delete(Persona persona);
 
     public List<Persona> getLastPublicPersona(Integer limit);
+
+    public List<Persona> getAll();
 }

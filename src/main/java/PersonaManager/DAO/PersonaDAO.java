@@ -55,4 +55,12 @@ public class PersonaDAO extends AbstractDAO implements IPersonaDAO {
 
         return (List<Persona>) query.getResultList();
     }
+
+    @Override
+    public List<Persona> getAll() {
+        String q = "SELECT p FROM Persona p";
+        Query query = sessionFactory.getCurrentSession().createQuery(q);
+
+        return (List<Persona>) query.getResultList();
+    }
 }
