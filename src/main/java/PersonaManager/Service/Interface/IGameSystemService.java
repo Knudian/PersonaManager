@@ -2,6 +2,8 @@ package PersonaManager.Service.Interface;
 
 import PersonaManager.Model.GameSystem;
 
+import java.util.List;
+
 public interface IGameSystemService {
 
     /**
@@ -18,7 +20,7 @@ public interface IGameSystemService {
      * @param id long : the entry's ID
      * @return GameSystem : the entry itself
      */
-    public GameSystem getById(long id);
+    public GameSystem getById(long id,boolean lazy);
 
     /**
      * Allows a GameSystem Entry to be updated
@@ -33,4 +35,6 @@ public interface IGameSystemService {
      * @param gameSystem GameSystem : the entry to delete
      */
     public void delete(GameSystem gameSystem);
+
+    public List<GameSystem> getAll();
 }

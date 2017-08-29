@@ -1,6 +1,6 @@
 package PersonaManager.Service;
 
-import PersonaManager.DAO.CaracteristicDAO;
+import PersonaManager.DAO.Interface.ICaracteristicDAO;
 import PersonaManager.Model.Caracteristic;
 import PersonaManager.Service.Interface.ICaracteristicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CaracteristicService implements ICaracteristicService {
 
     @Autowired
-    private CaracteristicDAO caracteristicDAO;
+    private ICaracteristicDAO caracteristicDAO;
 
     public CaracteristicService() {
     }

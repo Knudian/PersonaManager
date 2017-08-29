@@ -1,4 +1,4 @@
-package PersonaManager.Controller;
+package PersonaManager.Api;
 
 import PersonaManager.Model.MediaFile;
 import PersonaManager.Service.Interface.IMediaFileService;

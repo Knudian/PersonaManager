@@ -3,11 +3,15 @@ package PersonaManager.DAO;
 import PersonaManager.DAO.Interface.IPersonaTypeDAO;
 import PersonaManager.Model.PersonaType;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class PersonaTypeDAO extends AbstractDAO implements IPersonaTypeDAO {
 
-
+    public PersonaTypeDAO() {
+        super();
+    }
 
     @Override
     public PersonaType create(PersonaType personaType) {

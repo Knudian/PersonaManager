@@ -2,6 +2,8 @@ package PersonaManager.Service.Interface;
 
 import PersonaManager.Model.Persona;
 
+import java.util.List;
+
 public interface IPersonaService {
 
     /**
@@ -34,4 +36,11 @@ public interface IPersonaService {
      * @param persona Persona : the entry to delete
      */
     public void delete(Persona persona);
+
+    /**
+     * Gets a 'quantity' amount of personna
+     * @param quantity
+     * @return
+     */
+    public List<Persona> getLastPublicPersonnas(Integer quantity);
 }

@@ -3,11 +3,15 @@ package PersonaManager.DAO;
 import PersonaManager.DAO.Interface.IPortageDAO;
 import PersonaManager.Model.Portage;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class PortageDAO extends AbstractDAO implements IPortageDAO {
 
-
+    public PortageDAO() {
+        super();
+    }
 
     @Override
     public Portage create(Portage portage) {

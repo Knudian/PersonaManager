@@ -3,12 +3,22 @@ package PersonaManager.DAO;
 import PersonaManager.DAO.Interface.IPersonaDAO;
 import PersonaManager.Model.Persona;
 import org.hibernate.Hibernate;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
+@Transactional
 public class PersonaDAO extends AbstractDAO implements IPersonaDAO {
 
-
+    public PersonaDAO(){
+        super();
+    }
 
     @Override
     public Persona create(Persona persona) {
@@ -35,5 +45,14 @@ public class PersonaDAO extends AbstractDAO implements IPersonaDAO {
     @Override
     public void delete(Persona persona) {
         sessionFactory.getCurrentSession().remove(persona);
+    }
+
+    @Override
+    public List<Persona> getLastPublicPersona(Integer limit) {
+        String q = "FROM Persona p WHERE p.isPublic = true ORDER BY p.lastUpdate";
+        Query query = sessionFactory.getCurrentSession().createQuery(q);
+        query.setMaxResults(limit);
+
+        return (List<Persona>) query.getResultList();
     }
 }

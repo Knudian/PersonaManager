@@ -1,6 +1,6 @@
 package PersonaManager.Service;
 
-import PersonaManager.DAO.PersonaTypeDAO;
+import PersonaManager.DAO.Interface.IPersonaTypeDAO;
 import PersonaManager.Model.PersonaType;
 import PersonaManager.Service.Interface.IPersonaTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PersonaTypeService implements IPersonaTypeService {
 
     @Autowired
-    private PersonaTypeDAO personaTypeDAO;
+    private IPersonaTypeDAO personaTypeDAO;
 
     @Override
     /**

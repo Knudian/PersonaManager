@@ -2,7 +2,7 @@ package PersonaManager.Service.Interface;
 
 import PersonaManager.Model.Universe;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface IUniverseService {
 
@@ -40,5 +40,5 @@ public interface IUniverseService {
     /**
      * Calculates the Amount of personas per Universe
      */
-    public Collection<Universe> getAll();
+    public List<Universe> getAll();
 }

@@ -1,21 +1,21 @@
 package PersonaManager.Service;
 
-import PersonaManager.DAO.UniverseDAO;
+import PersonaManager.DAO.Interface.IUniverseDAO;
 import PersonaManager.Model.Universe;
 import PersonaManager.Service.Interface.IUniverseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.management.Query;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @Transactional
 public class UniverseService implements IUniverseService {
 
     @Autowired
-    private UniverseDAO universeDAO;
+    private IUniverseDAO universeDAO;
 
     @Override
     /**
@@ -50,8 +50,8 @@ public class UniverseService implements IUniverseService {
     }
 
     @Override
-    public Collection<Universe> getAll() {
+    public List<Universe> getAll() {
 
-        return null;
+        return universeDAO.getAll(true);
     }
 }

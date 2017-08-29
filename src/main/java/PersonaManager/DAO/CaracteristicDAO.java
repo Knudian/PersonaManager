@@ -3,10 +3,14 @@ package PersonaManager.DAO;
 import PersonaManager.DAO.Interface.ICaracteristicDAO;
 import PersonaManager.Model.Caracteristic;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class CaracteristicDAO extends AbstractDAO implements ICaracteristicDAO {
-
+    public CaracteristicDAO(){
+        super();
+    }
     @Override
     public Caracteristic create(Caracteristic caracteristic) {
         objectId = sessionFactory.getCurrentSession().save(caracteristic);

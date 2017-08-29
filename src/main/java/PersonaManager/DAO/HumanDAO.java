@@ -4,9 +4,15 @@ import PersonaManager.DAO.Interface.IHumanDAO;
 import PersonaManager.Model.Human;
 import org.hibernate.Hibernate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class HumanDAO extends AbstractDAO implements IHumanDAO {
+
+    public HumanDAO() {
+        super();
+    }
 
     @Override
     public Human create(Human human) {

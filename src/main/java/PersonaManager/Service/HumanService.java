@@ -1,6 +1,6 @@
 package PersonaManager.Service;
 
-import PersonaManager.DAO.HumanDAO;
+import PersonaManager.DAO.Interface.IHumanDAO;
 import PersonaManager.Model.Human;
 import PersonaManager.Service.Interface.IHumanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class HumanService implements IHumanService {
 
     @Autowired
-    private HumanDAO humanDAO;
+    private IHumanDAO humanDAO;
 
     @Override
     /**

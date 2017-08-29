@@ -3,9 +3,14 @@ package PersonaManager.DAO;
 import PersonaManager.DAO.Interface.ICaracteristicModifiedDAO;
 import PersonaManager.Model.CaracteristicModified;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class CaracteristicModifiedDAO extends AbstractDAO implements ICaracteristicModifiedDAO {
+    public CaracteristicModifiedDAO() {
+        super();
+    }
 
     @Override
     public CaracteristicModified create(CaracteristicModified caracteristicModified) {

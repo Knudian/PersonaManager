@@ -1,18 +1,20 @@
 package PersonaManager.Service;
 
-import PersonaManager.DAO.GameSystemDAO;
+import PersonaManager.DAO.Interface.IGameSystemDAO;
 import PersonaManager.Model.GameSystem;
 import PersonaManager.Service.Interface.IGameSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class GameSystemService implements IGameSystemService {
 
     @Autowired
-    private GameSystemDAO gameSystemDAO;
+    private IGameSystemDAO gameSystemDAO;
 
     @Override
     /**
@@ -26,8 +28,8 @@ public class GameSystemService implements IGameSystemService {
     /**
      * @InheritDoc
      */
-    public GameSystem getById(long id) {
-        return gameSystemDAO.getById(id);
+    public GameSystem getById(long id, boolean lazy) {
+        return gameSystemDAO.getById(id, lazy);
     }
 
     @Override
@@ -44,5 +46,10 @@ public class GameSystemService implements IGameSystemService {
      */
     public void delete(GameSystem gameSystem) {
         gameSystemDAO.delete(gameSystem);
+    }
+
+    @Override
+    public List<GameSystem> getAll() {
+        return gameSystemDAO.getAll(true);
     }
 }

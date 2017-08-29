@@ -17,7 +17,7 @@ public class PersonaType implements Serializable {
     @Setter
     private long id;
 
-    @ManyToOne(targetEntity = Universe.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Universe.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "universeId", nullable = false)
     @Getter
     @Setter

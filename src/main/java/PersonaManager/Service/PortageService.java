@@ -1,6 +1,6 @@
 package PersonaManager.Service;
 
-import PersonaManager.DAO.PortageDAO;
+import PersonaManager.DAO.Interface.IPortageDAO;
 import PersonaManager.Model.Portage;
 import PersonaManager.Service.Interface.IPortageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PortageService implements IPortageService {
 
     @Autowired
-    private PortageDAO portageDAO;
+    private IPortageDAO portageDAO;
 
     @Override
     /**

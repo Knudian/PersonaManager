@@ -19,13 +19,6 @@ public class Persona implements Serializable {
     @Setter
     private long id;
 
-    @OneToOne(targetEntity = Universe.class, fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
-    @PrimaryKeyJoinColumn
-    @Getter
-    @Setter
-    private Universe universe;
-
     @ManyToOne(targetEntity = Human.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "humanId", nullable = false)
     @Getter
@@ -69,12 +62,12 @@ public class Persona implements Serializable {
     @Setter
     private EnumPersonaGender gender;
 
-    @OneToOne(targetEntity = PersonaType.class, fetch = FetchType.LAZY,
+    @OneToOne(targetEntity = PersonaType.class, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "persona_typeId")
     @Getter
     @Setter
-    private PersonaType type;
+    private PersonaType personaType;
 
     @OneToMany(targetEntity = PersonaCaracteristic.class, fetch = FetchType.LAZY, mappedBy = "persona",
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
@@ -82,6 +75,25 @@ public class Persona implements Serializable {
     @Setter
     private List<PersonaCaracteristic> caracteristicList;
 
+    @OneToOne(targetEntity = Portage.class, fetch = FetchType.EAGER,
+            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @JoinColumn(name = "portageId")
+    @Getter
+    @Setter
+    private Portage portage;
+
     public Persona() {}
+
+    public String toString(){
+        String str = "{";
+        str += "'id':" + this.getId() + ",";
+        str += "'lastUpdate':" + this.getLastUpdate().getTime() + ",";
+        str += "'name' : { 'first':'"+ this.getFirstName() + "', 'last':'"+ this.getLastname() +"'},";
+        str += "'gender':'" + this.getGender() +"',";
+        str += "'typeId':"+ this.getPersonaType().getId() +",";
+        str += "'media':" + (this.getImage() != null ? this.getImage().getFilename() : null );
+        str += "}";
+        return str;
+    }
 
 }

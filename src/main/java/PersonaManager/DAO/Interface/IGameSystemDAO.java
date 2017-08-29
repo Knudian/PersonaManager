@@ -2,13 +2,17 @@ package PersonaManager.DAO.Interface;
 
 import PersonaManager.Model.GameSystem;
 
+import java.util.List;
+
 public interface IGameSystemDAO {
 
     public GameSystem create(GameSystem gameSystem);
 
-    public GameSystem getById(long id);
+    public GameSystem getById(long id, boolean lazy);
 
     public void delete(GameSystem gameSystem);
 
     public void update(GameSystem gameSystem);
+
+    public List<GameSystem> getAll(boolean lazy);
 }

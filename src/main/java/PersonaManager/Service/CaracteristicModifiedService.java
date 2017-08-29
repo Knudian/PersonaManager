@@ -1,6 +1,6 @@
 package PersonaManager.Service;
 
-import PersonaManager.DAO.CaracteristicModifiedDAO;
+import PersonaManager.DAO.Interface.ICaracteristicModifiedDAO;
 import PersonaManager.Model.CaracteristicModified;
 import PersonaManager.Service.Interface.ICaracteristicModifiedService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CaracteristicModifiedService implements ICaracteristicModifiedService {
 
     @Autowired
-    private CaracteristicModifiedDAO caracteristicModifiedDAO;
+    private ICaracteristicModifiedDAO caracteristicModifiedDAO;
 
     @Override
     /**

@@ -3,9 +3,15 @@ package PersonaManager.DAO;
 import PersonaManager.DAO.Interface.IPersonaCaracteristicDAO;
 import PersonaManager.Model.PersonaCaracteristic;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public class PersonaCaracteristicDAO extends AbstractDAO implements IPersonaCaracteristicDAO {
+
+    public PersonaCaracteristicDAO() {
+        super();
+    }
 
     @Override
     public PersonaCaracteristic create(PersonaCaracteristic personaCaracteristic) {
