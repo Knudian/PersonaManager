@@ -38,4 +38,9 @@ public class PersonaService implements IPersonaService {
     public List<Persona> getLastPublicPersonnas(Integer quantity){
         return personaDAO.getLastPublicPersona(quantity);
     }
+
+    @Override
+    public List<Persona> getAll() {
+        return personaDAO.getAll();
+    }
 }

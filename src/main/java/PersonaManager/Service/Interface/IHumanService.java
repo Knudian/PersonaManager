@@ -2,6 +2,8 @@ package PersonaManager.Service.Interface;
 
 import PersonaManager.Model.Human;
 
+import java.util.List;
+
 public interface IHumanService {
 
     /**
@@ -34,4 +36,9 @@ public interface IHumanService {
      * @param human Human : the entry to delete
      */
     public void delete(Human human);
+
+    /**
+     * Get the list of all Humans
+     */
+    public List<Human> getAll();
 }

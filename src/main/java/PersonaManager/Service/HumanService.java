@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class HumanService implements IHumanService {
@@ -44,5 +46,13 @@ public class HumanService implements IHumanService {
      */
     public void delete(Human human) {
         humanDAO.delete(human);
+    }
+
+    @Override
+    /**
+     * @InheritDoc
+     */
+    public List<Human> getAll(){
+        return humanDAO.getAll();
     }
 }

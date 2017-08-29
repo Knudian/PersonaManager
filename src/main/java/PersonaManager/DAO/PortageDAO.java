@@ -2,8 +2,11 @@ package PersonaManager.DAO;
 
 import PersonaManager.DAO.Interface.IPortageDAO;
 import PersonaManager.Model.Portage;
+import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Repository
 @Transactional
@@ -35,5 +38,12 @@ public class PortageDAO extends AbstractDAO implements IPortageDAO {
     public void update(Portage portage) {
         sessionFactory.getCurrentSession().update(portage);
         sessionFactory.getCurrentSession().refresh(portage);
+    }
+
+    @Override
+    public List<Portage> getAll() {
+        String q = "SELECT p FROM Portage p";
+        Query query = sessionFactory.getCurrentSession().createQuery(q);
+        return (List<Portage>) query.getResultList();
     }
 }
