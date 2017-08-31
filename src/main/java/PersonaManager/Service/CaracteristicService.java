@@ -1,51 +1,57 @@
 package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.ICaracteristicDAO;
+import PersonaManager.Factory.Interface.ICaracteristicFactory;
 import PersonaManager.Model.Caracteristic;
 import PersonaManager.Service.Interface.ICaracteristicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class CaracteristicService implements ICaracteristicService {
 
     @Autowired
     private ICaracteristicDAO caracteristicDAO;
 
-    public CaracteristicService() {
+    @Autowired
+    private ICaracteristicFactory caracteristicFactory;
+
+    public CaracteristicService(){}
+
+    @Override
+    public Long create(String entityAsString) {
+        Caracteristic caracteristic = caracteristicFactory.fromJson(entityAsString);
+        caracteristic = caracteristicDAO.create(caracteristic);
+        return caracteristic.getId();
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public Caracteristic create(Caracteristic caracteristic) {
-        return caracteristicDAO.create(caracteristic);
+    public String getById(long id) {
+        return caracteristicFactory.toJson(this.getEntity(id));
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public Caracteristic getById(long id) {
+    public Boolean update(String entityAsString) {
+        try {
+            caracteristicDAO.update(caracteristicFactory.fromJson(entityAsString));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean delete(String entityAsString) {
+        try {
+            caracteristicDAO.delete(caracteristicFactory.fromJson(entityAsString));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public Caracteristic getEntity(long id) {
         return caracteristicDAO.getById(id);
-    }
-
-    @Override
-    /**
-     * @InheritDoc
-     */
-    public void update(Caracteristic caracteristic) {
-        caracteristicDAO.update(caracteristic);
-    }
-
-    @Override
-    /**
-     * @InheritDoc
-     */
-    public void delete(Caracteristic caracteristic) {
-        caracteristicDAO.delete(caracteristic);
     }
 }

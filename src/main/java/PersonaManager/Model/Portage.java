@@ -43,41 +43,11 @@ public class Portage implements Serializable {
     @Setter
     private List<Persona> personaList;
     
-    @OneToMany(mappedBy = "gameSystem", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "portage", fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @Getter
     @Setter
     private List<CaracteristicModified> caracteristicList;
     
     public Portage(){ }
-    
-    public String getCaracsJson(boolean complete){
-        String str = "[";
-        for(CaracteristicModified p : this.getCaracteristicList()){
-            str += p.toJson(complete);
-        }
-        str += "]";
-        return str;
-    }
-    public String getPersonaJson(){
-        String str = "[";
-        for(Persona p : this.getPersonaList()){
-            str += p.getId();
-        }
-        str += "]";
-        return str;
-    }
-    
-    public String toJson(boolean complete){
-        String str = "{";
-        str += "'id':" + this.getId() + ",";
-        str += "'creationTime':" + this.getCreationTime().getTime() + ",";
-        str += "'gameSystem':'"+ this.getGameSystem().getId()+ "',";
-        str += "'universe':'"+ this.getUniverse().getId()+"' },";
-        if (complete)
-            str += "'caracteristicList':" + this.getCaracsJson(false);
-            str += "'persona':" + this.getPersonaJson()+ ",";
-        str += "}";
-        return str;
-    }
 }

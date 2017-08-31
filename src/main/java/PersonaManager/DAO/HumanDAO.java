@@ -25,10 +25,10 @@ public class HumanDAO extends AbstractDAO implements IHumanDAO {
     }
 
     @Override
-    public Human getById(long id, boolean lazy) {
+    public Human getById(long id, boolean complete) {
         Human human = sessionFactory.getCurrentSession().get(Human.class, id);
 
-        if( lazy ){
+        if( complete ){
             Hibernate.initialize(human.getPersonaList());
         }
 

@@ -1,48 +1,55 @@
 package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.ICaracteristicModifiedDAO;
+import PersonaManager.Factory.Interface.ICaracteristicModifiedFactory;
 import PersonaManager.Model.CaracteristicModified;
 import PersonaManager.Service.Interface.ICaracteristicModifiedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class CaracteristicModifiedService implements ICaracteristicModifiedService {
+
+    public CaracteristicModifiedService(){}
 
     @Autowired
     private ICaracteristicModifiedDAO caracteristicModifiedDAO;
+    @Autowired
+    private ICaracteristicModifiedFactory caracteristicModifiedFactory;
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public CaracteristicModified create(CaracteristicModified caracteristicModified) {
-        return caracteristicModifiedDAO.create(caracteristicModified);
+    public Long create(String entityAsString) {
+        CaracteristicModified caracteristicModified = caracteristicModifiedDAO.create(caracteristicModifiedFactory.fromJson(entityAsString));
+        return caracteristicModified.getId();
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public CaracteristicModified getById(long id) {
+    public String getById(long id) {
+        return caracteristicModifiedFactory.toJson(this.getEntity(id));
+    }
+
+    @Override
+    public Boolean update(String entityAsString) {
+        try {
+            caracteristicModifiedDAO.update(caracteristicModifiedFactory.fromJson(entityAsString));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public Boolean delete(String entityAsString) {
+        try {
+            caracteristicModifiedDAO.delete(caracteristicModifiedFactory.fromJson(entityAsString));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public CaracteristicModified getEntity(long id) {
         return caracteristicModifiedDAO.getById(id);
-    }
-
-    @Override
-    /**
-     * @InheritDoc
-     */
-    public void update(CaracteristicModified caracteristicModified) {
-        caracteristicModifiedDAO.update(caracteristicModified);
-    }
-
-    @Override
-    /**
-     * @InheritDoc
-     */
-    public void delete(CaracteristicModified caracteristicModified) {
-        caracteristicModifiedDAO.delete(caracteristicModified);
     }
 }

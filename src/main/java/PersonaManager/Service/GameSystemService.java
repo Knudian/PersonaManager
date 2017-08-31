@@ -1,55 +1,63 @@
 package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.IGameSystemDAO;
+import PersonaManager.Factory.Interface.IGameSystemFactory;
 import PersonaManager.Model.GameSystem;
 import PersonaManager.Service.Interface.IGameSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
-@Transactional
 public class GameSystemService implements IGameSystemService {
 
+    public GameSystemService(){}
+
+    @Autowired
+    private IGameSystemFactory gameSystemFactory;
     @Autowired
     private IGameSystemDAO gameSystemDAO;
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public GameSystem create(GameSystem gameSystem) {
-        return gameSystemDAO.create(gameSystem);
+    public Long create(String entityAsString) {
+        GameSystem gameSystem = gameSystemDAO.create(gameSystemFactory.fromJson(entityAsString));
+        return gameSystem.getId();
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public GameSystem getById(long id, boolean lazy) {
-        return gameSystemDAO.getById(id, lazy);
+    public String getById(long id, boolean complete) {
+        return gameSystemFactory.toJson(
+                this.getEntity(id, complete),
+                complete
+        );
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public void update(GameSystem gameSystem) {
-        gameSystemDAO.update(gameSystem);
+    public Boolean update(String entityAsString) {
+        try {
+            gameSystemDAO.update(gameSystemFactory.fromJson(entityAsString));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public void delete(GameSystem gameSystem) {
-        gameSystemDAO.delete(gameSystem);
+    public Boolean delete(String entityAsString) {
+        try {
+            gameSystemDAO.delete(gameSystemFactory.fromJson(entityAsString));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    public List<GameSystem> getAll() {
-        return gameSystemDAO.getAll(true);
+    public String getAll() {
+        return gameSystemFactory.allToJson(gameSystemDAO.getAll(true), true);
+    }
+
+    @Override
+    public GameSystem getEntity(long id, boolean complete){
+        return gameSystemDAO.getById(id, true);
     }
 }

@@ -8,7 +8,7 @@ public interface IUniverseDAO {
 
     public Universe create(Universe universe);
 
-    public Universe getById(long id, boolean lazy);
+    public Universe getById(long id, boolean complete);
 
     public void update(Universe universe);
 

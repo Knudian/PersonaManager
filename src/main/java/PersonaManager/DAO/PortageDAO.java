@@ -2,6 +2,7 @@ package PersonaManager.DAO;
 
 import PersonaManager.DAO.Interface.IPortageDAO;
 import PersonaManager.Model.Portage;
+import org.hibernate.Hibernate;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,8 +25,13 @@ public class PortageDAO extends AbstractDAO implements IPortageDAO {
     }
 
     @Override
-    public Portage getById(long id) {
-        return sessionFactory.getCurrentSession().get(Portage.class, id);
+    public Portage getById(long id, boolean complete) {
+        Portage portage = sessionFactory.getCurrentSession().get(Portage.class, id);
+        if( complete ){
+            Hibernate.initialize(portage.getCaracteristicList());
+            Hibernate.initialize(portage.getPersonaList());
+        }
+        return portage;
     }
 
     @Override
@@ -41,9 +47,18 @@ public class PortageDAO extends AbstractDAO implements IPortageDAO {
     }
 
     @Override
-    public List<Portage> getAll() {
+    public List<Portage> getAll(boolean complete) {
         String q = "SELECT p FROM Portage p";
         Query query = sessionFactory.getCurrentSession().createQuery(q);
-        return (List<Portage>) query.getResultList();
+        List<Portage> portageList = (List<Portage>) query.getResultList();
+
+        for(Portage p : portageList){
+            if( complete ){
+                Hibernate.initialize(p.getPersonaList());
+                Hibernate.initialize(p.getCaracteristicList());
+            }
+        }
+
+        return portageList;
     }
 }

@@ -4,27 +4,11 @@ import PersonaManager.Model.MediaFile;
 
 public interface IMediaFileService {
 
-    /**
-     * Allows to create a MediaFile Entry
-     *
-     * @param mediaFile MediaFile : the entry to save
-     * @return MediaFile : the saved entry
-     */
-    public MediaFile create(MediaFile mediaFile);
+    public Long create(String entityAsString);
 
-    /**
-     * Allows to get a MediaFile Entry by its ID
-     *
-     * @param id long : the entry's ID
-     * @return MediaFile : the entry itself
-     */
-    public MediaFile getById(long id);
+    public String getById(long id);
 
+    public Boolean delete(String entityAsString);
 
-    /**
-     * Allows to delete a MediaFile entry
-     *
-     * @param mediaFile MediaFile : the entry to delete
-     */
-    public void delete(MediaFile mediaFile);
+    public MediaFile save(MediaFile mediaFile);
 }

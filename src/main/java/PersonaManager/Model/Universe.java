@@ -54,35 +54,4 @@ public class Universe implements Serializable {
     private List<PersonaType> personaTypeList;
 
     public Universe(){ }
-    
-    public String getPersonaTypeJson(boolean complete){
-        String str = "[";
-        for(PersonaType p : this.getPersonaTypeList()){
-            str += p.toJson(complete);
-        }
-        str += "]";
-        return str;
-    }
-    public String getPortageJson(){
-        String str = "[";
-        for(Portage p : this.getPortageList()){
-            str += p.getId();
-        }
-        str += "]";
-        return str;
-    }
-    
-    public String toJson(boolean complete){
-        String str = "{";
-        str += "'id':" + this.getId() + ",";
-        str += "'name' : ':'"+ this.getName() + "',";
-        if (complete){
-            str += "'media':" + (this.getIllustration()!= null ? this.getIllustration().getFilename() : null ) +",";
-            str += "'description' : ':'"+ this.getDescription()+ "',";
-            str += "'personaTypeJson':" + this.getPersonaTypeJson(false);
-            str += "'portageList':" + this.getPortageJson();
-        }
-        str += "}";
-        return str;
-    }
 }

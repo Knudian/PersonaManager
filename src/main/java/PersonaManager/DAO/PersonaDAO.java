@@ -28,9 +28,9 @@ public class PersonaDAO extends AbstractDAO implements IPersonaDAO {
     }
 
     @Override
-    public Persona getById(long id, boolean lazy) {
+    public Persona getById(long id, boolean complete) {
         Persona persona = sessionFactory.getCurrentSession().get(Persona.class, id);
-        if( lazy ){
+        if( complete ){
             Hibernate.initialize(persona.getCaracteristicList());
         }
         return persona;

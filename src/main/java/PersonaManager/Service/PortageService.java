@@ -1,55 +1,67 @@
 package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.IPortageDAO;
+import PersonaManager.Factory.Interface.IPortageFactory;
 import PersonaManager.Model.Portage;
 import PersonaManager.Service.Interface.IPortageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@Transactional
 public class PortageService implements IPortageService {
+
+    public PortageService() {}
 
     @Autowired
     private IPortageDAO portageDAO;
 
+    @Autowired
+    private IPortageFactory portageFactory;
+
     @Override
-    /**
-     * @InheritDoc
-     */
-    public Portage create(Portage portage) {
-        return portageDAO.create(portage);
+    public Long create(String entityAsString) {
+        Portage portage = portageFactory.fromJson(entityAsString);
+        portage = portageDAO.create(portage);
+        return portage.getId();
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public Portage getById(long id) {
-        return portageDAO.getById(id);
+    public String getById(long id, boolean complete) {
+        return portageFactory.toJson(this.getEntity(id, complete), complete);
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public void update(Portage portage) {
-        portageDAO.update(portage);
+    public Boolean update(String entityAsString) {
+        try {
+            Portage portage = portageFactory.fromJson(entityAsString);
+            portageDAO.update(portage);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public void delete(Portage portage) {
-        portageDAO.delete(portage);
+    public Boolean delete(String entityAsString) {
+        try {
+            Portage portage = portageFactory.fromJson(entityAsString);
+            portageDAO.delete(portage);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    public List<Portage> getAll() {
-        return portageDAO.getAll();
+    public String getAll(boolean complete) {
+        List<Portage> portageList = portageDAO.getAll(complete);
+        return portageFactory.allToJson(portageList, complete);
+    }
+
+    @Override
+    public Portage getEntity(long id, boolean complete) {
+        return portageDAO.getById(id, complete);
     }
 }

@@ -70,7 +70,7 @@ public class UploadController {
             mediaFile.setFilename(path.toString());
             mediaFile.setUploadTime(new Timestamp(System.currentTimeMillis()));
 
-            iMediaFileService.create(mediaFile);
+            iMediaFileService.save(mediaFile);
 
             return fileUploadedResponse(mediaFile);
 

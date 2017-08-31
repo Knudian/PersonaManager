@@ -13,14 +13,8 @@ import java.util.List;
 @Controller
 public class MainController {
 
-    // TODO : Create a BuildResponse Method
-
     @GetMapping("/")
     public String main(ModelMap modelMap, HttpSession httpSession){
-
-        // TODO : Get the last 6 public personas
-        // TODO : Get the Universe Statistics (Amount of personnas created for each universes
-
         return "Main/index";
     }
 

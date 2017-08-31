@@ -19,7 +19,7 @@ public class Persona implements Serializable {
     @Setter
     private long id;
 
-    @ManyToOne(targetEntity = Human.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Human.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "humanId", nullable = false)
     @Getter
     @Setter
@@ -50,8 +50,7 @@ public class Persona implements Serializable {
     @Setter
     private Timestamp lastUpdate;
 
-    @OneToOne(targetEntity = MediaFile.class,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @OneToOne(targetEntity = MediaFile.class, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "mediaId")
     @Getter
     @Setter
@@ -62,8 +61,7 @@ public class Persona implements Serializable {
     @Setter
     private EnumPersonaGender gender;
 
-    @OneToOne(targetEntity = PersonaType.class, fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @OneToOne(targetEntity = PersonaType.class, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "persona_typeId")
     @Getter
     @Setter
@@ -75,39 +73,17 @@ public class Persona implements Serializable {
     @Setter
     private List<PersonaCaracteristic> caracteristicList;
 
-    @OneToOne(targetEntity = Portage.class, fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
+    @OneToOne(targetEntity = Portage.class, cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "portageId")
     @Getter
     @Setter
     private Portage portage;
 
-    public Persona() {}
+    @Getter
+    @Setter
+    @Column(length = 140)
+    private String description;
 
-    public String getCaracsJson(boolean complete){
-        String str = "[";
-        for(PersonaCaracteristic p : this.getCaracteristicList()){
-            str += p.toJson(complete);
-        }
-        str += "]";
-        return str;
-    }
-    
-    public String toJson(boolean complete){
-        String str = "{";
-        str += "'id':" + this.getId() + ",";
-        str += "'gameSystem':" + this.getPortage().getGameSystem().getId() + ",";
-        str += "'univers':" + this.getPortage().getUniverse().getId() + ",";
-        str += "'lastUpdate':" + this.getLastUpdate().getTime() + ",";
-        str += "'name' : { 'first':'"+ this.getFirstName() + "', 'last':'"+ this.getLastname() +"'},";
-        str += "'media':" + (this.getImage() != null ? this.getImage().getFilename() : null ) +",";
-        if (complete){
-            str += "'typeId':"+ this.getPersonaType().getId() +",";
-            str += "'gender':'" + this.getGender() +"',";
-            str += "'caracteristicList':" + this.getCaracsJson(false);
-        }
-        str += "}";
-        return str;
-    }
+    public Persona() {}
 
 }

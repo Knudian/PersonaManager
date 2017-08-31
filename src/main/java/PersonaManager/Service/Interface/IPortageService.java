@@ -6,35 +6,15 @@ import java.util.List;
 
 public interface IPortageService {
 
-    /**
-     * Allows to create a Portage Entry
-     *
-     * @param portage Portage : the entry to save
-     * @return Portage : the saved entry
-     */
-    public Portage create(Portage portage);
+    public Long create(String entityAsString);
 
-    /**
-     * Allows to get a Portage Entry by its ID
-     *
-     * @param id long : the entry's ID
-     * @return Portage : the entry itself
-     */
-    public Portage getById(long id);
+    public String getById(long id, boolean complete);
 
-    /**
-     * Allows a Portage Entry to be updated
-     *
-     * @param portage Portage : the entry to update
-     */
-    public void update(Portage portage);
+    public Boolean update(String entityAsString);
 
-    /**
-     * Allows to delete a Portage entry
-     *
-     * @param portage Portage : the entry to delete
-     */
-    public void delete(Portage portage);
+    public Boolean delete(String entityAsString);
 
-    public List<Portage> getAll();
+    public String getAll(boolean complete);
+
+    public Portage getEntity(long id, boolean complete);
 }

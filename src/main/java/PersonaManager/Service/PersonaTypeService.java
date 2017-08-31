@@ -1,48 +1,55 @@
 package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.IPersonaTypeDAO;
+import PersonaManager.Factory.Interface.IPersonaTypeFactory;
 import PersonaManager.Model.PersonaType;
 import PersonaManager.Service.Interface.IPersonaTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@Transactional
 public class PersonaTypeService implements IPersonaTypeService {
+
+    public PersonaTypeService() {}
 
     @Autowired
     private IPersonaTypeDAO personaTypeDAO;
 
+    @Autowired
+    private IPersonaTypeFactory personaTypeFactory;
+
     @Override
-    /**
-     * @InheritDoc
-     */
-    public PersonaType create(PersonaType personaType) {
-        return personaTypeDAO.create(personaType);
+    public Long create(String entityAsString) {
+        PersonaType personaType = personaTypeFactory.fromJson(entityAsString);
+        personaType = personaTypeDAO.create(personaType);
+        return personaType.getId();
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public PersonaType getById(long id) {
-        return personaTypeDAO.getById(id);
+    public String getById(long id) {
+        PersonaType personaType = personaTypeDAO.getById(id);
+        return personaTypeFactory.toJson(personaType);
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public void update(PersonaType personaType) {
-        personaTypeDAO.update(personaType);
+    public Boolean update(String entityAsString) {
+        try {
+            PersonaType personaType = personaTypeFactory.fromJson(entityAsString);
+            personaTypeDAO.update(personaType);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public void delete(PersonaType personaType) {
-        personaTypeDAO.delete(personaType);
+    public Boolean delete(String entityAsString) {
+        try {
+            PersonaType personaType = personaTypeFactory.fromJson(entityAsString);
+            personaTypeDAO.delete(personaType);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 }

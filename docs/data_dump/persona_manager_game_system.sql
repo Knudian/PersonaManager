@@ -1,0 +1,10 @@
+UPDATE persona_manager.game_system SET name = 'Chtulhu', short_name = 'Chtu', website = 'http://Chtulhu.com', mediaId = null WHERE id = 1;
+UPDATE persona_manager.game_system SET name = 'D100', short_name = 'D100', website = 'http://D100.com', mediaId = null WHERE id = 2;
+UPDATE persona_manager.game_system SET name = 'BASIC', short_name = 'BASI', website = 'http://BASIC.com', mediaId = null WHERE id = 3;
+UPDATE persona_manager.game_system SET name = 'Simulacres', short_name = 'Simu', website = 'http://Simulacres.com', mediaId = null WHERE id = 4;
+UPDATE persona_manager.game_system SET name = 'Donjon louforcs', short_name = 'Donj', website = 'http://Donjon louforcs.com', mediaId = null WHERE id = 5;
+UPDATE persona_manager.game_system SET name = 'Cats', short_name = 'Cats', website = 'http://Cats.com', mediaId = null WHERE id = 6;
+UPDATE persona_manager.game_system SET name = 'Tenga', short_name = 'Teng', website = 'http://Tenga.com', mediaId = null WHERE id = 7;
+UPDATE persona_manager.game_system SET name = 'MNS', short_name = 'MNS', website = 'http://MNS.com', mediaId = null WHERE id = 8;
+UPDATE persona_manager.game_system SET name = 'ANS', short_name = 'ANS', website = 'http://ANS.com', mediaId = null WHERE id = 9;
+UPDATE persona_manager.game_system SET name = 'Shadowrun', short_name = 'Shad', website = 'http://Shadowrun.com', mediaId = null WHERE id = 10;

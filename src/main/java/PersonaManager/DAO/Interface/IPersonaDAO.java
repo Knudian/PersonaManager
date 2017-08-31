@@ -8,7 +8,7 @@ public interface IPersonaDAO {
 
     public Persona create(Persona persona);
 
-    public Persona getById(long id, boolean lazy);
+    public Persona getById(long id, boolean complete);
 
     public void update(Persona persona);
 

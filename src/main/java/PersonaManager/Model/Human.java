@@ -65,39 +65,5 @@ public class Human implements Serializable{
     private List<String> roleList;
 
     public Human() {}
-
-    public Human(String nick,
-                 String email,
-                 String salt,
-                 String password,
-                 List<Persona> personaList,
-                 String roleListStored){
-        this.nick           = nick;
-        this.email          = email;
-        this.salt           = salt;
-        this.password       = password;
-        this.personaList    = personaList;
-        this.roleListStored = roleListStored;
-    }
-    
-    public String getPersonaJson(boolean complete){
-        String str = "[";
-        for(Persona p : this.getPersonaList()){
-            str += p.toJson(complete);
-        }
-        str += "]";
-        return str;
-    }
-    
-    public String toJson(boolean complete){
-        String str = "{";
-        str += "'id':" + this.getId() + ",";
-        str += "'nick':" + this.getNick()+ ",";
-        str += "'lastConnection':" + this.getLastConnection().getTime()+ ",";
-        if (complete)
-            str += "'persona':" + this.getId() + ",";
-        str += "}";
-        return str;
-    }
     
 }

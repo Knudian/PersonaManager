@@ -1,6 +1,7 @@
 package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.IPersonaDAO;
+import PersonaManager.Factory.Interface.IPersonaFactory;
 import PersonaManager.Model.Persona;
 import PersonaManager.Service.Interface.IPersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,36 +12,57 @@ import java.util.List;
 @Service
 public class PersonaService implements IPersonaService {
 
+    public PersonaService() {}
+
     @Autowired
     private IPersonaDAO personaDAO;
 
+    @Autowired
+    private IPersonaFactory personaFactory;
+
     @Override
-    public Persona create(Persona persona) {
-        return personaDAO.create(persona);
+    public Long create(String entityAsString) {
+        Persona persona = personaFactory.fromJson(entityAsString);
+        persona = personaDAO.create(persona);
+        return persona.getId();
     }
 
     @Override
-    public Persona getById(long id, boolean lazy) {
-        return personaDAO.getById(id, lazy);
+    public String getById(long id, boolean complete) {
+        Persona persona = this.getEntity(id, complete);
+        return personaFactory.toJson(persona, complete);
     }
 
     @Override
-    public void update(Persona persona) {
-        personaDAO.update(persona);
+    public Boolean update(String entityAsString) {
+        return null;
     }
 
     @Override
-    public void delete(Persona persona) {
-        personaDAO.delete(persona);
+    public Boolean delete(String entityAsString) {
+        try{
+            Persona p = personaFactory.fromJson(entityAsString);
+            personaDAO.delete(p);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    public List<Persona> getLastPublicPersonnas(Integer quantity){
-        return personaDAO.getLastPublicPersona(quantity);
+    public String getLastPublicPersonnas(Integer quantity) {
+        List<Persona> list = personaDAO.getLastPublicPersona(quantity);
+        return personaFactory.allToJson(list, false);
     }
 
     @Override
-    public List<Persona> getAll() {
-        return personaDAO.getAll();
+    public String getAll() {
+        List<Persona> list = personaDAO.getAll();
+        return personaFactory.allToJson(list, false);
+    }
+
+    @Override
+    public Persona getEntity(long id, boolean complete) {
+        return personaDAO.getById(id, complete);
     }
 }

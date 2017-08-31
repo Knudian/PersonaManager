@@ -8,7 +8,7 @@ public interface IGameSystemDAO {
 
     public GameSystem create(GameSystem gameSystem);
 
-    public GameSystem getById(long id, boolean lazy);
+    public GameSystem getById(long id, boolean complete);
 
     public void delete(GameSystem gameSystem);
 

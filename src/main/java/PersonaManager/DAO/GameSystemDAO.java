@@ -25,9 +25,9 @@ public class GameSystemDAO extends AbstractDAO implements IGameSystemDAO {
     }
 
     @Override
-    public GameSystem getById(long id, boolean lazy) {
+    public GameSystem getById(long id, boolean complete) {
         GameSystem gs = sessionFactory.getCurrentSession().get(GameSystem.class, id);
-        if( !lazy ) {
+        if( complete ) {
             Hibernate.initialize(gs.getCaracteristicList());
             Hibernate.initialize(gs.getPortageList());
         }

@@ -6,38 +6,15 @@ import java.util.List;
 
 public interface IHumanService {
 
-    /**
-     *
-     * @param inputDatas
-     * @return
-     */
-    public Human create(String inputDatas);
+    public Long create(String entityAsString);
 
-    /**
-     * Allows to get a Human Entry by its ID
-     *
-     * @param id long : the entry's ID
-     * @param lazy boolean : has the entry to be eagerly loaded or not.
-     * @return Human : the entry itself
-     */
-    public Human getById(long id, boolean lazy);
+    public String getById(long id, boolean complete);
 
-    /**
-     * Allows a Human Entry to be updated
-     *
-     * @param human Human : the entry to update
-     */
-    public void update(Human human);
+    public Boolean update(String entityAsString);
 
-    /**
-     * Allows to delete a Human entry
-     *
-     * @param human Human : the entry to delete
-     */
-    public void delete(Human human);
+    public Boolean delete(String entityAsString);
 
-    /**
-     * Get the list of all Humans
-     */
-    public List<Human> getAll();
+    public String getAll();
+
+    public Human getEntity(long id, boolean complete);
 }

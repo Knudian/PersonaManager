@@ -8,7 +8,7 @@ public interface IHumanDAO {
 
     public Human create(Human human);
 
-    public Human getById(long id, boolean lazy);
+    public Human getById(long id, boolean complete);
 
     public void update(Human human);
 

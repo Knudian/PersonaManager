@@ -17,7 +17,7 @@ public class PersonaCaracteristic implements Serializable {
     @Setter
     private long id;
 
-    @OneToOne(targetEntity = CaracteristicModified.class, fetch = FetchType.LAZY,
+    @OneToOne(targetEntity = CaracteristicModified.class, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "caracteristic_modifiedId")
     @Getter
@@ -37,15 +37,4 @@ public class PersonaCaracteristic implements Serializable {
     private String value;
 
     public PersonaCaracteristic(){}
-    
-    public String toJson(boolean complete){
-        String str = "{";
-        str += "'id':" + this.getId() + ",";
-        str += "'caracteristicModified':" + this.getCaracteristicModified().toJson(complete)+ ",";
-        str += "'value':" + this.getValue() + ",";
-        if (complete)
-            str += "'persona':" + this.getPersona().getId()+ ",";
-        str += "}";
-        return str;
-    }
 }

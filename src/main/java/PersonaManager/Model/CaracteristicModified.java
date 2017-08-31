@@ -17,13 +17,13 @@ public class CaracteristicModified implements Serializable {
     @Setter
     private long id;
 
-    @ManyToOne(targetEntity = Portage.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Portage.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "portageId", nullable = false)
     @Getter
     @Setter
     private Portage portage;
 
-    @OneToOne(targetEntity = Caracteristic.class, fetch = FetchType.LAZY,
+    @OneToOne(targetEntity = Caracteristic.class, fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH, CascadeType.REMOVE})
     @JoinColumn(name = "caracteristicId")
     @Getter
@@ -36,15 +36,4 @@ public class CaracteristicModified implements Serializable {
     private String label;
 
     public CaracteristicModified() { }
-    
-    public String toJson(boolean complete){
-        String str = "{";
-        str += "'id':" + this.getId() + ",";
-        str += "'label':" + this.getLabel()+ ",";
-        str += "'caracteristic':" + this.getCaracteristic().toJson(complete)+ ",";
-        if (complete)
-            str += "'portage':" + this.getPortage().getId()+ ",";
-        str += "}";
-        return str;
-    }
 }

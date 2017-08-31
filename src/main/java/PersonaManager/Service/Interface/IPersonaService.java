@@ -6,43 +6,17 @@ import java.util.List;
 
 public interface IPersonaService {
 
-    /**
-     * Allows to create a Persona Entry
-     *
-     * @param persona Persona : the entry to save
-     * @return Persona : the saved entry
-     */
-    public Persona create(Persona persona);
+    public Long create(String entityAsString);
 
-    /**
-     * Allows to get a Persona Entry by its ID
-     *
-     * @param id long : the entry's ID
-     * @param lazy boolean : has the entry to be eagerly loaded?
-     * @return Persona : the entry itself
-     */
-    public Persona getById(long id, boolean lazy);
+    public String getById(long id, boolean complete);
 
-    /**
-     * Allows a Persona Entry to be updated
-     *
-     * @param persona Persona : the entry to update
-     */
-    public void update(Persona persona);
+    public Boolean update(String entityAsString);
 
-    /**
-     * Allows to delete a Persona entry
-     *
-     * @param persona Persona : the entry to delete
-     */
-    public void delete(Persona persona);
+    public Boolean delete(String entityAsString);
 
-    /**
-     * Gets a 'quantity' amount of personna
-     * @param quantity
-     * @return
-     */
-    public List<Persona> getLastPublicPersonnas(Integer quantity);
+    public String getLastPublicPersonnas(Integer quantity);
 
-    public List<Persona> getAll();
+    public String getAll();
+
+    public Persona getEntity(long id, boolean complete);
 }

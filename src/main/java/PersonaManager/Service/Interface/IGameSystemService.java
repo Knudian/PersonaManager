@@ -6,35 +6,15 @@ import java.util.List;
 
 public interface IGameSystemService {
 
-    /**
-     * Allows to create a GameSystem Entry
-     *
-     * @param gameSystem GameSystem : the entry to save
-     * @return GameSystem : the saved entry
-     */
-    public GameSystem create(GameSystem gameSystem);
+    public Long create(String entityAsString);
 
-    /**
-     * Allows to get a GameSystem Entry by its ID
-     *
-     * @param id long : the entry's ID
-     * @return GameSystem : the entry itself
-     */
-    public GameSystem getById(long id,boolean lazy);
+    public String getById(long id, boolean complete);
 
-    /**
-     * Allows a GameSystem Entry to be updated
-     *
-     * @param gameSystem GameSystem : the entry to update
-     */
-    public void update(GameSystem gameSystem);
+    public Boolean update(String entityAsString);
 
-    /**
-     * Allows to delete a GameSystem entry
-     *
-     * @param gameSystem GameSystem : the entry to delete
-     */
-    public void delete(GameSystem gameSystem);
+    public Boolean delete(String entityAsString);
 
-    public List<GameSystem> getAll();
+    public String getAll();
+
+    public GameSystem getEntity(long id, boolean complete);
 }

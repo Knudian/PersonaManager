@@ -29,14 +29,4 @@ public class PersonaType implements Serializable {
     private String name;
 
     public PersonaType(){}
-
-    public String toJson(boolean complete){
-        String str = "{";
-        str += "'id':" + this.getId() + ",";
-        str += "'name':" + this.getName()+ ",";
-        if (complete)
-            str += "'universe':" + this.getUniverse().getId()+ ",";
-        str += "}";
-        return str;
-    }
 }

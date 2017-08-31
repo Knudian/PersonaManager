@@ -6,58 +6,58 @@ import PersonaManager.Model.Human;
 import PersonaManager.Service.Interface.IHumanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
-@Transactional
 public class HumanService implements IHumanService {
 
+    public HumanService() {}
+
+    @Autowired
+    private IHumanFactory humanFactory;
     @Autowired
     private IHumanDAO humanDAO;
 
-    @Autowired
-    protected IHumanFactory humanFactory;
-
     @Override
-    /**
-     * @InheritDoc
-     */
-    public Human create(String humanAsJson) {
-        Human human = humanFactory.fromJson(humanAsJson);
-        return humanDAO.create(human);
+    public Long create(String entityAsString) {
+        Human human = humanDAO.create(humanFactory.fromJson(entityAsString));
+        return human.getId();
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public Human getById(long id, boolean lazy) {
-        return humanDAO.getById(id, lazy);
+    public String getById(long id, boolean complete) {
+        return humanFactory.toJson(
+                this.getEntity(id, complete),
+                complete
+        );
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public void update(Human human) {
-        humanDAO.update(human);
+    public Boolean update(String entityAsString) {
+        try {
+            humanDAO.update(humanFactory.fromJson(entityAsString));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public void delete(Human human) {
-        humanDAO.delete(human);
+    public Boolean delete(String entityAsString) {
+        try {
+            humanDAO.delete(humanFactory.fromJson(entityAsString));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     @Override
-    /**
-     * @InheritDoc
-     */
-    public List<Human> getAll(){
-        return humanDAO.getAll();
+    public String getAll() {
+        return humanFactory.allToJson(humanDAO.getAll(), false);
+    }
+
+    @Override
+    public Human getEntity(long id, boolean complete){
+        return humanDAO.getById(id, complete);
     }
 }
