@@ -25,6 +25,7 @@ public class ApiResponse {
     }
 
     public String toString(){
+        // TODO : Transform this method using the Javax.Json
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("{'requestTime':")
                 .append(this.requestDate.getTime())

@@ -1,6 +1,8 @@
 package PersonaManager.Api;
 
 import PersonaManager.Model.ApiResponse;
+import PersonaManager.Service.Interface.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -10,6 +12,27 @@ public class ApiController {
 
     public ApiController(){ }
 
+    @Autowired
+    private IGameSystemService gameSystemService;
+
+    @Autowired
+    private IHumanService humanService;
+
+    @Autowired
+    private IPersonaService personaService;
+
+    @Autowired
+    private IPersonaTypeService personaTypeService;
+
+    @Autowired
+    private IPortageService portageService;
+
+    @Autowired
+    private IUniverseService universeService;
+
+    @Autowired
+    private ICaracteristicService caracteristicService;
+
     private void reset(){
         this.apiResponse = new ApiResponse();
     }
@@ -18,6 +41,27 @@ public class ApiController {
     public String getOneById(@PathVariable(value="id") long id, @PathVariable(value="entity") String entity){
         this.reset();
         switch (entity){
+            case "gamesystem":
+                this.apiResponse.addContent(gameSystemService.getById(id, false));
+                break;
+            case "human":
+                this.apiResponse.addContent(humanService.getById(id, false));
+                break;
+            case "persona":
+                this.apiResponse.addContent(personaService.getById(id, false));
+                break;
+            case "personaType":
+                this.apiResponse.addContent(personaTypeService.getById(id));
+                break;
+            case "portage":
+                this.apiResponse.addContent(portageService.getById(id, false));
+                break;
+            case "universe":
+                this.apiResponse.addContent(universeService.getById(id, false));
+                break;
+            case "caracteristic":
+                this.apiResponse.addContent(caracteristicService.getById(id));
+                break;
             default:
                 this.apiResponse.addError("{'code':'ILLEGAL_ENTITY', 'entity':'"+ entity +"'}");
         }

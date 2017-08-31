@@ -82,7 +82,7 @@ public class Persona implements Serializable {
     @Getter
     @Setter
     @Column(length = 140)
-    private String description;
+    private String description = "";
 
     public Persona() {}
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 import java.util.List;
 
 @Service
@@ -26,8 +27,8 @@ public class PortageFactory extends BaseFactory implements IPortageFactory {
 
     @Override
     public String toJson(Portage portage, boolean complete) {
-        JsonArray personaList = null;
-        JsonArray caracList   = null;
+        JsonValue personaList = Json.createValue("");
+        JsonValue caracList = Json.createValue("");
 
         if( complete ){
             personaList = personaFactory.listToJson(portage.getPersonaList(), false);

@@ -1,16 +1,16 @@
 package PersonaManager.Factory;
 
+import PersonaManager.Factory.Interface.IMediaFileFactory;
 import PersonaManager.Factory.Interface.IPersonaCaracteristicFactory;
 import PersonaManager.Factory.Interface.IPersonaFactory;
-import PersonaManager.Model.EnumPersonaGender;
-import PersonaManager.Model.MediaFile;
 import PersonaManager.Model.Persona;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-import java.sql.Timestamp;
+import javax.json.JsonValue;
 import java.util.List;
 
 @Service
@@ -20,11 +20,14 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
         super();
     }
 
+    @Autowired
+    private IMediaFileFactory mediaFileFactory;
+
     private IPersonaCaracteristicFactory personaCaracteristicFactory;
 
     @Override
     public String toJson(Persona persona, boolean complete) {
-        JsonArray caracteristicArray = null;
+        JsonValue caracteristicArray = Json.createValue("");
         if( complete ){
             caracteristicArray = personaCaracteristicFactory.listToJson(persona.getCaracteristicList());
         }
@@ -36,12 +39,12 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
                 .add("lastName", persona.getLastname())
                 .add("lastUpdate", persona.getLastUpdate().getTime())
                 .add("creationTime", persona.getCreationTime().getTime())
-                .add("media", persona.getImage().getFilename())
+                .add("media", mediaFileFactory.toJson(persona.getImage()))
                 .add("type", persona.getPersonaType().getId())
                 .add("portageId", persona.getPortage().getId())
                 .add("gender", persona.getGender().getKey())
                 .add("caracteristics", caracteristicArray)
-                .add("description", persona.getDescription())
+                .add("description", (persona.getDescription() == null ? "" : persona.getDescription()))
                 .build();
         return this.write(model);
     }

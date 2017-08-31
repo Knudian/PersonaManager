@@ -16,12 +16,16 @@ public class MediaFileFactory extends BaseFactory implements IMediaFileFactory {
 
     @Override
     public String toJson(MediaFile mediaFile) {
-        JsonObject model = Json.createObjectBuilder()
-                .add("id", mediaFile.getId())
-                .add("name", mediaFile.getFilename())
-                .add("uploaded", mediaFile.getUploadTime().getTime())
-                .build();
-        return this.write(model);
+        if ( mediaFile != null){
+            JsonObject model = Json.createObjectBuilder()
+                    .add("id", mediaFile.getId())
+                    .add("name", mediaFile.getFilename())
+                    .add("uploaded", mediaFile.getUploadTime().getTime())
+                    .build();
+            return this.write(model);
+        } else {
+            return "undefined";
+        }
     }
 
     @Override

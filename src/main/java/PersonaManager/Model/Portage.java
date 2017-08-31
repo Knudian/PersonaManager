@@ -19,13 +19,13 @@ public class Portage implements Serializable {
     @Setter
     private long id;
 
-    @ManyToOne(targetEntity = GameSystem.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = GameSystem.class)
     @JoinColumn(name = "game_systemId", nullable = false)
     @Getter
     @Setter
     private GameSystem gameSystem;
 
-    @ManyToOne(targetEntity = Universe.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = Universe.class)
     @JoinColumn(name = "universeId", nullable = false)
     @Getter
     @Setter

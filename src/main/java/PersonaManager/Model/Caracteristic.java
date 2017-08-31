@@ -17,7 +17,7 @@ public class Caracteristic implements Serializable {
     @Setter
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = GameSystem.class)
     @JoinColumn(name = "game_systemId", nullable = false)
     @Getter
     @Setter
