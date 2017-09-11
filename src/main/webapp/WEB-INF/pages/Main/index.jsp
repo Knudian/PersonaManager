@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Persona Manager</title>
+    <title>Persona Manager v0.23 DEV</title>
 
 
     <spring:url value="/resources/css/style.css" var="mainCss" />
