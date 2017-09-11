@@ -1,54 +1,50 @@
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Persona Manager v0.23 DEV</title>
-
-
-    <spring:url value="/resources/css/style.css" var="mainCss" />
-    <spring:url value="/resources/css/bootstrap.min.css" var="bootstrapCss" />
-    <spring:url value="/resources/css/logo-nav.css" var="logonavCss" />
-
-    <link href="${mainCss}" rel="stylesheet" />
-    <link href="${bootstrapCss}" rel="stylesheet" />
-    <link href="${logonavCss}" rel="stylesheet" />
-
-  </head>
-
-  <body>
-
-      <!-- Navigation -->
-      <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-          <div class="container">
-              <div class="navbar-header">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                      <span class="sr-only">Toggle navigation</span>
-                  </button>
-                  <a class="navbar-brand" href="#">Persona Manager</a>
-              </div>
-
-          </div>
-      </nav>
-
-      <!-- Page Content -->
-      <div class="container">
-          <h1 class="page-header">Persona Manager</h1>
-      </div>
-      <!-- jQuery & Bootstrap -->
-      <spring:url value="/resources/js/jquery.js" var="jqueryJs" />
-      <spring:url value="/resources/js/bootstrap.min.js" var="bootstrapJs" />
-
-      <script src="${jqueryJs}" type="text/javascript"></script>
-      <script src="${bootstrapJs}" type="text/javascript"></script>²
-
-  </body>
-</html>
+<%@include file="includes/header.jsp"%>
+<!-- Main content. Do not use de <main/> tag -->
+<section class="row" class="homeContainer">
+    <div class="col-xs-offset-3 col-xs-6">
+        <h1 class="page-header">Role Playing game<hr/>Persona Manager</h1>
+    </div>
+</section>
+<section class="row">
+    <div class="col-xs-12">
+        <h3 class="page-header">Latest publicly shared personas</h3>
+    </div>
+    <div class="col-xs-2">
+        <a href="#" class="thumbnail">
+            <img src="https://gifyu.com/images/fa71237e429134040da85ffb0c598b78.png" class="img-responsive"/>
+            <h3 class="text-center">[persona.name]</h3>
+            <p class="text-center">
+                <a href="#" class="label label-primary">[Universe]</a>
+                <a href="#" class="label label-info">[GameSystem]</a>
+            </p>
+            <p class="text-center">
+                <a href="#" class="label label-default">[human]</a>
+            </p>
+        </a>
+    </div>
+</section>
+<section class="row">
+    <div class="col-xs-12">
+        <h3 class="page-header">Universe Statistics</h3>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="row">
+                <div class="col-xs-3">Gilliam</div>
+                <div class="col-xs-9">
+                    <div class="progress">
+                        <div role="progressbar" class="progress-bar" aria-valuenow="19" aria-valuemin="0" aria-valuemax="100" style="width: 19%;">19</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-3">Combs</div>
+                <div class="col-xs-9">
+                    <div class="progress">
+                        <div role="progressbar" class="progress-bar" aria-valuenow="13" aria-valuemin="0" aria-valuemax="100" style="width: 13%;">13</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
