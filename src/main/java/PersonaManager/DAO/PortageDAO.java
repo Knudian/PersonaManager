@@ -41,9 +41,10 @@ public class PortageDAO extends AbstractDAO implements IPortageDAO {
     }
 
     @Override
-    public void update(Portage portage) {
+    public Portage update(Portage portage) {
         sessionFactory.getCurrentSession().update(portage);
-        sessionFactory.getCurrentSession().refresh(portage);
+        sessionFactory.getCurrentSession().flush();
+        return portage;
     }
 
     @Override

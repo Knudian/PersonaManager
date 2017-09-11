@@ -38,7 +38,7 @@ public class Persona implements Serializable {
     @Column(name = "last_name", nullable = false)
     @Getter
     @Setter
-    private String lastname;
+    private String lastName;
 
     @Column(name = "creation_time", nullable = false)
     @Getter
@@ -86,4 +86,30 @@ public class Persona implements Serializable {
 
     public Persona() {}
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Persona persona = (Persona) o;
+
+        if (isPublic != persona.isPublic) return false;
+        if (!owner.equals(persona.owner)) return false;
+        if (firstName != null ? !firstName.equals(persona.firstName) : persona.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(persona.lastName) : persona.lastName != null) return false;
+        if (!creationTime.equals(persona.creationTime)) return false;
+        if (image != null ? !image.equals(persona.image) : persona.image != null) return false;
+        if (gender != persona.gender) return false;
+        if (!personaType.equals(persona.personaType)) return false;
+        if (!portage.equals(persona.portage)) return false;
+        return description != null ? description.equals(persona.description) : persona.description == null;
+    }
+
+    public void setPublic(){
+        this.isPublic = true;
+    }
+
+    public void setPrivate(){
+        this.isPublic = false;
+    }
 }

@@ -10,13 +10,15 @@ public interface IPersonaService {
 
     public String getById(long id, boolean complete);
 
-    public Boolean update(String entityAsString);
+    public String update(String entityAsString, long id);
 
-    public Boolean delete(String entityAsString);
+    public Boolean delete(long id);
 
     public String getLastPublicPersonnas(Integer quantity);
 
     public String getAll();
 
     public Persona getEntity(long id, boolean complete);
+
+    public Persona init(Persona persona);
 }

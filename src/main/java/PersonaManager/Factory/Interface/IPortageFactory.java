@@ -14,4 +14,5 @@ public interface IPortageFactory {
     public JsonArray listToJson(List<Portage> list, boolean complete);
 
     public String allToJson(List<Portage> list, boolean complete);
+
 }

@@ -18,6 +18,8 @@ public class BaseFactory {
 
     protected JsonObject getStructure(String json){
         JsonReader reader = Json.createReader(new StringReader(json));
-        return reader.readObject();
+        JsonObject jsonObject = reader.readObject();
+        reader.close();
+        return jsonObject;
     }
 }

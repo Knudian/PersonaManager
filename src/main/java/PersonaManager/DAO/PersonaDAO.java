@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.Query;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,8 @@ public class PersonaDAO extends AbstractDAO implements IPersonaDAO {
 
     @Override
     public Persona create(Persona persona) {
+        persona.setCreationTime(new Timestamp(System.currentTimeMillis()));
+        persona.setLastUpdate(new Timestamp(System.currentTimeMillis()));
         objectId = sessionFactory.getCurrentSession().save(persona);
         sessionFactory.getCurrentSession().refresh(persona);
         return persona;
@@ -37,9 +40,11 @@ public class PersonaDAO extends AbstractDAO implements IPersonaDAO {
     }
 
     @Override
-    public void update(Persona persona) {
+    public Persona update(Persona persona) {
+        persona.setLastUpdate(new Timestamp(System.currentTimeMillis()));
         sessionFactory.getCurrentSession().update(persona);
-        sessionFactory.getCurrentSession().refresh(persona);
+        sessionFactory.getCurrentSession().flush();
+        return persona;
     }
 
     @Override

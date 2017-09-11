@@ -32,15 +32,20 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
     }
 
     @Override
-    public Boolean update(String entityAsString) {
-        try {
-            PersonaCaracteristic personaCaracteristic = personaCaracteristicFactory.fromJson(entityAsString);
-            personaCaracteristicDAO.update(personaCaracteristic);
-            return true;
+    public String update(String entityAsString, long id) {
+        PersonaCaracteristic original = this.getEntity(id);
+        PersonaCaracteristic updated  = personaCaracteristicFactory.fromJson(entityAsString);
 
-        } catch (Exception e){
-            return false;
+        if( !updated.equals(original)){
+            original.setPersona(updated.getPersona());
+            original.setCaracteristicModified(updated.getCaracteristicModified());
+            original.setValue(updated.getValue());
+
+            original = personaCaracteristicDAO.update(original);
+
         }
+
+        return personaCaracteristicFactory.toJson(original);
     }
 
     @Override
@@ -53,5 +58,10 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
         } catch (Exception e){
             return false;
         }
+    }
+
+    @Override
+    public PersonaCaracteristic getEntity(long id) {
+        return personaCaracteristicDAO.getById(id);
     }
 }

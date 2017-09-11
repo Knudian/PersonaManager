@@ -31,21 +31,29 @@ public class UniverseService implements IUniverseService {
     }
 
     @Override
-    public Boolean update(String entityAsString) {
-        try {
-            Universe universe = universeFactory.fromJson(entityAsString);
-            universeDAO.update(universe);
-            return true;
-        } catch (Exception e){
-            return false;
+    public String update(String entityAsString, long id) {
+        Universe original = this.getEntity(id, false);
+        Universe updated  = universeFactory.fromJson(entityAsString);
+
+        if ( !updated.equals(original) ){
+            if( updated.getName() != null){
+                original.setName(updated.getName());
+            }
+            if( updated.getDescription() != null){
+                original.setDescription(updated.getDescription());
+            }
+
+            original.setIllustration(updated.getIllustration());
+
+            original = universeDAO.update(original);
         }
+        return universeFactory.toJson(original, false);
     }
 
     @Override
-    public Boolean delete(String entityAsString) {
+    public Boolean delete(long id) {
         try {
-            Universe universe = universeFactory.fromJson(entityAsString);
-            universeDAO.delete(universe);
+            universeDAO.delete(this.getEntity(id, false));
             return true;
         } catch (Exception e){
             return false;

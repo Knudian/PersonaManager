@@ -30,8 +30,9 @@ public class CaracteristicModifiedDAO extends AbstractDAO implements ICaracteris
     }
 
     @Override
-    public void update(CaracteristicModified caracteristicModified) {
+    public CaracteristicModified update(CaracteristicModified caracteristicModified) {
         sessionFactory.getCurrentSession().update(caracteristicModified);
-        sessionFactory.getCurrentSession().refresh(caracteristicModified);
+        sessionFactory.getCurrentSession().flush();
+        return caracteristicModified;
     }
 }

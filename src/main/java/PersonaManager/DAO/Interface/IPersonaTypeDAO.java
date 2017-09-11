@@ -8,7 +8,7 @@ public interface IPersonaTypeDAO {
 
     public PersonaType getById(long id);
 
-    public void update(PersonaType personaType);
+    public PersonaType update(PersonaType personaType);
 
     public void delete(PersonaType personaType);
 }

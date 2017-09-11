@@ -31,8 +31,9 @@ public class PersonaCaracteristicDAO extends AbstractDAO implements IPersonaCara
     }
 
     @Override
-    public void update(PersonaCaracteristic personaCaracteristic) {
+    public PersonaCaracteristic update(PersonaCaracteristic personaCaracteristic) {
         sessionFactory.getCurrentSession().update(personaCaracteristic);
-        sessionFactory.getCurrentSession().refresh(personaCaracteristic);
+        sessionFactory.getCurrentSession().flush();
+        return personaCaracteristic;
     }
 }

@@ -37,4 +37,16 @@ public class PersonaCaracteristic implements Serializable {
     private String value;
 
     public PersonaCaracteristic(){}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonaCaracteristic that = (PersonaCaracteristic) o;
+
+        if (!caracteristicModified.equals(that.caracteristicModified)) return false;
+        if (!persona.equals(that.persona)) return false;
+        return value != null ? value.equals(that.value) : that.value == null;
+    }
 }

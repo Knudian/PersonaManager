@@ -4,10 +4,8 @@ import PersonaManager.Factory.Interface.IHumanFactory;
 import PersonaManager.Model.Human;
 import org.springframework.stereotype.Service;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
+import javax.json.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -34,17 +32,25 @@ public class HumanFactory extends BaseFactory implements IHumanFactory {
 
     @Override
     public Human fromJson(String inputDatas) {
-        // Todo : PersonaService
-        return null;
+        Human human = new Human();
+        JsonObject jsonObject = this.getStructure(inputDatas);
+        human.setEmail(jsonObject.getString("email"));
+        human.setNick(jsonObject.getString("nick"));
+        human.setPassword(jsonObject.getString("password"));
+        human.setCreationTime(new Timestamp(System.currentTimeMillis()));
+        human.setLastConnection(new Timestamp(System.currentTimeMillis()));
+        human.setPersonaList(null);
+        human.setSalt("the salt");
+        return human;
     }
 
     @Override
     public JsonArray listToJson(List<Human> list, boolean complete) {
-        JsonArray jsonArray = (JsonArray) Json.createArrayBuilder();
+        JsonArrayBuilder builder = Json.createArrayBuilder();
         for(Human human : list){
-            jsonArray.add(Json.createValue(this.toJson(human, false)));
+            builder.add(this.getStructure(this.toJson(human, false)));
         }
-        return null;
+        return builder.build();
     }
 
 

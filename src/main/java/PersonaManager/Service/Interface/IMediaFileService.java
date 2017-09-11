@@ -11,4 +11,6 @@ public interface IMediaFileService {
     public Boolean delete(String entityAsString);
 
     public MediaFile save(MediaFile mediaFile);
+
+    public MediaFile getByFileName(String filename);
 }

@@ -50,4 +50,14 @@ public class Portage implements Serializable {
     private List<CaracteristicModified> caracteristicList;
     
     public Portage(){ }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Portage portage = (Portage) o;
+
+        return id == portage.id;
+    }
 }

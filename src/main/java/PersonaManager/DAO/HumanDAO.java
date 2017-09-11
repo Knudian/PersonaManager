@@ -41,9 +41,10 @@ public class HumanDAO extends AbstractDAO implements IHumanDAO {
     }
 
     @Override
-    public void update(Human human) {
+    public Human update(Human human) {
         sessionFactory.getCurrentSession().update(human);
-        sessionFactory.getCurrentSession().refresh(human);
+        sessionFactory.getCurrentSession().flush();
+        return human;
     }
 
     @Override

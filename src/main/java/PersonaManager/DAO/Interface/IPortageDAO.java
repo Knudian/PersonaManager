@@ -12,7 +12,7 @@ public interface IPortageDAO {
 
     public void delete(Portage portage);
 
-    public void update(Portage portage);
+    public Portage update(Portage portage);
 
     public List<Portage> getAll(boolean complete);
 }

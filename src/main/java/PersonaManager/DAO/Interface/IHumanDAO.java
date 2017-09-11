@@ -10,7 +10,7 @@ public interface IHumanDAO {
 
     public Human getById(long id, boolean complete);
 
-    public void update(Human human);
+    public Human update(Human human);
 
     public void delete(Human human);
 

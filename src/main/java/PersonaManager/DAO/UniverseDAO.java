@@ -34,9 +34,10 @@ public class UniverseDAO extends AbstractDAO implements IUniverseDAO {
     }
 
     @Override
-    public void update(Universe universe) {
+    public Universe update(Universe universe) {
         sessionFactory.getCurrentSession().update(universe);
-        sessionFactory.getCurrentSession().refresh(universe);
+        sessionFactory.getCurrentSession().flush();
+        return universe;
     }
 
     @Override

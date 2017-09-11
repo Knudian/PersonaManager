@@ -29,4 +29,15 @@ public class PersonaType implements Serializable {
     private String name;
 
     public PersonaType(){}
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PersonaType that = (PersonaType) o;
+
+        if (universe != null ? !universe.equals(that.universe) : that.universe != null) return false;
+        return name != null ? name.equals(that.name) : that.name == null;
+    }
 }

@@ -46,4 +46,9 @@ public class MediaFileService implements IMediaFileService {
     public MediaFile save(MediaFile mediaFile) {
         return mediaFileDAO.create(mediaFile);
     }
+
+    @Override
+    public MediaFile getByFileName(String filename) {
+        return mediaFileDAO.getByFileName(filename);
+    }
 }

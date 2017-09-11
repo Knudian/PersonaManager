@@ -36,4 +36,16 @@ public class CaracteristicModified implements Serializable {
     private String label;
 
     public CaracteristicModified() { }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CaracteristicModified that = (CaracteristicModified) o;
+
+        if (!portage.equals(that.portage)) return false;
+        if (!caracteristic.equals(that.caracteristic)) return false;
+        return label != null ? label.equals(that.label) : that.label == null;
+    }
 }

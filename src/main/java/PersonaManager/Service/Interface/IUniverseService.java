@@ -10,9 +10,9 @@ public interface IUniverseService {
 
     public String getById(long id, boolean complete);
 
-    public Boolean update(String entityAsString);
+    public String update(String entityAsString, long id);
 
-    public Boolean delete(String entityAsString);
+    public Boolean delete(long id);
 
     public String getAll(boolean complete);
 

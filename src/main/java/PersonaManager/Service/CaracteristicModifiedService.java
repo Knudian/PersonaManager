@@ -29,19 +29,25 @@ public class CaracteristicModifiedService implements ICaracteristicModifiedServi
     }
 
     @Override
-    public Boolean update(String entityAsString) {
-        try {
-            caracteristicModifiedDAO.update(caracteristicModifiedFactory.fromJson(entityAsString));
-            return true;
-        } catch (Exception e){
-            return false;
+    public String update(String entityAsString, long id) {
+        CaracteristicModified original = this.getEntity(id);
+        CaracteristicModified updated  = caracteristicModifiedFactory.fromJson(entityAsString);
+
+        if( !updated.equals(original) ){
+            original.setPortage(updated.getPortage());
+            original.setCaracteristic(updated.getCaracteristic());
+            original.setLabel(updated.getLabel());
+
+            original = caracteristicModifiedDAO.update(original);
         }
+
+        return caracteristicModifiedFactory.toJson(original);
     }
 
     @Override
-    public Boolean delete(String entityAsString) {
+    public Boolean delete(long id) {
         try {
-            caracteristicModifiedDAO.delete(caracteristicModifiedFactory.fromJson(entityAsString));
+            caracteristicModifiedDAO.delete(this.getEntity(id));
             return true;
         } catch (Exception e){
             return false;

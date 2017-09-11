@@ -2,6 +2,7 @@ package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.IPersonaTypeDAO;
 import PersonaManager.Factory.Interface.IPersonaTypeFactory;
+import PersonaManager.Model.Persona;
 import PersonaManager.Model.PersonaType;
 import PersonaManager.Service.Interface.IPersonaTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,10 +33,27 @@ public class PersonaTypeService implements IPersonaTypeService {
     }
 
     @Override
-    public Boolean update(String entityAsString) {
+    public String update(String entityAsString, long id) {
+        PersonaType original = this.getEntity(id);
+        PersonaType updated  = personaTypeFactory.fromJson(entityAsString);
+
+        if( !updated.equals(original) ){
+            if( updated.getName() != null){
+                original.setName(updated.getName());
+            }
+            if( updated.getUniverse() != null ){
+                original.setUniverse(updated.getUniverse());
+            }
+
+            original = personaTypeDAO.update(original);
+        }
+        return personaTypeFactory.toJson(original);
+    }
+
+    @Override
+    public Boolean delete(long id) {
         try {
-            PersonaType personaType = personaTypeFactory.fromJson(entityAsString);
-            personaTypeDAO.update(personaType);
+            personaTypeDAO.delete(this.getEntity(id));
             return true;
         } catch (Exception e){
             return false;
@@ -43,13 +61,7 @@ public class PersonaTypeService implements IPersonaTypeService {
     }
 
     @Override
-    public Boolean delete(String entityAsString) {
-        try {
-            PersonaType personaType = personaTypeFactory.fromJson(entityAsString);
-            personaTypeDAO.delete(personaType);
-            return true;
-        } catch (Exception e){
-            return false;
-        }
+    public PersonaType getEntity(long id) {
+        return personaTypeDAO.getById(id);
     }
 }

@@ -2,10 +2,15 @@ package PersonaManager.Factory;
 
 import PersonaManager.Factory.Interface.ICaracteristicFactory;
 import PersonaManager.Model.Caracteristic;
+import PersonaManager.Model.EnumCaracType;
+import PersonaManager.Model.GameSystem;
+import PersonaManager.Service.Interface.IGameSystemService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.json.Json;
 import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
 import javax.json.JsonObject;
 import java.util.List;
 
@@ -15,6 +20,9 @@ public class CaracteristicFactory extends BaseFactory implements ICaracteristicF
     public CaracteristicFactory(){
         super();
     }
+
+    @Autowired
+    private IGameSystemService gameSystemService;
 
     @Override
     public String toJson(Caracteristic caracteristic) {
@@ -32,16 +40,23 @@ public class CaracteristicFactory extends BaseFactory implements ICaracteristicF
 
     @Override
     public Caracteristic fromJson(String inputDatas) {
-        // TODO : GameSystemService
-        return null;
+        Caracteristic caracteristic = new Caracteristic();
+        JsonObject jsonObject = this.getStructure(inputDatas);
+        GameSystem gameSystem = gameSystemService.getEntity(jsonObject.getInt("gameSystem"), false);
+        caracteristic.setGameSystem(gameSystem);
+        caracteristic.setDefaultLabel(jsonObject.getString("label"));
+        caracteristic.setType(EnumCaracType.getType(jsonObject.getString("type")));
+        caracteristic.setMinimum(jsonObject.getString("min"));
+        caracteristic.setMaximum(jsonObject.getString("max"));
+        return caracteristic;
     }
 
     @Override
     public JsonArray listToJson(List<Caracteristic> list) {
-        JsonArray jsonArray = (JsonArray) Json.createArrayBuilder();
+        JsonArrayBuilder builder = Json.createArrayBuilder();
         for(Caracteristic caracteristic : list){
-            jsonArray.add(Json.createValue(caracteristic.getId()));
+            builder.add(this.getStructure(this.toJson(caracteristic)));
         }
-        return jsonArray;
+        return builder.build();
     }
 }

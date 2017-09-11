@@ -32,19 +32,31 @@ public class GameSystemService implements IGameSystemService {
     }
 
     @Override
-    public Boolean update(String entityAsString) {
-        try {
-            gameSystemDAO.update(gameSystemFactory.fromJson(entityAsString));
-            return true;
-        } catch (Exception e){
-            return false;
+    public String update(String entityAsString, long id) {
+        GameSystem original = this.getEntity(id, false);
+        GameSystem updated  = gameSystemFactory.fromJson(entityAsString);
+
+        if( !updated.equals(original) ){
+            if( updated.getName() != null){
+                original.setName(updated.getName());
+            }
+            if(updated.getShortName() != null){
+                original.setShortName(updated.getShortName());
+            }
+
+            original.setWebSite(updated.getWebSite());
+            original.setIllustration(updated.getIllustration());
+
+            original = gameSystemDAO.update(original);
+
         }
+        return gameSystemFactory.toJson(original, false);
     }
 
     @Override
-    public Boolean delete(String entityAsString) {
+    public Boolean delete(long id) {
         try {
-            gameSystemDAO.delete(gameSystemFactory.fromJson(entityAsString));
+            gameSystemDAO.delete(this.getEntity(id, false));
             return true;
         } catch (Exception e){
             return false;

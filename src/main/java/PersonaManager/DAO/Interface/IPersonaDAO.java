@@ -10,7 +10,7 @@ public interface IPersonaDAO {
 
     public Persona getById(long id, boolean complete);
 
-    public void update(Persona persona);
+    public Persona update(Persona persona);
 
     public void delete(Persona persona);
 

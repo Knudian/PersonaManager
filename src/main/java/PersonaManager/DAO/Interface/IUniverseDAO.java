@@ -10,7 +10,7 @@ public interface IUniverseDAO {
 
     public Universe getById(long id, boolean complete);
 
-    public void update(Universe universe);
+    public Universe update(Universe universe);
 
     public void delete(Universe universe);
 

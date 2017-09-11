@@ -8,7 +8,9 @@ public interface IPersonaCaracteristicService {
 
     public String getById(long id);
 
-    public Boolean update(String entityAsString);
+    public String update(String entityAsString, long id);
 
     public Boolean delete(String entityAsString);
+
+    public PersonaCaracteristic getEntity(long id);
 }

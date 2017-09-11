@@ -32,19 +32,26 @@ public class HumanService implements IHumanService {
     }
 
     @Override
-    public Boolean update(String entityAsString) {
-        try {
-            humanDAO.update(humanFactory.fromJson(entityAsString));
-            return true;
-        } catch (Exception e){
-            return false;
+    public String update(String entityAsString, long id) {
+        Human original = this.getEntity(id, false);
+        Human updated  = humanFactory.fromJson(entityAsString);
+
+        if( !updated.equals(original) ){
+            if( updated.getNick() != null) {
+                original.setNick(updated.getNick());
+            }
+            if( updated.getEmail() != null) {
+                original.setEmail(updated.getPassword());
+            }
+            original = humanDAO.update(original);
         }
+        return humanFactory.toJson(original, false);
     }
 
     @Override
-    public Boolean delete(String entityAsString) {
+    public Boolean delete(long id) {
         try {
-            humanDAO.delete(humanFactory.fromJson(entityAsString));
+            humanDAO.delete(this.getEntity(id, false));
             return true;
         } catch (Exception e){
             return false;

@@ -38,8 +38,9 @@ public class CaracteristicDAO implements ICaracteristicDAO {
     }
 
     @Override
-    public void update(Caracteristic caracteristic) {
+    public Caracteristic update(Caracteristic caracteristic) {
         sessionFactory.getCurrentSession().update(caracteristic);
-        sessionFactory.getCurrentSession().refresh(caracteristic);
+        sessionFactory.getCurrentSession().flush();
+        return caracteristic;
     }
 }

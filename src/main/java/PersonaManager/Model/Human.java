@@ -61,9 +61,17 @@ public class Human implements Serializable{
     @Setter
     private String roleListStored;
 
-    @Transient
-    private List<String> roleList;
-
     public Human() {}
-    
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Human human = (Human) o;
+
+        if (nick != null ? !nick.equals(human.nick) : human.nick != null) return false;
+        if (email != null ? !email.equals(human.email) : human.email != null) return false;
+        return password != null ? password.equals(human.password) : human.password == null;
+    }
 }

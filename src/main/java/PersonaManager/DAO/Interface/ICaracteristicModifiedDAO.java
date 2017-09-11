@@ -10,6 +10,6 @@ public interface ICaracteristicModifiedDAO {
 
     public void delete(CaracteristicModified caracteristicModified);
 
-    public void update(CaracteristicModified caracteristicModified);
+    public CaracteristicModified update(CaracteristicModified caracteristicModified);
 
 }

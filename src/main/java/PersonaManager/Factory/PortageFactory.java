@@ -3,14 +3,18 @@ package PersonaManager.Factory;
 import PersonaManager.Factory.Interface.ICaracteristicModifiedFactory;
 import PersonaManager.Factory.Interface.IPersonaFactory;
 import PersonaManager.Factory.Interface.IPortageFactory;
+import PersonaManager.Model.Caracteristic;
+import PersonaManager.Model.CaracteristicModified;
+import PersonaManager.Model.GameSystem;
 import PersonaManager.Model.Portage;
+import PersonaManager.Service.Interface.IGameSystemService;
+import PersonaManager.Service.Interface.IUniverseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
+import javax.json.*;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -24,6 +28,10 @@ public class PortageFactory extends BaseFactory implements IPortageFactory {
     private IPersonaFactory personaFactory;
     @Autowired
     private ICaracteristicModifiedFactory caracteristicModifiedFactory;
+    @Autowired
+    private IGameSystemService gameSystemService;
+    @Autowired
+    private IUniverseService universeService;
 
     @Override
     public String toJson(Portage portage, boolean complete) {
@@ -49,16 +57,23 @@ public class PortageFactory extends BaseFactory implements IPortageFactory {
 
     @Override
     public Portage fromJson(String inputDatas) {
-        return null;
+        Portage portage = new Portage();
+        JsonObject jsonObject = this.getStructure(inputDatas);
+        portage.setCreationTime(new Timestamp(System.currentTimeMillis()));
+        portage.setGameSystem(gameSystemService.getEntity(jsonObject.getInt("gameSystemId"), false));
+        portage.setUniverse(universeService.getEntity(jsonObject.getInt("universeId"), false));
+        portage.setCaracteristicList(null);
+        portage.setPersonaList(null);
+        return portage;
     }
 
     @Override
     public JsonArray listToJson(List<Portage> list, boolean complete) {
-        JsonArray jsonArray = (JsonArray) Json.createArrayBuilder();
+        JsonArrayBuilder builder = Json.createArrayBuilder();
         for(Portage p : list){
-            jsonArray.add(Json.createValue(this.toJson(p, false)));
+            builder.add(this.getStructure(this.toJson(p, false)));
         }
-        return null;
+        return builder.build();
     }
 
     @Override
@@ -68,4 +83,5 @@ public class PortageFactory extends BaseFactory implements IPortageFactory {
                 .build();
         return this.write(model);
     }
+
 }

@@ -1,6 +1,7 @@
 package PersonaManager.DAO;
 
 import PersonaManager.DAO.Interface.IPersonaTypeDAO;
+import PersonaManager.Model.Persona;
 import PersonaManager.Model.PersonaType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +27,10 @@ public class PersonaTypeDAO extends AbstractDAO implements IPersonaTypeDAO {
     }
 
     @Override
-    public void update(PersonaType personaType) {
+    public PersonaType update(PersonaType personaType) {
         sessionFactory.getCurrentSession().update(personaType);
-        sessionFactory.getCurrentSession().refresh(personaType);
+        sessionFactory.getCurrentSession().flush();
+        return personaType;
     }
 
     @Override

@@ -3,13 +3,12 @@ package PersonaManager.Factory;
 import PersonaManager.Factory.Interface.IGameSystemFactory;
 import PersonaManager.Factory.Interface.IMediaFileFactory;
 import PersonaManager.Model.GameSystem;
+import PersonaManager.Model.MediaFile;
+import PersonaManager.Service.Interface.IMediaFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
+import javax.json.*;
 import java.util.List;
 
 @Service
@@ -20,7 +19,7 @@ public class GameSystemFactory extends BaseFactory implements IGameSystemFactory
     }
 
     @Autowired
-    private IMediaFileFactory mediaFileFactory;
+    private IMediaFileService mediaFileService;
 
     @Override
     public String toJson(GameSystem gameSystem, boolean complete) {
@@ -36,7 +35,7 @@ public class GameSystemFactory extends BaseFactory implements IGameSystemFactory
                 .add("name", gameSystem.getName())
                 .add("shortName", gameSystem.getShortName())
                 .add("url", gameSystem.getWebSite())
-                .add("media", mediaFileFactory.toJson(gameSystem.getIllustration()))
+                .add("media", mediaFileService.getById(gameSystem.getIllustration().getId()))
                 .add("portageList", portageList)
                 .add("caracteristicList", caracteristicList)
                 .build();
@@ -45,18 +44,28 @@ public class GameSystemFactory extends BaseFactory implements IGameSystemFactory
 
     @Override
     public GameSystem fromJson(String inputDatas) {
-        // TODO : PortageService
-        // TODO : CaracteristicService
-        return null;
+        GameSystem gameSystem = new GameSystem();
+        JsonObject jsonObject = this.getStructure(inputDatas);
+        gameSystem.setName(jsonObject.getString("name"));
+        gameSystem.setShortName(jsonObject.getString("shortName"));
+        gameSystem.setWebSite(jsonObject.getString("url"));
+        gameSystem.setPortageList(null);
+        MediaFile file = null;
+        if( jsonObject.getString("media") != null && !jsonObject.getString("media").equals("undefined")) {
+            file = mediaFileService.getByFileName(jsonObject.getString("media"));
+        }
+        gameSystem.setCaracteristicList(null);
+        gameSystem.setIllustration(file);
+        return gameSystem;
     }
 
     @Override
     public JsonArray listToJson(List<GameSystem> list, boolean complete) {
-        JsonArray jsonArray = (JsonArray) Json.createArrayBuilder();
+        JsonArrayBuilder builder = Json.createArrayBuilder();
         for(GameSystem gameSystem : list){
-            jsonArray.add(Json.createValue(gameSystem.getId()));
+            builder.add(this.getStructure(this.toJson(gameSystem, false)));
         }
-        return jsonArray;
+        return builder.build();
     }
 
     @Override

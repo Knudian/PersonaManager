@@ -40,9 +40,10 @@ public class GameSystemDAO extends AbstractDAO implements IGameSystemDAO {
     }
 
     @Override
-    public void update(GameSystem gameSystem) {
+    public GameSystem update(GameSystem gameSystem) {
         sessionFactory.getCurrentSession().update(gameSystem);
-        sessionFactory.getCurrentSession().refresh(gameSystem);
+        sessionFactory.getCurrentSession().flush();
+        return gameSystem;
     }
 
     @Override

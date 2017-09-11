@@ -3,14 +3,16 @@ package PersonaManager.Factory;
 import PersonaManager.Factory.Interface.IMediaFileFactory;
 import PersonaManager.Factory.Interface.IPersonaCaracteristicFactory;
 import PersonaManager.Factory.Interface.IPersonaFactory;
+import PersonaManager.Model.EnumPersonaGender;
 import PersonaManager.Model.Persona;
+import PersonaManager.Service.Interface.IHumanService;
+import PersonaManager.Service.Interface.IPersonaTypeService;
+import PersonaManager.Service.Interface.IPortageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonValue;
+import javax.json.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -23,7 +25,15 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
     @Autowired
     private IMediaFileFactory mediaFileFactory;
 
+    @Autowired
+    private IPersonaTypeService personaTypeService;
+
+    @Autowired
     private IPersonaCaracteristicFactory personaCaracteristicFactory;
+    @Autowired
+    private IHumanService humanService;
+    @Autowired
+    private IPortageService portageService;
 
     @Override
     public String toJson(Persona persona, boolean complete) {
@@ -36,7 +46,7 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
                 .add("owner", persona.getOwner().getId())
                 .add("isPublic", persona.isPublic())
                 .add("firstName", persona.getFirstName())
-                .add("lastName", persona.getLastname())
+                .add("lastName", persona.getLastName())
                 .add("lastUpdate", persona.getLastUpdate().getTime())
                 .add("creationTime", persona.getCreationTime().getTime())
                 .add("media", mediaFileFactory.toJson(persona.getImage()))
@@ -51,17 +61,32 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
 
     @Override
     public Persona fromJson(String inputDatas) {
-        // TODO : Create Persona from Json Values
-        return null;
+        Persona persona = new Persona();
+        JsonObject jsonObject = this.getStructure(inputDatas);
+        persona.setPersonaType(personaTypeService.getEntity(jsonObject.getInt("type")));
+        persona.setOwner(humanService.getEntity(jsonObject.getInt("owner"), false));
+        if( jsonObject.getBoolean("isPublic")){
+            persona.setPublic();
+        } else {
+            persona.setPrivate();
+        }
+        persona.setFirstName(jsonObject.getString("firstName"));
+        persona.setLastName(jsonObject.getString("lastName"));
+        Timestamp creationTime = new Timestamp(System.currentTimeMillis());
+        persona.setDescription(jsonObject.getString("description"));
+        persona.setGender(EnumPersonaGender.getGender(jsonObject.getString("gender")));
+        persona.setPortage(portageService.getEntity(jsonObject.getInt("portageId"), false));
+        persona.setCaracteristicList(null);
+        return persona;
     }
 
     @Override
     public JsonArray listToJson(List<Persona> list, boolean complete) {
-        JsonArray jsonArray = (JsonArray) Json.createArrayBuilder();
+        JsonArrayBuilder builder = Json.createArrayBuilder();
         for(Persona p : list){
-            jsonArray.add(Json.createValue(this.toJson(p, false)));
+            builder.add(this.getStructure(this.toJson(p, false)));
         }
-        return jsonArray;
+        return builder.build();
     }
 
     @Override

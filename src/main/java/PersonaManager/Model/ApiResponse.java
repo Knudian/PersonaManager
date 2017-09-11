@@ -1,5 +1,7 @@
 package PersonaManager.Model;
 
+import javax.json.*;
+import java.io.StringWriter;
 import java.util.*;
 
 public class ApiResponse {
@@ -11,8 +13,8 @@ public class ApiResponse {
     private Date requestDate;
 
     public ApiResponse(){
-        this.response = new ArrayList<String>();
-        this.errors   = new ArrayList<String>();
+        this.response = new ArrayList<>();
+        this.errors   = new ArrayList<>();
         this.requestDate = new Date();
     }
 
@@ -25,27 +27,25 @@ public class ApiResponse {
     }
 
     public String toString(){
-        // TODO : Transform this method using the Javax.Json
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("{'requestTime':")
-                .append(this.requestDate.getTime())
-                .append(",")
-                .append("'response':[");
-        for(int i = 0; i < this.response.size(); i++){
-            stringBuilder.append(this.response.get(i));
-            if( i < (this.response.size() -1)){
-                stringBuilder.append(',');
-            }
+        JsonObject jsonObject = Json.createObjectBuilder()
+                .add("requestTime", this.requestDate.getTime())
+                .add("response", this.listToJson(this.response))
+                .add("errors", this.listToJson(this.errors))
+                .build();
+
+        StringWriter stringWriter = new StringWriter();
+        JsonWriter jsonWriter = Json.createWriter(stringWriter);
+        jsonWriter.writeObject(jsonObject);
+        jsonWriter.close();
+
+        return stringWriter.toString();
+    }
+
+    private JsonArray listToJson(List<String> list){
+        JsonArrayBuilder builder = Json.createArrayBuilder();
+        for(String s : list){
+            builder.add(Json.createValue(s));
         }
-        stringBuilder.append("],")
-                .append("'errors':[");
-        for(int i = 0; i < this.errors.size(); i++){
-            stringBuilder.append(this.errors.get(i));
-            if( i < (this.errors.size() -1)){
-                stringBuilder.append(',');
-            }
-        }
-        stringBuilder.append("]}");
-        return stringBuilder.toString();
+        return builder.build();
     }
 }

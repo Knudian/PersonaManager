@@ -10,5 +10,5 @@ public interface ICaracteristicDAO {
 
     public void delete(Caracteristic caracteristic);
 
-    public void update(Caracteristic caracteristic);
+    public Caracteristic update(Caracteristic caracteristic);
 }

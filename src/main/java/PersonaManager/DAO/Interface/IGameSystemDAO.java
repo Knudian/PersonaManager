@@ -12,7 +12,7 @@ public interface IGameSystemDAO {
 
     public void delete(GameSystem gameSystem);
 
-    public void update(GameSystem gameSystem);
+    public GameSystem update(GameSystem gameSystem);
 
     public List<GameSystem> getAll(boolean lazy);
 }

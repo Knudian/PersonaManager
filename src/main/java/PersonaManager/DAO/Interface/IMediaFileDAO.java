@@ -9,4 +9,6 @@ public interface IMediaFileDAO {
     public MediaFile getById(long id);
 
     public void delete(MediaFile mediaFile);
+
+    public MediaFile getByFileName(String filename);
 }
