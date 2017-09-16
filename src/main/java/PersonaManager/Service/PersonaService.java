@@ -13,6 +13,8 @@ import PersonaManager.Service.Interface.IPortageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.json.JsonArray;
+import javax.json.JsonValue;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,18 +40,18 @@ public class PersonaService implements IPersonaService {
     public Long create(String entityAsString) {
         Persona persona = personaFactory.fromJson(entityAsString);
         persona = personaDAO.create(persona);
-        persona = this.init(persona);
+        persona = init(persona);
         return persona.getId();
     }
 
     @Override
-    public String getById(long id, boolean complete) {
+    public JsonValue getById(long id, boolean complete) {
         Persona persona = this.getEntity(id, complete);
         return personaFactory.toJson(persona, complete);
     }
 
     @Override
-    public String update(String entityAsString, long id) {
+    public JsonValue update(String entityAsString, long id) {
         Persona original = this.getEntity(id, false);
         Persona updated  = personaFactory.fromJson(entityAsString);
 
@@ -79,15 +81,15 @@ public class PersonaService implements IPersonaService {
     }
 
     @Override
-    public String getLastPublicPersonnas(Integer quantity) {
+    public JsonValue getLastPublicPersonnas(Integer quantity) {
         List<Persona> list = personaDAO.getLastPublicPersona(quantity);
-        return personaFactory.allToJson(list, false);
+        return personaFactory.listToJson(list, false);
     }
 
     @Override
-    public String getAll() {
+    public JsonValue getAll() {
         List<Persona> list = personaDAO.getAll();
-        return personaFactory.allToJson(list, false);
+        return personaFactory.listToJson(list, false);
     }
 
     @Override
@@ -99,22 +101,29 @@ public class PersonaService implements IPersonaService {
     public Persona init(Persona persona) {
         Portage portage = portageService.getEntity(persona.getPortage().getId(), true);
 
-        List<PersonaCaracteristic> personaCaracteristicList = new ArrayList<>();
+        createMissingPersonaCaracteristic(persona, portage.getCaracteristicList());
 
-        for(CaracteristicModified c : portage.getCaracteristicList()){
+        return personaDAO.update(persona);
+    }
 
-            PersonaCaracteristic p = new PersonaCaracteristic();
+    @Override
+    public JsonArray listToJson(List<Persona> list) {
+        return personaFactory.listToJson(list, false);
+    }
 
-            p.setCaracteristicModified(c);
-            p.setPersona(persona);
-            p.setValue("null");
+    @Override
+    public void createMissingPersonaCaracteristic(Persona persona, List<CaracteristicModified> list) {
 
-            long id = personaCaracteristicService.create(personaCaracteristicFactory.toJson(p));
-            personaCaracteristicList.add(personaCaracteristicService.getEntity(id));
+        persona = personaDAO.getById(persona.getId(), true);
+
+        List<PersonaCaracteristic> listP = persona.getCaracteristicList();
+
+        for(CaracteristicModified c : list){
+            listP.add(personaCaracteristicService.createStandard(persona, c));
         }
 
-        persona = personaDAO.update(persona);
+        persona.setCaracteristicList(listP);
 
-        return persona;
+        persona = personaDAO.update(persona);
     }
 }

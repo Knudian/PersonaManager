@@ -9,7 +9,10 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-@Table(name = "portage")
+@Table(
+        name = "portage",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"game_systemId", "universeId"})
+)
 public class Portage implements Serializable {
 
     @Id

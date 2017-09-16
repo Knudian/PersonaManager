@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import javax.json.Json;
 import javax.json.JsonObject;
+import javax.json.JsonValue;
 
 @Service
 public class MediaFileFactory extends BaseFactory implements IMediaFileFactory {
@@ -15,16 +16,16 @@ public class MediaFileFactory extends BaseFactory implements IMediaFileFactory {
     }
 
     @Override
-    public String toJson(MediaFile mediaFile) {
+    public JsonValue toJson(MediaFile mediaFile) {
         if ( mediaFile != null){
             JsonObject model = Json.createObjectBuilder()
                     .add("id", mediaFile.getId())
                     .add("name", mediaFile.getFilename())
                     .add("uploaded", mediaFile.getUploadTime().getTime())
                     .build();
-            return this.write(model);
+            return model;
         } else {
-            return "undefined";
+            return JsonValue.NULL;
         }
     }
 

@@ -7,6 +7,9 @@ import PersonaManager.Service.Interface.IGameSystemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.json.JsonArray;
+import javax.json.JsonValue;
+
 @Service
 public class GameSystemService implements IGameSystemService {
 
@@ -24,7 +27,7 @@ public class GameSystemService implements IGameSystemService {
     }
 
     @Override
-    public String getById(long id, boolean complete) {
+    public JsonValue getById(long id, boolean complete) {
         return gameSystemFactory.toJson(
                 this.getEntity(id, complete),
                 complete
@@ -32,7 +35,7 @@ public class GameSystemService implements IGameSystemService {
     }
 
     @Override
-    public String update(String entityAsString, long id) {
+    public JsonValue update(String entityAsString, long id) {
         GameSystem original = this.getEntity(id, false);
         GameSystem updated  = gameSystemFactory.fromJson(entityAsString);
 
@@ -64,8 +67,8 @@ public class GameSystemService implements IGameSystemService {
     }
 
     @Override
-    public String getAll() {
-        return gameSystemFactory.allToJson(gameSystemDAO.getAll(true), true);
+    public JsonArray getAll() {
+        return gameSystemFactory.listToJson(gameSystemDAO.getAll(true), true);
     }
 
     @Override

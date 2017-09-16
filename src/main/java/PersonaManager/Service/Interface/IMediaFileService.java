@@ -2,11 +2,13 @@ package PersonaManager.Service.Interface;
 
 import PersonaManager.Model.MediaFile;
 
+import javax.json.JsonValue;
+
 public interface IMediaFileService {
 
     public Long create(String entityAsString);
 
-    public String getById(long id);
+    public JsonValue getById(long id);
 
     public Boolean delete(String entityAsString);
 

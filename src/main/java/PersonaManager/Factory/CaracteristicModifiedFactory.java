@@ -1,16 +1,15 @@
 package PersonaManager.Factory;
 
+import PersonaManager.Factory.Interface.ICaracteristicFactory;
 import PersonaManager.Factory.Interface.ICaracteristicModifiedFactory;
+import PersonaManager.Factory.Interface.IPortageFactory;
 import PersonaManager.Model.CaracteristicModified;
 import PersonaManager.Service.Interface.ICaracteristicService;
 import PersonaManager.Service.Interface.IPortageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
+import javax.json.*;
 import java.util.List;
 
 @Service
@@ -22,19 +21,27 @@ public class CaracteristicModifiedFactory extends BaseFactory implements ICaract
 
     @Autowired
     private IPortageService portageService;
-
     @Autowired
     private ICaracteristicService caracteristicService;
 
+    @Autowired
+    private IPortageFactory portageFactory;
+    @Autowired
+    private ICaracteristicFactory caracteristicFactory;
+
     @Override
-    public String toJson(CaracteristicModified caracteristicModified) {
+    public JsonObject toJson(CaracteristicModified caracteristicModified) {
+
+        JsonValue portage = portageFactory.toJson(caracteristicModified.getPortage(), false);
+        JsonValue caracteristic = caracteristicFactory.toJson(caracteristicModified.getCaracteristic(), false);
+
         JsonObject model = Json.createObjectBuilder()
                 .add("id", caracteristicModified.getId())
-                .add("portageId", caracteristicModified.getPortage().getId())
-                .add("caracteristicId", caracteristicModified.getCaracteristic().getId())
+                .add("portage", portage)
+                .add("caracteristic", caracteristic)
                 .add("label", caracteristicModified.getLabel() == null ? "null" : caracteristicModified.getLabel())
                 .build();
-        return this.write(model);
+        return model;
     }
 
     @Override
@@ -51,9 +58,24 @@ public class CaracteristicModifiedFactory extends BaseFactory implements ICaract
 
     @Override
     public JsonArray listToJson(List<CaracteristicModified> list) {
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for(CaracteristicModified c : list){
-            builder.add(this.getStructure(this.toJson(c)));
+            builder.add(this.toJson(c));
+        }
+        return builder.build();
+    }
+
+    @Override
+    public JsonArray getListOfIdToJson(List<CaracteristicModified> list){
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
+        JsonArrayBuilder builder = Json.createArrayBuilder();
+        for(CaracteristicModified c : list){
+            builder.add(c.getId());
         }
         return builder.build();
     }

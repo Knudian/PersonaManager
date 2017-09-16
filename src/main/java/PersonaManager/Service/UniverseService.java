@@ -7,6 +7,8 @@ import PersonaManager.Service.Interface.IUniverseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.json.JsonValue;
+
 @Service
 public class UniverseService implements IUniverseService {
 
@@ -26,12 +28,12 @@ public class UniverseService implements IUniverseService {
     }
 
     @Override
-    public String getById(long id, boolean complete) {
+    public JsonValue getById(long id, boolean complete) {
         return universeFactory.toJson(this.getEntity(id, complete), complete);
     }
 
     @Override
-    public String update(String entityAsString, long id) {
+    public JsonValue update(String entityAsString, long id) {
         Universe original = this.getEntity(id, false);
         Universe updated  = universeFactory.fromJson(entityAsString);
 
@@ -61,8 +63,8 @@ public class UniverseService implements IUniverseService {
     }
 
     @Override
-    public String getAll(boolean complete) {
-        return universeFactory.allToJson(universeDAO.getAll(complete), complete);
+    public JsonValue getAll(boolean complete) {
+        return universeFactory.listToJson(universeDAO.getAll(complete), complete);
     }
 
     @Override

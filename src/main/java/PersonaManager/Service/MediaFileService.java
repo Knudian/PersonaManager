@@ -7,6 +7,8 @@ import PersonaManager.Service.Interface.IMediaFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.json.JsonValue;
+
 @Service
 public class MediaFileService implements IMediaFileService {
 
@@ -26,7 +28,7 @@ public class MediaFileService implements IMediaFileService {
     }
 
     @Override
-    public String getById(long id) {
+    public JsonValue getById(long id) {
         MediaFile mediaFile = mediaFileDAO.getById(id);
         return mediaFileFactory.toJson(mediaFile);
     }

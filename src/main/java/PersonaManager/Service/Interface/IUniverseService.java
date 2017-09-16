@@ -2,19 +2,20 @@ package PersonaManager.Service.Interface;
 
 import PersonaManager.Model.Universe;
 
+import javax.json.JsonValue;
 import java.util.List;
 
 public interface IUniverseService {
 
     public Long create(String entityAsString);
 
-    public String getById(long id, boolean complete);
+    public JsonValue getById(long id, boolean complete);
 
-    public String update(String entityAsString, long id);
+    public JsonValue update(String entityAsString, long id);
 
     public Boolean delete(long id);
 
-    public String getAll(boolean complete);
+    public JsonValue getAll(boolean complete);
 
     public Universe getEntity(long id, boolean complete);
 }

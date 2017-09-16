@@ -1,11 +1,11 @@
 package PersonaManager.Factory;
 
-import PersonaManager.Factory.Interface.IMediaFileFactory;
-import PersonaManager.Factory.Interface.IPersonaCaracteristicFactory;
-import PersonaManager.Factory.Interface.IPersonaFactory;
+import PersonaManager.Factory.Interface.*;
 import PersonaManager.Model.EnumPersonaGender;
 import PersonaManager.Model.Persona;
+import PersonaManager.Model.PersonaCaracteristic;
 import PersonaManager.Service.Interface.IHumanService;
+import PersonaManager.Service.Interface.IPersonaService;
 import PersonaManager.Service.Interface.IPersonaTypeService;
 import PersonaManager.Service.Interface.IPortageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,23 +24,29 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
 
     @Autowired
     private IMediaFileFactory mediaFileFactory;
-
     @Autowired
     private IPersonaTypeService personaTypeService;
-
     @Autowired
     private IPersonaCaracteristicFactory personaCaracteristicFactory;
     @Autowired
     private IHumanService humanService;
     @Autowired
     private IPortageService portageService;
+    @Autowired
+    private IPersonaService personaService;
+    @Autowired
+    private IPortageFactory portageFactory;
 
     @Override
-    public String toJson(Persona persona, boolean complete) {
-        JsonValue caracteristicArray = Json.createValue("");
+    public JsonValue toJson(Persona persona, boolean complete) {
+        JsonValue caracteristicArray = JsonValue.EMPTY_JSON_ARRAY;
+        JsonValue portage = Json.createValue(persona.getPortage().getId());
+
         if( complete ){
+            persona = personaService.getEntity(persona.getId(), true);
             caracteristicArray = personaCaracteristicFactory.listToJson(persona.getCaracteristicList());
         }
+
         JsonObject model = Json.createObjectBuilder()
                 .add("id", persona.getId())
                 .add("owner", persona.getOwner().getId())
@@ -51,12 +57,12 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
                 .add("creationTime", persona.getCreationTime().getTime())
                 .add("media", mediaFileFactory.toJson(persona.getImage()))
                 .add("type", persona.getPersonaType().getId())
-                .add("portageId", persona.getPortage().getId())
+                .add("portage", portage)
                 .add("gender", persona.getGender().getKey())
                 .add("caracteristics", caracteristicArray)
                 .add("description", (persona.getDescription() == null ? "" : persona.getDescription()))
                 .build();
-        return this.write(model);
+        return model;
     }
 
     @Override
@@ -65,35 +71,43 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
         JsonObject jsonObject = this.getStructure(inputDatas);
         persona.setPersonaType(personaTypeService.getEntity(jsonObject.getInt("type")));
         persona.setOwner(humanService.getEntity(jsonObject.getInt("owner"), false));
+
         if( jsonObject.getBoolean("isPublic")){
             persona.setPublic();
         } else {
             persona.setPrivate();
         }
+
         persona.setFirstName(jsonObject.getString("firstName"));
         persona.setLastName(jsonObject.getString("lastName"));
-        Timestamp creationTime = new Timestamp(System.currentTimeMillis());
+        persona.setCreationTime(new Timestamp(System.currentTimeMillis()));
         persona.setDescription(jsonObject.getString("description"));
         persona.setGender(EnumPersonaGender.getGender(jsonObject.getString("gender")));
-        persona.setPortage(portageService.getEntity(jsonObject.getInt("portageId"), false));
-        persona.setCaracteristicList(null);
+        persona.setPortage(portageService.getEntity(jsonObject.getInt("portage"), false));
         return persona;
     }
 
     @Override
     public JsonArray listToJson(List<Persona> list, boolean complete) {
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for(Persona p : list){
-            builder.add(this.getStructure(this.toJson(p, false)));
+            builder.add(this.toJson(p, false));
         }
         return builder.build();
     }
 
     @Override
-    public String allToJson(List<Persona> list, boolean complete) {
-        JsonObject model = Json.createObjectBuilder()
-                .add("personas", this.listToJson(list, complete))
-                .build();
-        return this.write(model);
+    public JsonArray getListOfIdToJson(List<Persona> list) {
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
+        JsonArrayBuilder builder = Json.createArrayBuilder();
+        for(Persona p : list){
+            builder.add(p.getId());
+        }
+        return builder.build();
     }
 }

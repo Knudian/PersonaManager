@@ -6,9 +6,9 @@ import java.util.*;
 
 public class ApiResponse {
 
-    private List<String> response;
+    private List<JsonValue> response;
 
-    private List<String> errors;
+    private List<JsonValue> errors;
 
     private Date requestDate;
 
@@ -18,16 +18,16 @@ public class ApiResponse {
         this.requestDate = new Date();
     }
 
-    public void addContent(String content){
+    public void addContent(JsonValue content){
         this.response.add(content);
     }
 
-    public void addError(String error){
+    public void addError(JsonValue error){
         this.errors.add(error);
     }
 
     public String toString(){
-        JsonObject jsonObject = Json.createObjectBuilder()
+        JsonObject model = Json.createObjectBuilder()
                 .add("requestTime", this.requestDate.getTime())
                 .add("response", this.listToJson(this.response))
                 .add("errors", this.listToJson(this.errors))
@@ -35,16 +35,19 @@ public class ApiResponse {
 
         StringWriter stringWriter = new StringWriter();
         JsonWriter jsonWriter = Json.createWriter(stringWriter);
-        jsonWriter.writeObject(jsonObject);
+        jsonWriter.writeObject(model);
         jsonWriter.close();
 
         return stringWriter.toString();
     }
 
-    private JsonArray listToJson(List<String> list){
+    private JsonArray listToJson(List<JsonValue> list){
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
         JsonArrayBuilder builder = Json.createArrayBuilder();
-        for(String s : list){
-            builder.add(Json.createValue(s));
+        for(JsonValue s : list){
+            builder.add(s);
         }
         return builder.build();
     }

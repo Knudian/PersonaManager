@@ -2,10 +2,14 @@ package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.ICaracteristicModifiedDAO;
 import PersonaManager.Factory.Interface.ICaracteristicModifiedFactory;
+import PersonaManager.Model.Caracteristic;
 import PersonaManager.Model.CaracteristicModified;
+import PersonaManager.Model.Portage;
 import PersonaManager.Service.Interface.ICaracteristicModifiedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.json.JsonValue;
 
 @Service
 public class CaracteristicModifiedService implements ICaracteristicModifiedService {
@@ -24,12 +28,12 @@ public class CaracteristicModifiedService implements ICaracteristicModifiedServi
     }
 
     @Override
-    public String getById(long id) {
+    public JsonValue getById(long id) {
         return caracteristicModifiedFactory.toJson(this.getEntity(id));
     }
 
     @Override
-    public String update(String entityAsString, long id) {
+    public JsonValue update(String entityAsString, long id) {
         CaracteristicModified original = this.getEntity(id);
         CaracteristicModified updated  = caracteristicModifiedFactory.fromJson(entityAsString);
 
@@ -57,5 +61,14 @@ public class CaracteristicModifiedService implements ICaracteristicModifiedServi
     @Override
     public CaracteristicModified getEntity(long id) {
         return caracteristicModifiedDAO.getById(id);
+    }
+
+    @Override
+    public CaracteristicModified createStandard(Portage portage, Caracteristic caracteristic) {
+        CaracteristicModified cm = new CaracteristicModified();
+        cm.setCaracteristic(caracteristic);
+        cm.setPortage(portage);
+        cm.setLabel("default");
+        return caracteristicModifiedDAO.create(cm);
     }
 }

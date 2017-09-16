@@ -26,7 +26,7 @@ public class Universe implements Serializable {
     @Setter
     private MediaFile illustration;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     @Getter
     @Setter
     private String name;

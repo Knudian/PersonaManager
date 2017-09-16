@@ -3,16 +3,17 @@ package PersonaManager.Service;
 import PersonaManager.DAO.Interface.IPortageDAO;
 import PersonaManager.Factory.Interface.ICaracteristicModifiedFactory;
 import PersonaManager.Factory.Interface.IPortageFactory;
-import PersonaManager.Model.Caracteristic;
-import PersonaManager.Model.CaracteristicModified;
-import PersonaManager.Model.GameSystem;
-import PersonaManager.Model.Portage;
+import PersonaManager.Model.*;
 import PersonaManager.Service.Interface.ICaracteristicModifiedService;
 import PersonaManager.Service.Interface.IGameSystemService;
+import PersonaManager.Service.Interface.IPersonaService;
 import PersonaManager.Service.Interface.IPortageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.json.JsonArray;
+import javax.json.JsonValue;
+import javax.validation.ConstraintDeclarationException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class PortageService implements IPortageService {
     private ICaracteristicModifiedService caracteristicModifiedService;
     @Autowired
     private ICaracteristicModifiedFactory caracteristicModifiedFactory;
+    @Autowired
+    private IPersonaService personaService;
 
     @Override
     public Long create(String entityAsString) {
@@ -42,12 +45,12 @@ public class PortageService implements IPortageService {
     }
 
     @Override
-    public String getById(long id, boolean complete) {
+    public JsonValue getById(long id, boolean complete) {
         return portageFactory.toJson(this.getEntity(id, complete), complete);
     }
 
     @Override
-    public String update(String entityAsString, long id) {
+    public JsonValue update(String entityAsString, long id) {
         Portage original = this.getEntity(id, false);
         Portage updated  = portageFactory.fromJson(entityAsString);
 
@@ -74,16 +77,15 @@ public class PortageService implements IPortageService {
     }
 
     @Override
-    public String getAll(boolean complete) {
+    public JsonValue getAll(boolean complete) {
         List<Portage> portageList = portageDAO.getAll(complete);
-        return portageFactory.allToJson(portageList, complete);
+        return portageFactory.listToJson(portageList, complete);
     }
 
     @Override
     public Portage getEntity(long id, boolean complete) {
         return portageDAO.getById(id, complete);
     }
-
 
     @Override
     public Portage init(Portage portage) {
@@ -93,17 +95,46 @@ public class PortageService implements IPortageService {
 
         for(Caracteristic caracteristic : gameSystem.getCaracteristicList()){
 
-            CaracteristicModified caracteristicModified = new CaracteristicModified();
-
-            caracteristicModified.setPortage(portage);
-            caracteristicModified.setCaracteristic(caracteristic);
-
-            long id = caracteristicModifiedService.create(caracteristicModifiedFactory.toJson(caracteristicModified));
-            caracteristicModifiedList.add(caracteristicModifiedService.getEntity(id));
+            caracteristicModifiedList.add(caracteristicModifiedService.createStandard(portage, caracteristic));
         }
 
         portage.setCaracteristicList(caracteristicModifiedList);
 
         return portageDAO.update(portage);
+    }
+
+    @Override
+    public JsonArray listToJson(List<Portage> list) {
+        return portageFactory.listToJson(list, false);
+    }
+
+    @Override
+    public void createMissingCaracteristicModified(Portage portage) {
+
+        portage = this.getEntity(portage.getId(), true);
+
+        GameSystem gameSystem = gameSystemService.getEntity(portage.getId(), true);
+
+        List<Caracteristic> listC = gameSystem.getCaracteristicList();
+        List<CaracteristicModified> listCM = portage.getCaracteristicList();
+
+        for (Caracteristic c : listC) {
+            try {
+                listCM.add(caracteristicModifiedService.createStandard(portage, c));
+            } catch (Exception e) {
+                // do nothing !
+            }
+        }
+
+        portage.setCaracteristicList(listCM);
+        portage = portageDAO.update(portage);
+        for(Persona p : portage.getPersonaList()){
+            try {
+                personaService.createMissingPersonaCaracteristic(p, listCM);
+            } catch (Exception e){
+                // do nothing !
+            }
+        }
+
     }
 }

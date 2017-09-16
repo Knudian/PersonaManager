@@ -2,10 +2,14 @@ package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.IPersonaCaracteristicDAO;
 import PersonaManager.Factory.Interface.IPersonaCaracteristicFactory;
+import PersonaManager.Model.CaracteristicModified;
+import PersonaManager.Model.Persona;
 import PersonaManager.Model.PersonaCaracteristic;
 import PersonaManager.Service.Interface.IPersonaCaracteristicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.json.JsonValue;
 
 @Service
 public class PersonaCaracteristicService implements IPersonaCaracteristicService {
@@ -26,13 +30,13 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
     }
 
     @Override
-    public String getById(long id) {
+    public JsonValue getById(long id) {
         PersonaCaracteristic personaCaracteristic = personaCaracteristicDAO.getById(id);
         return personaCaracteristicFactory.toJson(personaCaracteristic);
     }
 
     @Override
-    public String update(String entityAsString, long id) {
+    public JsonValue update(String entityAsString, long id) {
         PersonaCaracteristic original = this.getEntity(id);
         PersonaCaracteristic updated  = personaCaracteristicFactory.fromJson(entityAsString);
 
@@ -63,5 +67,15 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
     @Override
     public PersonaCaracteristic getEntity(long id) {
         return personaCaracteristicDAO.getById(id);
+    }
+
+    @Override
+    public PersonaCaracteristic createStandard(Persona persona, CaracteristicModified caracteristicModified) {
+        PersonaCaracteristic p = new PersonaCaracteristic();
+        p.setPersona(persona);
+        p.setCaracteristicModified(caracteristicModified);
+        p.setValue("default");
+
+        return personaCaracteristicDAO.create(p);
     }
 }

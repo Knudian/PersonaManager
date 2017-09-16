@@ -8,10 +8,7 @@ import PersonaManager.Service.Interface.IPersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
+import javax.json.*;
 import java.util.List;
 
 @Service
@@ -28,14 +25,15 @@ public class PersonaCaracteristicFactory extends BaseFactory implements IPersona
     private IPersonaService personaService;
 
     @Override
-    public String toJson(PersonaCaracteristic caracteristic) {
+    public JsonValue toJson(PersonaCaracteristic caracteristic) {
+
         JsonObject model = Json.createObjectBuilder()
                 .add("id", caracteristic.getId())
                 .add("value", caracteristic.getValue())
                 .add("caracteristicMiD", caracteristic.getCaracteristicModified().getId())
-                .add("persona", caracteristic.getPersona().getId())
                 .build();
-        return this.write(model);
+
+        return model;
     }
 
     @Override
@@ -50,9 +48,12 @@ public class PersonaCaracteristicFactory extends BaseFactory implements IPersona
 
     @Override
     public JsonArray listToJson(List<PersonaCaracteristic> list) {
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
         JsonArrayBuilder builder = Json.createArrayBuilder();
-        for(PersonaCaracteristic personaCaracteristic : list){
-            builder.add(this.getStructure(this.toJson(personaCaracteristic)));
+        for(PersonaCaracteristic personaCaracteristic : list) {
+            builder.add(this.toJson(personaCaracteristic));
         }
         return builder.build();
     }

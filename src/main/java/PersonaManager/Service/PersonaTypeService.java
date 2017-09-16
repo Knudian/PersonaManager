@@ -8,6 +8,8 @@ import PersonaManager.Service.Interface.IPersonaTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.json.JsonValue;
+
 @Service
 public class PersonaTypeService implements IPersonaTypeService {
 
@@ -27,13 +29,13 @@ public class PersonaTypeService implements IPersonaTypeService {
     }
 
     @Override
-    public String getById(long id) {
+    public JsonValue getById(long id) {
         PersonaType personaType = personaTypeDAO.getById(id);
         return personaTypeFactory.toJson(personaType);
     }
 
     @Override
-    public String update(String entityAsString, long id) {
+    public JsonValue update(String entityAsString, long id) {
         PersonaType original = this.getEntity(id);
         PersonaType updated  = personaTypeFactory.fromJson(entityAsString);
 

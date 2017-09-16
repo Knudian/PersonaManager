@@ -7,6 +7,7 @@ import PersonaManager.Factory.Interface.IUniverseFactory;
 import PersonaManager.Model.MediaFile;
 import PersonaManager.Model.Universe;
 import PersonaManager.Service.Interface.IMediaFileService;
+import PersonaManager.Service.Interface.IUniverseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,14 +30,19 @@ public class UniverseFactory extends BaseFactory implements IUniverseFactory {
     private IMediaFileFactory mediaFileFactory;
     @Autowired
     private IMediaFileService mediaFileService;
+    @Autowired
+    private IUniverseService universeService;
 
     @Override
-    public String toJson(Universe universe, boolean complete) {
-        JsonValue portageList = Json.createValue("");
-        JsonValue personaTypeList = Json.createValue("");
+    public JsonValue toJson(Universe universe, boolean complete) {
+
+        JsonValue portageList       = JsonValue.EMPTY_JSON_ARRAY;
+        JsonValue personaTypeList   = JsonValue.EMPTY_JSON_ARRAY;
 
         if( complete ){
-            portageList = portageFactory.listToJson(universe.getPortageList(), false);
+            universe = universeService.getEntity(universe.getId(), true);
+
+            portageList = portageFactory.getListOfIdToJson(universe.getPortageList());
             personaTypeList = personaTypeFactory.listToJson(universe.getPersonaTypeList());
         }
 
@@ -50,7 +56,7 @@ public class UniverseFactory extends BaseFactory implements IUniverseFactory {
                 .add("personaTypeList", personaTypeList)
                 .build();
 
-        return this.write(model);
+        return model;
     }
 
     @Override
@@ -70,18 +76,13 @@ public class UniverseFactory extends BaseFactory implements IUniverseFactory {
 
     @Override
     public JsonArray listToJson(List<Universe> list, boolean complete) {
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for(Universe u : list){
-            builder.add(this.getStructure(this.toJson(u, false)));
+            builder.add(this.toJson(u, false));
         }
         return builder.build();
-    }
-
-    @Override
-    public String allToJson(List<Universe> list, boolean complete) {
-        JsonObject model = Json.createObjectBuilder()
-                .add("universeList", this.listToJson(list, complete))
-                .build();
-        return this.write(model);
     }
 }

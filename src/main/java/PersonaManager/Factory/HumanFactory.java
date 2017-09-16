@@ -1,7 +1,11 @@
 package PersonaManager.Factory;
 
 import PersonaManager.Factory.Interface.IHumanFactory;
+import PersonaManager.Factory.Interface.IPersonaFactory;
 import PersonaManager.Model.Human;
+import PersonaManager.Service.Interface.IHumanService;
+import PersonaManager.Service.Interface.IPersonaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.json.*;
@@ -15,19 +19,29 @@ public class HumanFactory extends BaseFactory implements IHumanFactory {
         super();
     }
 
+    @Autowired
+    private IPersonaFactory personaFactory;
+    @Autowired
+    private IHumanService humanService;
+
     @Override
-    public String toJson(Human human, boolean complete) {
-        JsonValue personaIdList = Json.createValue("");
+    public JsonValue toJson(Human human, boolean complete) {
+
+        human = humanService.getEntity(human.getId(), true);
+
+        JsonValue personaList = personaFactory.getListOfIdToJson(human.getPersonaList());
+
         if( complete ){
-            // TODO : PersonaService
+            personaList = personaFactory.listToJson(human.getPersonaList(), false);
         }
+
         JsonObject model = Json.createObjectBuilder()
                 .add("id", human.getId())
                 .add("nick", human.getNick())
                 .add("lastConnection", human.getLastConnection().getTime())
-                .add("personaList", personaIdList)
+                .add("personaList", personaList)
                 .build();
-        return this.write(model);
+        return model;
     }
 
     @Override
@@ -39,27 +53,21 @@ public class HumanFactory extends BaseFactory implements IHumanFactory {
         human.setPassword(jsonObject.getString("password"));
         human.setCreationTime(new Timestamp(System.currentTimeMillis()));
         human.setLastConnection(new Timestamp(System.currentTimeMillis()));
-        human.setPersonaList(null);
         human.setSalt("the salt");
         return human;
     }
 
     @Override
     public JsonArray listToJson(List<Human> list, boolean complete) {
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
+
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for(Human human : list){
-            builder.add(this.getStructure(this.toJson(human, false)));
+            builder.add(this.toJson(human, false));
         }
         return builder.build();
-    }
-
-
-    @Override
-    public String allToJson(List<Human> list, boolean complete) {
-        JsonObject model = Json.createObjectBuilder()
-                .add("humans", this.listToJson(list, complete))
-                .build();
-        return this.write(model);
     }
 
 }

@@ -26,9 +26,11 @@ public class UniverseDAO extends AbstractDAO implements IUniverseDAO {
 
     @Override
     public Universe getById(long id, boolean complete) {
+
         Universe universe = sessionFactory.getCurrentSession().get(Universe.class, id);
         if( complete ){
             Hibernate.initialize(universe.getPersonaTypeList());
+            Hibernate.initialize(universe.getPortageList());
         }
         return universe;
     }

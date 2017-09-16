@@ -18,12 +18,12 @@ public class GameSystem implements Serializable {
     @Setter
     private long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     @Getter
     @Setter
     private String name;
 
-    @Column(name = "short_name", nullable = false)
+    @Column(name = "short_name", unique = true, nullable = false)
     @Getter
     @Setter
     private String shortName;

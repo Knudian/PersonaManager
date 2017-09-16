@@ -7,7 +7,10 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "caracteristic_modified")
+@Table(
+        name = "caracteristic_modified",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"portageId", "caracteristicId"})
+)
 public class CaracteristicModified implements Serializable {
 
     @Id
@@ -33,7 +36,7 @@ public class CaracteristicModified implements Serializable {
     @Column(name = "label", nullable = false)
     @Getter
     @Setter
-    private String label;
+    private String label= "undefined";
 
     public CaracteristicModified() { }
 

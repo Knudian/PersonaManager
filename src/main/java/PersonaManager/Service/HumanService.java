@@ -7,6 +7,9 @@ import PersonaManager.Service.Interface.IHumanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.json.JsonArray;
+import javax.json.JsonValue;
+
 @Service
 public class HumanService implements IHumanService {
 
@@ -24,7 +27,7 @@ public class HumanService implements IHumanService {
     }
 
     @Override
-    public String getById(long id, boolean complete) {
+    public JsonValue getById(long id, boolean complete) {
         return humanFactory.toJson(
                 this.getEntity(id, complete),
                 complete
@@ -32,7 +35,7 @@ public class HumanService implements IHumanService {
     }
 
     @Override
-    public String update(String entityAsString, long id) {
+    public JsonValue update(String entityAsString, long id) {
         Human original = this.getEntity(id, false);
         Human updated  = humanFactory.fromJson(entityAsString);
 
@@ -59,8 +62,8 @@ public class HumanService implements IHumanService {
     }
 
     @Override
-    public String getAll() {
-        return humanFactory.allToJson(humanDAO.getAll(), false);
+    public JsonArray getAll() {
+        return humanFactory.listToJson(humanDAO.getAll(), false);
     }
 
     @Override

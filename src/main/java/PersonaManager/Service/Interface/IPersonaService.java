@@ -1,24 +1,31 @@
 package PersonaManager.Service.Interface;
 
+import PersonaManager.Model.CaracteristicModified;
 import PersonaManager.Model.Persona;
 
+import javax.json.JsonArray;
+import javax.json.JsonValue;
 import java.util.List;
 
 public interface IPersonaService {
 
     public Long create(String entityAsString);
 
-    public String getById(long id, boolean complete);
+    public JsonValue getById(long id, boolean complete);
 
-    public String update(String entityAsString, long id);
+    public JsonValue update(String entityAsString, long id);
 
     public Boolean delete(long id);
 
-    public String getLastPublicPersonnas(Integer quantity);
+    public JsonValue getLastPublicPersonnas(Integer quantity);
 
-    public String getAll();
+    public JsonValue getAll();
 
     public Persona getEntity(long id, boolean complete);
 
+    public JsonArray listToJson(List<Persona> list);
+
     public Persona init(Persona persona);
+
+    public void createMissingPersonaCaracteristic(Persona persona, List<CaracteristicModified> list);
 }

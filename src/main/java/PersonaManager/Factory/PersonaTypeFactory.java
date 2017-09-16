@@ -6,10 +6,7 @@ import PersonaManager.Service.Interface.IUniverseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonObject;
+import javax.json.*;
 import java.util.List;
 
 @Service
@@ -23,13 +20,15 @@ public class PersonaTypeFactory extends BaseFactory implements IPersonaTypeFacto
     private IUniverseService universeService;
 
     @Override
-    public String toJson(PersonaType personaType) {
+    public JsonValue toJson(PersonaType personaType) {
+
         JsonObject model = Json.createObjectBuilder()
                 .add("id", personaType.getId())
                 .add("name", personaType.getName())
-                .add("universeId", personaType.getUniverse().getId())
+                .add("universe", personaType.getUniverse().getId())
                 .build();
-        return this.write(model);
+
+        return model;
     }
 
     @Override
@@ -37,16 +36,19 @@ public class PersonaTypeFactory extends BaseFactory implements IPersonaTypeFacto
         PersonaType personaType = new PersonaType();
         JsonObject jsonObject = this.getStructure(inputDatas);
         personaType.setName(jsonObject.getString("name"));
-        personaType.setUniverse(universeService.getEntity(jsonObject.getInt("universeId"), false));
+        personaType.setUniverse(universeService.getEntity(jsonObject.getInt("universe"), false));
 
         return personaType;
     }
 
     @Override
     public JsonArray listToJson(List<PersonaType> list) {
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for(PersonaType p : list){
-            builder.add(this.getStructure(this.toJson(p)));
+            builder.add(this.toJson(p));
         }
         return builder.build();
     }
