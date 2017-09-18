@@ -57,4 +57,17 @@ public class PersonaCaracteristicFactory extends BaseFactory implements IPersona
         }
         return builder.build();
     }
+
+    @Override
+    public PersonaCaracteristic patch(PersonaCaracteristic personaCaracteristic, String patchingValues) {
+
+        JsonObject jsonObject = this.getStructure(patchingValues);
+
+        // Only the label can be modified.
+        if( jsonObject.getString("value") != null){
+            personaCaracteristic.setValue(jsonObject.getString("value"));
+        }
+
+        return personaCaracteristic;
+    }
 }

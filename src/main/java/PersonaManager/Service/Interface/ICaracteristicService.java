@@ -19,4 +19,6 @@ public interface ICaracteristicService {
     public Caracteristic getEntity(long id);
 
     public JsonArray listToJson(List<Caracteristic> list);
+
+    public JsonValue patch(long id, String patchingValues);
 }

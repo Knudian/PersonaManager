@@ -79,4 +79,15 @@ public class CaracteristicModifiedFactory extends BaseFactory implements ICaract
         }
         return builder.build();
     }
+
+    @Override
+    public CaracteristicModified patch(CaracteristicModified caracteristicModified, String patchingValues) {
+        JsonObject jsonObject = this.getStructure(patchingValues);
+
+        // Only the label can be modified.
+        if( jsonObject.getString("label") != null){
+            caracteristicModified.setLabel(jsonObject.getString("label"));
+        }
+        return caracteristicModified;
+    }
 }

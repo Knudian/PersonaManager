@@ -70,4 +70,22 @@ public class HumanFactory extends BaseFactory implements IHumanFactory {
         return builder.build();
     }
 
+    @Override
+    public Human patch(Human human, String patchingValues) {
+        JsonObject jsonObject = this.getStructure(patchingValues);
+
+        if( jsonObject.getString("nick") != null ){
+            human.setNick( jsonObject.getString("nick") );
+        }
+
+        if( jsonObject.getString("email") != null ){
+            human.setEmail( jsonObject.getString("email") );
+        }
+
+        if( jsonObject.getString("password") != null ){
+            human.setPassword( jsonObject.getString("password") );
+        }
+
+        return human;
+    }
 }

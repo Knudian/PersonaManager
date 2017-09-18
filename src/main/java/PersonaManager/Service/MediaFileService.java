@@ -50,6 +50,11 @@ public class MediaFileService implements IMediaFileService {
     }
 
     @Override
+    public MediaFile getEntity(long id) {
+        return mediaFileDAO.getById(id);
+    }
+
+    @Override
     public MediaFile getByFileName(String filename) {
         return mediaFileDAO.getByFileName(filename);
     }

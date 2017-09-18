@@ -19,4 +19,6 @@ public interface IHumanService {
     public JsonArray getAll();
 
     public Human getEntity(long id, boolean complete);
+
+    public JsonValue patch(long id, String patchingValues);
 }

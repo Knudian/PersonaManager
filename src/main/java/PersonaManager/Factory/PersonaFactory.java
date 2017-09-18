@@ -110,4 +110,34 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
         }
         return builder.build();
     }
+
+    @Override
+    public Persona patch(Persona persona, String patchingValues) {
+
+        JsonObject jsonObject = this.getStructure(patchingValues);
+
+        if( jsonObject.getString("firstName") != null) {
+            persona.setFirstName(jsonObject.getString("firstName"));
+        }
+
+        if( jsonObject.getString("lastName") != null){
+            persona.setLastName(jsonObject.getString("lastName"));
+        }
+
+        if( jsonObject.getString("gender") != null){
+            persona.setGender(EnumPersonaGender.getGender( jsonObject.getString("gender")));
+        }
+
+        if( jsonObject.getBoolean("isPublic") != persona.isPublic()) {
+            boolean b = jsonObject.getBoolean("isPublic");
+            if (b) {
+                persona.setPublic();
+            } else {
+                persona.setPrivate();
+            }
+        }
+
+        return persona;
+
+    }
 }

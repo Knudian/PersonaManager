@@ -70,4 +70,11 @@ public class HumanService implements IHumanService {
     public Human getEntity(long id, boolean complete){
         return humanDAO.getById(id, complete);
     }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+        Human human = humanFactory.patch(this.getEntity(id, false), patchingValues);
+
+        return humanFactory.toJson(humanDAO.update(human), false);
+    }
 }

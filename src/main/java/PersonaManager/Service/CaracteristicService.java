@@ -92,4 +92,10 @@ public class CaracteristicService implements ICaracteristicService {
     public JsonArray listToJson(List<Caracteristic> list) {
         return caracteristicFactory.listToJson(list);
     }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+        Caracteristic caracteristic = caracteristicFactory.patch(this.getEntity(id), patchingValues);
+        return caracteristicFactory.toJson(caracteristicDAO.update(caracteristic), false);
+    }
 }

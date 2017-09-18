@@ -19,4 +19,6 @@ public interface IPersonaCaracteristicService {
     public PersonaCaracteristic getEntity(long id);
 
     public PersonaCaracteristic createStandard(Persona persona, CaracteristicModified caracteristicModified);
+
+    public JsonValue patch(long id, String patchingValues);
 }

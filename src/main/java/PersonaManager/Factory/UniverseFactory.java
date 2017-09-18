@@ -85,4 +85,25 @@ public class UniverseFactory extends BaseFactory implements IUniverseFactory {
         }
         return builder.build();
     }
+
+    @Override
+    public Universe patch(Universe universe, String patchingValues) {
+
+        JsonObject jsonObject = this.getStructure(patchingValues);
+
+        if( jsonObject.getString("name") != null){
+            universe.setName(jsonObject.getString("name"));
+        }
+
+        if( jsonObject.getString("description") != null){
+            universe.setDescription(jsonObject.getString("description"));
+        }
+
+        if( jsonObject.getInt("media") != universe.getIllustration().getId()){
+
+            universe.setIllustration(mediaFileService.getEntity(jsonObject.getInt("media")));
+        }
+
+        return universe;
+    }
 }

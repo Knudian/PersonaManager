@@ -71,4 +71,12 @@ public class UniverseService implements IUniverseService {
     public Universe getEntity(long id, boolean complete) {
         return universeDAO.getById(id, complete);
     }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+
+        Universe universe = universeFactory.patch(getEntity(id, false), patchingValues);
+
+        return universeFactory.toJson(universeDAO.update(universe), false);
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.json.Json;
+import javax.json.JsonObject;
 import javax.json.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,7 +78,7 @@ public class ApiController {
         this.reset();
 
         JsonValue response = JsonValue.EMPTY_JSON_OBJECT;
-
+        try {
             switch (entity) {
                 case CARACTERISTIC:
                     response = caracteristicService.getById(id);
@@ -112,6 +113,14 @@ public class ApiController {
             }
 
             this.apiResponse.addContent(response);
+        } catch (NullPointerException e){
+            JsonObject model = Json.createObjectBuilder()
+                    .add("code", "ITEM_DOES_NOT_EXISTS")
+                    .add("entity", entity)
+                    .add("id", id)
+                    .build();
+            this.apiResponse.addError(model);
+        }
         return this.apiResponse.toString();
     }
 
@@ -148,7 +157,7 @@ public class ApiController {
 
         this.reset();
         JsonValue response = JsonValue.EMPTY_JSON_OBJECT;
-
+        try {
             switch (entity) {
                 case HUMAN:
                     response = humanService.getById(humanService.create(inputString), false);
@@ -174,13 +183,21 @@ public class ApiController {
             }
 
             this.apiResponse.addContent(response);
+        } catch (NullPointerException e) {
+            JsonObject model = Json.createObjectBuilder()
+                    .add("code", "ITEM_CANNOT_BE_CREATED")
+                    .add("entity", entity)
+                    .add("value", inputString)
+                    .build();
+            this.apiResponse.addError(model);
+        }
 
         return this.apiResponse.toString();
     }
 
     @RequestMapping(
-            value="/api/{entity}/{id}/{mode}",
-            method = RequestMethod.POST,
+            value="/api/{entity}/{id}",
+            method = RequestMethod.PATCH,
             produces = "application/json;charset=UTF-8")
     public String update(@RequestParam(value="entity") String inputString, @PathVariable(value="id") long id, @PathVariable(value="entity") String entity, @PathVariable(value="mode") String mode){
         this.reset();
@@ -199,9 +216,6 @@ public class ApiController {
                 case CARACTERISTIC:
                     response = caracteristicService.update(inputString, id);
                     break;
-                case PERSONA_TYPE:
-                    response = personaTypeService.update(inputString, id);
-                    break;
                 case PORTAGE:
                     response = portageService.update(inputString, id);
                     break;
@@ -211,14 +225,20 @@ public class ApiController {
                 case PERSONA:
                     response = personaService.update(inputString, id);
                     break;
+                default:
+                    JsonObject model = Json.createObjectBuilder()
+                            .add("code", "UPDATE_FORBIDDEN")
+                            .add("entity", entity)
+                            .build();
+                    this.apiResponse.addError(model);
             }
             this.apiResponse.addContent(response);
         } catch (Exception e){
             JsonValue model = Json.createObjectBuilder()
-                    .add("code", "ITEM_DOES_NOT_EXISTS")
+                    .add("code", "ITEM_CANNOT_BE_UPDATED")
                     .add("entity", Json.createValue(entity))
+                    .add("id", id)
                     .add("input", Json.createValue(inputString))
-                    .add("exception", Json.createValue(e.getMessage()))
                     .build();
             this.apiResponse.addError(model);
         }

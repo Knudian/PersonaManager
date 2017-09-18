@@ -15,4 +15,6 @@ public interface IMediaFileService {
     public MediaFile save(MediaFile mediaFile);
 
     public MediaFile getByFileName(String filename);
+
+    public MediaFile getEntity(long id);
 }

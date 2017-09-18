@@ -20,4 +20,5 @@ public interface ICaracteristicModifiedService {
 
     public CaracteristicModified getEntity(long id);
 
+    public JsonValue patch(long id, String patchingValues);
 }

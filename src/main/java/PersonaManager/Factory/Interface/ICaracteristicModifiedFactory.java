@@ -13,5 +13,8 @@ public interface ICaracteristicModifiedFactory {
     public CaracteristicModified fromJson(String inputDatas);
 
     public JsonArray listToJson(List<CaracteristicModified> list);
+
     public JsonArray getListOfIdToJson(List<CaracteristicModified> list);
+
+    public CaracteristicModified patch(CaracteristicModified caracteristicModified, String patchingValues);
 }

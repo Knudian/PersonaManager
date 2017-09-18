@@ -16,4 +16,6 @@ public interface ICaracteristicFactory {
     public Caracteristic fromJson(String inputDatas);
 
     public JsonArray listToJson(List<Caracteristic> list);
+
+    public Caracteristic patch(Caracteristic caracteristic, String patchingValues);
 }

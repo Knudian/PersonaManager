@@ -15,4 +15,6 @@ public interface IPersonaFactory {
     public JsonArray listToJson(List<Persona> list, boolean complete);
 
     public JsonArray getListOfIdToJson(List<Persona> list);
+
+    public Persona patch(Persona persona, String patchingValues);
 }

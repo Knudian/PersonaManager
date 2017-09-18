@@ -71,4 +71,11 @@ public class CaracteristicModifiedService implements ICaracteristicModifiedServi
         cm.setLabel("default");
         return caracteristicModifiedDAO.create(cm);
     }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+        CaracteristicModified caracteristicModified = caracteristicModifiedFactory.patch(getEntity(id), patchingValues);
+
+        return caracteristicModifiedFactory.toJson(caracteristicModifiedDAO.update(caracteristicModified));
+    }
 }

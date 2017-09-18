@@ -75,4 +75,11 @@ public class GameSystemService implements IGameSystemService {
     public GameSystem getEntity(long id, boolean complete){
         return gameSystemDAO.getById(id, true);
     }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+        GameSystem gameSystem = gameSystemFactory.patch(this.getEntity(id, false), patchingValues);
+
+        return gameSystemFactory.toJson(gameSystemDAO.update(gameSystem), false);
+    }
 }

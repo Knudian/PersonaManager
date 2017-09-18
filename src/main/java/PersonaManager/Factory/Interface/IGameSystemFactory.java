@@ -14,4 +14,6 @@ public interface IGameSystemFactory {
 
     public JsonArray listToJson(List<GameSystem> list, boolean complete);
 
+    public GameSystem patch(GameSystem gameSystem, String patchingValues);
+
 }

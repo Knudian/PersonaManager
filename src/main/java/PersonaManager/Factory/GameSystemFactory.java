@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.json.*;
+import javax.print.attribute.standard.Media;
 import java.util.List;
 
 @Service
@@ -84,5 +85,27 @@ public class GameSystemFactory extends BaseFactory implements IGameSystemFactory
             builder.add(this.toJson(gameSystem, false));
         }
         return builder.build();
+    }
+
+    @Override
+    public GameSystem patch(GameSystem gameSystem, String patchingValues) {
+        JsonObject jsonObject = this.getStructure(patchingValues);
+
+        if( jsonObject.getString("name") != null ){
+            gameSystem.setName(jsonObject.getString("name"));
+        }
+        if( jsonObject.getString("shortName") != null){
+            gameSystem.setShortName( jsonObject.getString("shortName"));
+        }
+        if( jsonObject.getString("website") != null){
+            gameSystem.setWebSite( jsonObject.getString("website"));
+        }
+
+        if( jsonObject.getInt("media") != gameSystem.getIllustration().getId()){
+
+            gameSystem.setIllustration(mediaFileService.getEntity(jsonObject.getInt("media")));
+        }
+
+        return gameSystem;
     }
 }

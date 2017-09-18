@@ -126,4 +126,11 @@ public class PersonaService implements IPersonaService {
 
         persona = personaDAO.update(persona);
     }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+        Persona persona = personaFactory.patch(this.getEntity(id, false), patchingValues);
+
+        return personaFactory.toJson(personaDAO.update(persona), false);
+    }
 }

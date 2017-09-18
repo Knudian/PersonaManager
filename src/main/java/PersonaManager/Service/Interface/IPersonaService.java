@@ -28,4 +28,6 @@ public interface IPersonaService {
     public Persona init(Persona persona);
 
     public void createMissingPersonaCaracteristic(Persona persona, List<CaracteristicModified> list);
+
+    public JsonValue patch(long id, String patchingValues);
 }

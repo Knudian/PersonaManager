@@ -78,4 +78,11 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
 
         return personaCaracteristicDAO.create(p);
     }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+        PersonaCaracteristic personaCaracteristic = personaCaracteristicFactory.patch(getEntity(id), patchingValues);
+
+        return personaCaracteristicFactory.toJson(personaCaracteristicDAO.update(personaCaracteristic));
+    }
 }

@@ -14,4 +14,6 @@ public interface IHumanFactory {
 
     public JsonArray listToJson(List<Human> list, boolean complete);
 
+    public Human patch(Human human, String patchingValues);
+
 }
