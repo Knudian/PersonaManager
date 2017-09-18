@@ -4,17 +4,12 @@ import PersonaManager.Model.ApiResponse;
 import PersonaManager.Service.Interface.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sun.misc.Request;
 
 import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
-import java.util.ArrayList;
-import java.util.List;
 
-@CrossOrigin(
-        origins = "http://localhost:3000/"
-)
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class ApiController {
 
@@ -329,5 +324,45 @@ public class ApiController {
         }
 
         return  this.apiResponse.toString();
+    }
+
+    @RequestMapping(
+            value ="/api/homepage",
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8")
+    public String getDatasForHomePage() {
+        this.reset();
+        try {
+            this.apiResponse.addContent(Json.createObjectBuilder().add("personas", personaService.getLastPublicPersonnas(6)).build());
+        } catch (Exception e){
+        // doNothing;
+        }
+
+        try {
+            this.apiResponse.addContent(Json.createObjectBuilder().add("universeList", universeService.getAll(true)).build());
+        } catch ( Exception e){
+            // do nothing;
+        }
+
+        try {
+            this.apiResponse.addContent(Json.createObjectBuilder().add("universeStat", universeService.statististics()).build());
+        } catch (Exception e){
+            // do nothing
+        }
+
+        try {
+            this.apiResponse.addContent(Json.createObjectBuilder().add("gameSystemList", gameSystemService.getAll()).build());
+        } catch (Exception e){
+            // do nothing;
+        }
+
+        try {
+             this.apiResponse.addContent(Json.createObjectBuilder().add("humanList", humanService.getAll()).build());
+        } catch (Exception e){
+            // do nothing
+        }
+
+        return this.apiResponse.toString();
+
     }
 }
