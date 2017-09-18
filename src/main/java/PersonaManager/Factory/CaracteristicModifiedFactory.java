@@ -85,8 +85,12 @@ public class CaracteristicModifiedFactory extends BaseFactory implements ICaract
         JsonObject jsonObject = this.getStructure(patchingValues);
 
         // Only the label can be modified.
-        if( jsonObject.getString("label") != null){
-            caracteristicModified.setLabel(jsonObject.getString("label"));
+        try {
+            if (jsonObject.getString("label") != null) {
+                caracteristicModified.setLabel(jsonObject.getString("label"));
+            }
+        } catch (Exception e){
+            // do nothing
         }
         return caracteristicModified;
     }

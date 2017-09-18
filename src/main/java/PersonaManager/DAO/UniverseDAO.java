@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -48,10 +49,18 @@ public class UniverseDAO extends AbstractDAO implements IUniverseDAO {
     }
 
     @Override
-    public List<Universe> getAll(boolean lazy) {
+    public List<Universe> getAll(boolean complete) {
         String q = "SELECT u FROM Universe u";
         Query query = sessionFactory.getCurrentSession().createQuery(q);
 
-        return (List<Universe>) query.getResultList();
+        List<Universe> firstList = (List<Universe>) query.getResultList();
+
+        List<Universe> list = new ArrayList<>();
+
+        for(Universe u : firstList){
+            list.add(this.getById(u.getId(),  complete));
+        }
+
+        return list;
     }
 }

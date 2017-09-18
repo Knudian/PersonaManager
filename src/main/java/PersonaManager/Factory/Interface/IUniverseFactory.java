@@ -15,4 +15,6 @@ public interface IUniverseFactory {
     public JsonArray listToJson(List<Universe> list, boolean complete);
 
     public Universe patch(Universe universe, String patchingValues);
+
+    public JsonArray personaInUniverse(List<Universe> list);
 }

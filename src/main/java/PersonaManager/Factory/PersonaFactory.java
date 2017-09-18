@@ -116,25 +116,42 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
 
         JsonObject jsonObject = this.getStructure(patchingValues);
 
-        if( jsonObject.getString("firstName") != null) {
-            persona.setFirstName(jsonObject.getString("firstName"));
-        }
-
-        if( jsonObject.getString("lastName") != null){
-            persona.setLastName(jsonObject.getString("lastName"));
-        }
-
-        if( jsonObject.getString("gender") != null){
-            persona.setGender(EnumPersonaGender.getGender( jsonObject.getString("gender")));
-        }
-
-        if( jsonObject.getBoolean("isPublic") != persona.isPublic()) {
-            boolean b = jsonObject.getBoolean("isPublic");
-            if (b) {
-                persona.setPublic();
-            } else {
-                persona.setPrivate();
+        try {
+            if (jsonObject.getString("firstName") != null) {
+                persona.setFirstName(jsonObject.getString("firstName"));
             }
+        } catch (Exception e) {
+            // do nothing
+        }
+
+        try {
+            if( jsonObject.getString("lastName") != null){
+                persona.setLastName(jsonObject.getString("lastName"));
+            }
+        } catch (Exception e) {
+            // do nothing
+        }
+
+        try {
+            if( jsonObject.getString("gender") != null){
+                persona.setGender(EnumPersonaGender.getGender( jsonObject.getString("gender")));
+            }
+        } catch (Exception e) {
+            // do nothing
+        }
+
+        try {
+            if( jsonObject.getBoolean("isPublic") != persona.isPublic()) {
+                boolean b = jsonObject.getBoolean("isPublic");
+                if (b) {
+                    persona.setPublic();
+                } else {
+                    persona.setPrivate();
+                }
+            }
+
+        } catch (Exception e) {
+            // do nothing
         }
 
         return persona;

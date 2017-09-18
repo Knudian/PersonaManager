@@ -83,18 +83,34 @@ public class CaracteristicFactory extends BaseFactory implements ICaracteristicF
     public Caracteristic patch(Caracteristic caracteristic, String patchingValues) {
 
         JsonObject jsonObject = this.getStructure(patchingValues);
+        try {
+            if (jsonObject.getString("defaultLabel") != null) {
+                caracteristic.setDefaultLabel(jsonObject.getString("defaultLabel"));
+            }
+        } catch (Exception e) {
+            // do nothing
+        }
 
-        if( jsonObject.getString("defaultLabel") != null){
-            caracteristic.setDefaultLabel( jsonObject.getString("defaultLabel"));
+        try {
+            if( jsonObject.getString("maximum") != null) {
+                caracteristic.setMaximum( jsonObject.getString("maximum"));
+            }
+        } catch (Exception e) {
+            // do nothing
         }
-        if( jsonObject.getString("maximum") != null) {
-            caracteristic.setMaximum( jsonObject.getString("maximum"));
+        try {
+            if( jsonObject.getString("minimum") != null){
+                caracteristic.setMinimum( jsonObject.getString("minimum"));
+            }
+        } catch (Exception e) {
+            // do nothing
         }
-        if( jsonObject.getString("minimum") != null){
-            caracteristic.setMinimum( jsonObject.getString("minimum"));
-        }
-        if( jsonObject.getString("type") != null){
-            caracteristic.setType(EnumCaracType.getType(jsonObject.getString("type")));
+        try {
+            if( jsonObject.getString("type") != null){
+                caracteristic.setType(EnumCaracType.getType(jsonObject.getString("type")));
+            }
+        } catch (Exception e) {
+            // do nothing
         }
 
         return caracteristic;

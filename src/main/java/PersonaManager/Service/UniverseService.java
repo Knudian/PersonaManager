@@ -2,12 +2,18 @@ package PersonaManager.Service;
 
 import PersonaManager.DAO.Interface.IUniverseDAO;
 import PersonaManager.Factory.Interface.IUniverseFactory;
+import PersonaManager.Model.Portage;
 import PersonaManager.Model.Universe;
 import PersonaManager.Service.Interface.IUniverseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.json.JsonValue;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UniverseService implements IUniverseService {
@@ -78,5 +84,12 @@ public class UniverseService implements IUniverseService {
         Universe universe = universeFactory.patch(getEntity(id, false), patchingValues);
 
         return universeFactory.toJson(universeDAO.update(universe), false);
+    }
+
+    @Override
+    public JsonValue statististics() {
+        List<Universe> list = universeDAO.getAll(true);
+        return universeFactory.personaInUniverse( list );
+
     }
 }

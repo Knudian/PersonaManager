@@ -90,20 +90,37 @@ public class GameSystemFactory extends BaseFactory implements IGameSystemFactory
     @Override
     public GameSystem patch(GameSystem gameSystem, String patchingValues) {
         JsonObject jsonObject = this.getStructure(patchingValues);
-
-        if( jsonObject.getString("name") != null ){
-            gameSystem.setName(jsonObject.getString("name"));
-        }
-        if( jsonObject.getString("shortName") != null){
-            gameSystem.setShortName( jsonObject.getString("shortName"));
-        }
-        if( jsonObject.getString("website") != null){
-            gameSystem.setWebSite( jsonObject.getString("website"));
+        try {
+            if (jsonObject.getString("name") != null) {
+                gameSystem.setName(jsonObject.getString("name"));
+            }
+        } catch (Exception e){
+            // do nothing
         }
 
-        if( jsonObject.getInt("media") != gameSystem.getIllustration().getId()){
+        try {
+            if (jsonObject.getString("shortName") != null) {
+                gameSystem.setShortName(jsonObject.getString("shortName"));
+            }
+        } catch (Exception e){
+            // do nothing
+        }
 
-            gameSystem.setIllustration(mediaFileService.getEntity(jsonObject.getInt("media")));
+        try {
+            if (jsonObject.getString("website") != null) {
+                gameSystem.setWebSite(jsonObject.getString("website"));
+            }
+        } catch (Exception e){
+            // do nothing
+        }
+
+        try {
+            if (jsonObject.getInt("media") != gameSystem.getIllustration().getId()) {
+
+                gameSystem.setIllustration(mediaFileService.getEntity(jsonObject.getInt("media")));
+            }
+        } catch (Exception e){
+            // do nothing
         }
 
         return gameSystem;

@@ -63,9 +63,13 @@ public class PersonaCaracteristicFactory extends BaseFactory implements IPersona
 
         JsonObject jsonObject = this.getStructure(patchingValues);
 
-        // Only the label can be modified.
-        if( jsonObject.getString("value") != null){
-            personaCaracteristic.setValue(jsonObject.getString("value"));
+        try {
+            // Only the label can be modified.
+            if (jsonObject.getString("value") != null) {
+                personaCaracteristic.setValue(jsonObject.getString("value"));
+            }
+        } catch (Exception e){
+            // do nothing
         }
 
         return personaCaracteristic;

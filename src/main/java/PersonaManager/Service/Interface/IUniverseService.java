@@ -21,4 +21,6 @@ public interface IUniverseService {
     public Universe getEntity(long id, boolean complete);
 
     public JsonValue patch(long id, String patchingValues);
+
+    public JsonValue statististics();
 }

@@ -4,6 +4,7 @@ import PersonaManager.Model.ApiResponse;
 import PersonaManager.Service.Interface.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sun.misc.Request;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -11,6 +12,9 @@ import javax.json.JsonValue;
 import java.util.ArrayList;
 import java.util.List;
 
+@CrossOrigin(
+        origins = "http://localhost:3000/"
+)
 @RestController
 public class ApiController {
 
@@ -136,6 +140,12 @@ public class ApiController {
                 case PERSONA:
                     response = personaService.getAll();
                     break;
+                case UNIVERSE:
+                    response = universeService.getAll(false);
+                    break;
+                case GAME_SYSTEM:
+                    response = gameSystemService.getAll();
+                    break;
             }
             this.apiResponse.addContent(response);
         } catch (NullPointerException e){
@@ -197,33 +207,30 @@ public class ApiController {
 
     @RequestMapping(
             value="/api/{entity}/{id}",
-            method = RequestMethod.PATCH,
+            method = RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
-    public String update(@RequestParam(value="entity") String inputString, @PathVariable(value="id") long id, @PathVariable(value="entity") String entity, @PathVariable(value="mode") String mode){
+    public String update(@RequestParam(value="entity") String inputString, @PathVariable(value="id") long id, @PathVariable(value="entity") String entity){
         this.reset();
         JsonValue response = JsonValue.NULL;
         try {
             switch (entity) {
                 case HUMAN:
-                    response = humanService.update(inputString, id);
+                    response = humanService.patch(id, inputString);
                     break;
                 case GAME_SYSTEM:
-                    response = gameSystemService.update(inputString, id);
+                    response = gameSystemService.patch(id, inputString);
                     break;
                 case UNIVERSE:
-                    response = universeService.update(inputString, id);
+                    response = universeService.patch(id, inputString);
                     break;
                 case CARACTERISTIC:
-                    response = caracteristicService.update(inputString, id);
-                    break;
-                case PORTAGE:
-                    response = portageService.update(inputString, id);
+                    response = caracteristicService.patch(id, inputString);
                     break;
                 case CARACTERISTIC_MODIFIED:
-                    response = caracteristicModifiedService.update(inputString, id);
+                    response = caracteristicModifiedService.patch(id, inputString);
                     break;
                 case PERSONA:
-                    response = personaService.update(inputString, id);
+                    response = personaService.patch(id, inputString);
                     break;
                 default:
                     JsonObject model = Json.createObjectBuilder()
@@ -290,5 +297,37 @@ public class ApiController {
             this.apiResponse.addError(model);
         }
         return this.apiResponse.toString();
+    }
+
+    @RequestMapping(
+            value = "/api/universe/statistics",
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8")
+    public String getUniverseStatistics(){
+
+        this.reset();
+        try {
+            this.apiResponse.addContent(universeService.statististics());
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return this.apiResponse.toString();
+    }
+
+    @RequestMapping(
+            value = "/api/lastpublicpersonas/{quantity}",
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8")
+    public String getLastPublicPersonas(@PathVariable(value="quantity") Integer quantity){
+        this.reset();
+
+        try{
+            this.apiResponse.addContent(personaService.getLastPublicPersonnas(quantity));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return  this.apiResponse.toString();
     }
 }

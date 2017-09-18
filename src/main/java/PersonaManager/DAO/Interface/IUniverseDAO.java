@@ -14,5 +14,5 @@ public interface IUniverseDAO {
 
     public void delete(Universe universe);
 
-    public List<Universe> getAll(boolean lazy);
+    public List<Universe> getAll(boolean complete);
 }

@@ -73,17 +73,28 @@ public class HumanFactory extends BaseFactory implements IHumanFactory {
     @Override
     public Human patch(Human human, String patchingValues) {
         JsonObject jsonObject = this.getStructure(patchingValues);
+        System.out.println(jsonObject.toString());
+        try {
+            if (jsonObject.getString("nick") != null) {
+                human.setNick(jsonObject.getString("nick"));
+            }
 
-        if( jsonObject.getString("nick") != null ){
-            human.setNick( jsonObject.getString("nick") );
+        } catch (Exception e){
+            // do nothing
         }
-
-        if( jsonObject.getString("email") != null ){
-            human.setEmail( jsonObject.getString("email") );
+        try {
+            if (jsonObject.getString("email") != null) {
+                human.setEmail(jsonObject.getString("email"));
+            }
+        } catch (Exception e){
+            // do nothing
         }
-
-        if( jsonObject.getString("password") != null ){
-            human.setPassword( jsonObject.getString("password") );
+        try {
+            if (jsonObject.getString("password") != null) {
+                human.setPassword(jsonObject.getString("password"));
+            }
+        } catch (Exception e){
+            // do nothing
         }
 
         return human;

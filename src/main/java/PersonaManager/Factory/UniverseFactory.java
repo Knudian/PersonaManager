@@ -5,8 +5,10 @@ import PersonaManager.Factory.Interface.IPersonaTypeFactory;
 import PersonaManager.Factory.Interface.IPortageFactory;
 import PersonaManager.Factory.Interface.IUniverseFactory;
 import PersonaManager.Model.MediaFile;
+import PersonaManager.Model.Portage;
 import PersonaManager.Model.Universe;
 import PersonaManager.Service.Interface.IMediaFileService;
+import PersonaManager.Service.Interface.IPortageService;
 import PersonaManager.Service.Interface.IUniverseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,6 +34,8 @@ public class UniverseFactory extends BaseFactory implements IUniverseFactory {
     private IMediaFileService mediaFileService;
     @Autowired
     private IUniverseService universeService;
+    @Autowired
+    private IPortageService portageService;
 
     @Override
     public JsonValue toJson(Universe universe, boolean complete) {
@@ -91,19 +95,54 @@ public class UniverseFactory extends BaseFactory implements IUniverseFactory {
 
         JsonObject jsonObject = this.getStructure(patchingValues);
 
-        if( jsonObject.getString("name") != null){
-            universe.setName(jsonObject.getString("name"));
+        try {
+            if( jsonObject.getString("name") != null){
+                universe.setName(jsonObject.getString("name"));
+            }
+        } catch (Exception e) {
+            // do nothing
         }
 
-        if( jsonObject.getString("description") != null){
-            universe.setDescription(jsonObject.getString("description"));
+        try {
+            if( jsonObject.getString("description") != null){
+                universe.setDescription(jsonObject.getString("description"));
+            }
+        } catch (Exception e) {
+            // do nothing
         }
 
-        if( jsonObject.getInt("media") != universe.getIllustration().getId()){
+        try {
+            if (jsonObject.getInt("media") != universe.getIllustration().getId()) {
 
-            universe.setIllustration(mediaFileService.getEntity(jsonObject.getInt("media")));
+                universe.setIllustration(mediaFileService.getEntity(jsonObject.getInt("media")));
+            }
+        } catch (Exception e){
+            // do nothing
         }
 
         return universe;
+    }
+
+    @Override
+    public JsonArray personaInUniverse(List<Universe> list){
+        JsonArrayBuilder builder = Json.createArrayBuilder();
+
+        for(Universe u : list){
+            int count = 0;
+
+            for(Portage p : u.getPortageList()){
+                p = portageService.getEntity(p.getId(), true);
+                count += p.getPersonaList().size();
+            }
+
+            JsonObject jsonObject = Json.createObjectBuilder()
+                    .add("universe", u.getId())
+                    .add("personas", count)
+                    .build();
+
+            builder.add(jsonObject);
+        }
+
+        return builder.build();
     }
 }
