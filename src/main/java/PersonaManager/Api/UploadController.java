@@ -4,6 +4,7 @@ import PersonaManager.Model.MediaFile;
 import PersonaManager.Service.Interface.IMediaFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,8 @@ import java.sql.Timestamp;
 /**
  * @link https://www.mkyong.com/spring-mvc/spring-mvc-file-upload-example/
  */
+
+@CrossOrigin(origins = "http://localhost:3000")
 @Controller
 public class UploadController {
 
@@ -50,7 +53,9 @@ public class UploadController {
 
     @PostMapping("/upload")
     public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
-
+        System.out.println("Received a file");
+        System.out.println(file.getName());
+        System.out.println(redirectAttributes.toString());
         if( file.isEmpty() ){
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             return null;

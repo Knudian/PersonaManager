@@ -136,10 +136,13 @@ public class ApiController {
                     response = personaService.getAll();
                     break;
                 case UNIVERSE:
-                    response = universeService.getAll(false);
+                    response = universeService.getAll(true);
                     break;
                 case GAME_SYSTEM:
                     response = gameSystemService.getAll();
+                    break;
+                case PORTAGE:
+                    response = portageService.getAll(true);
                     break;
             }
             this.apiResponse.addContent(response);
@@ -189,6 +192,7 @@ public class ApiController {
 
             this.apiResponse.addContent(response);
         } catch (NullPointerException e) {
+            e.printStackTrace();
             JsonObject model = Json.createObjectBuilder()
                     .add("code", "ITEM_CANNOT_BE_CREATED")
                     .add("entity", entity)
@@ -358,6 +362,12 @@ public class ApiController {
 
         try {
              this.apiResponse.addContent(Json.createObjectBuilder().add("humanList", humanService.getAll()).build());
+        } catch (Exception e){
+            // do nothing
+        }
+
+        try {
+            this.apiResponse.addContent(Json.createObjectBuilder().add("portageList", portageService.getAll(true)).build());
         } catch (Exception e){
             // do nothing
         }
