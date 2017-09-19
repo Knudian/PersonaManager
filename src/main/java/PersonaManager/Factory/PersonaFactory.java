@@ -35,7 +35,9 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
     @Autowired
     private IPersonaService personaService;
     @Autowired
-    private IPortageFactory portageFactory;
+    private IUniverseFactory universeFactory;
+    @Autowired
+    private IGameSystemFactory gameSystemFactory;
 
     @Override
     public JsonValue toJson(Persona persona, boolean complete) {
@@ -60,6 +62,40 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
                 .add("portage", portage)
                 .add("gender", persona.getGender().getKey())
                 .add("caracteristics", caracteristicArray)
+                .add("description", (persona.getDescription() == null ? "" : persona.getDescription()))
+                .build();
+        return model;
+    }
+
+    @Override
+    public JsonValue toJsonExtended(Persona persona, boolean complete) {
+
+        JsonValue caracteristicArray = JsonValue.EMPTY_JSON_ARRAY;
+        JsonValue portage = Json.createValue(persona.getPortage().getId());
+
+        if( complete ){
+            persona = personaService.getEntity(persona.getId(), true);
+            caracteristicArray = personaCaracteristicFactory.listToJson(persona.getCaracteristicList());
+        }
+
+        JsonValue universe = universeFactory.toJson(persona.getPortage().getUniverse(), false);
+        JsonValue gamesystem = gameSystemFactory.toJson(persona.getPortage().getGameSystem(), false);
+
+        JsonObject model = Json.createObjectBuilder()
+                .add("id", persona.getId())
+                .add("owner", persona.getOwner().getId())
+                .add("isPublic", persona.isPublic())
+                .add("firstName", persona.getFirstName())
+                .add("lastName", persona.getLastName())
+                .add("lastUpdate", persona.getLastUpdate().getTime())
+                .add("creationTime", persona.getCreationTime().getTime())
+                .add("media", mediaFileFactory.toJson(persona.getImage()))
+                .add("type", persona.getPersonaType().getId())
+                .add("portage", portage)
+                .add("gender", persona.getGender().getKey())
+                .add("caracteristics", caracteristicArray)
+                .add("universe", universe)
+                .add("gamesystem", gamesystem)
                 .add("description", (persona.getDescription() == null ? "" : persona.getDescription()))
                 .build();
         return model;
@@ -95,6 +131,18 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for(Persona p : list){
             builder.add(this.toJson(p, false));
+        }
+        return builder.build();
+    }
+
+    @Override
+    public JsonArray listToJsonExtended(List<Persona> list, boolean complete) {
+        if( list.isEmpty()){
+            return JsonValue.EMPTY_JSON_ARRAY;
+        }
+        JsonArrayBuilder builder = Json.createArrayBuilder();
+        for(Persona p : list){
+            builder.add(this.toJsonExtended(p, false));
         }
         return builder.build();
     }

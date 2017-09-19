@@ -375,4 +375,21 @@ public class ApiController {
         return this.apiResponse.toString();
 
     }
+
+    @RequestMapping(
+            value = "/api/persona/list/{page}/{quantity}",
+            method = RequestMethod.GET,
+            produces = "application/json;charset=UTF-8"
+    )
+    public String getPublicPersonasForPage(@PathVariable(value="page") int page, @PathVariable(value="quantity") int quantity){
+        this.reset();
+        try {
+            this.apiResponse.addContent(personaService.getPublicPersonasForPage(page, quantity));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return this.apiResponse.toString();
+
+    }
 }

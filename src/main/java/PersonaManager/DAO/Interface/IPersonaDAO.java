@@ -17,4 +17,6 @@ public interface IPersonaDAO {
     public List<Persona> getLastPublicPersona(Integer limit);
 
     public List<Persona> getAll();
+
+    public List<Persona> getPublicPersonasForPage(int page, int quantity);
 }
