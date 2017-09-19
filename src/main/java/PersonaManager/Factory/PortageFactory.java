@@ -40,17 +40,22 @@ public class PortageFactory extends BaseFactory implements IPortageFactory {
         JsonValue personaList   = JsonValue.EMPTY_JSON_ARRAY;
         JsonValue caracList     = JsonValue.EMPTY_JSON_ARRAY;
 
+        JsonValue gamesystem    = Json.createValue(portage.getGameSystem().getId());
+        JsonValue universe      = Json.createValue(portage.getUniverse().getId());
         if( complete ){
 
             portage = portageService.getEntity(portage.getId(), true);
             personaList = personaFactory.getListOfIdToJson(portage.getPersonaList());
             caracList   = caracteristicModifiedFactory.getListOfIdToJson(portage.getCaracteristicList());
+
+            gamesystem = gameSystemService.getById(portage.getGameSystem().getId(), false);
+            universe    = universeService.getById(portage.getUniverse().getId(), false);
         }
 
         JsonObject model = Json.createObjectBuilder()
                 .add("id", portage.getId())
-                .add("universe", portage.getUniverse().getId())
-                .add("gamesystem", portage.getGameSystem().getId())
+                .add("universe", universe)
+                .add("gamesystem", gamesystem)
                 .add("creationTime", portage.getCreationTime().getTime())
                 .add("personaList", personaList)
                 .add("caracteristicList", caracList)

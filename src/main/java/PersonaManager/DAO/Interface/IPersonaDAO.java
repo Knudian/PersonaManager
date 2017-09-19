@@ -19,4 +19,6 @@ public interface IPersonaDAO {
     public List<Persona> getAll();
 
     public List<Persona> getPublicPersonasForPage(int page, int quantity);
+
+    public List<Persona> getAllPublic();
 }

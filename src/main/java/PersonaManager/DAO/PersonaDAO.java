@@ -72,12 +72,17 @@ public class PersonaDAO extends AbstractDAO implements IPersonaDAO {
     @Override
     public List<Persona> getPublicPersonasForPage(int page, int quantity) {
         int offset = (page - 1) * quantity;
-        int end = offset + quantity;
         String q = "FROM Persona p WHERE p.isPublic = true";
-        System.out.println(q);
         Query query = sessionFactory.getCurrentSession().createQuery(q);
         query.setFirstResult(offset);
         query.setMaxResults(quantity);
+        return (List<Persona>) query.getResultList();
+    }
+
+    @Override
+    public List<Persona> getAllPublic() {
+        String q = "FROM Persona p WHERE p.isPublic = true";
+        Query query = sessionFactory.getCurrentSession().createQuery(q);
         return (List<Persona>) query.getResultList();
     }
 }

@@ -33,5 +33,5 @@ public interface IPersonaService {
 
     public JsonValue getPublicPersonasForPage(int page, int quantity);
 
-    public int getCount();
+    public int getCountPublic();
 }

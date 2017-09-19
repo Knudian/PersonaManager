@@ -140,7 +140,7 @@ public class PersonaService implements IPersonaService {
     }
 
     @Override
-    public int getCount() {
-        return personaDAO.getAll().size();
+    public int getCountPublic() {
+        return personaDAO.getAllPublic().size();
     }
 }
