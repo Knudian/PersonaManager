@@ -138,4 +138,9 @@ public class PersonaService implements IPersonaService {
     public JsonValue getPublicPersonasForPage(int page, int quantity) {
         return personaFactory.listToJsonExtended(personaDAO.getPublicPersonasForPage(page, quantity), true);
     }
+
+    @Override
+    public int getCount() {
+        return personaDAO.getAll().size();
+    }
 }

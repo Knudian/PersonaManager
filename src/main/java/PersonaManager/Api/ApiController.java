@@ -384,6 +384,7 @@ public class ApiController {
     public String getPublicPersonasForPage(@PathVariable(value="page") int page, @PathVariable(value="quantity") int quantity){
         this.reset();
         try {
+            this.apiResponse.addContent(Json.createObjectBuilder().add("personaCount", personaService.getCount()).build());
             this.apiResponse.addContent(personaService.getPublicPersonasForPage(page, quantity));
         } catch (Exception e){
             e.printStackTrace();

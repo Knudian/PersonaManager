@@ -32,4 +32,6 @@ public interface IPersonaService {
     public JsonValue patch(long id, String patchingValues);
 
     public JsonValue getPublicPersonasForPage(int page, int quantity);
+
+    public int getCount();
 }
