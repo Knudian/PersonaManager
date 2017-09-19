@@ -83,7 +83,7 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
 
         JsonObject model = Json.createObjectBuilder()
                 .add("id", persona.getId())
-                .add("owner", persona.getOwner().getId())
+                .add("owner", humanService.getById(persona.getOwner().getId(), false))
                 .add("isPublic", persona.isPublic())
                 .add("firstName", persona.getFirstName())
                 .add("lastName", persona.getLastName())
