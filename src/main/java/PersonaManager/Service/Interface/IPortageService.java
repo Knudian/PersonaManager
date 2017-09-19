@@ -23,7 +23,7 @@ public interface IPortageService {
 
     public Portage init(Portage portage);
 
-    public JsonArray listToJson(List<Portage> list);
+    public JsonArray listToJson(List<Portage> list, boolean complete);
 
     public void createMissingCaracteristicModified(Portage portage);
 }

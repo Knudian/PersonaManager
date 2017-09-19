@@ -81,7 +81,7 @@ public class PortageFactory extends BaseFactory implements IPortageFactory {
         }
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for(Portage p : list){
-            builder.add(this.toJson(p, false));
+            builder.add(this.toJson(p, complete));
         }
         return builder.build();
     }

@@ -46,7 +46,7 @@ public class UniverseFactory extends BaseFactory implements IUniverseFactory {
         if( complete ){
             universe = universeService.getEntity(universe.getId(), true);
 
-            portageList = portageFactory.getListOfIdToJson(universe.getPortageList());
+            portageList = portageService.listToJson(universe.getPortageList(), true);
             personaTypeList = personaTypeFactory.listToJson(universe.getPersonaTypeList());
         }
 

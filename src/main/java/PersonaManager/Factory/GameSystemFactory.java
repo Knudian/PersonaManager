@@ -39,7 +39,7 @@ public class GameSystemFactory extends BaseFactory implements IGameSystemFactory
         JsonValue caracteristicList = JsonValue.EMPTY_JSON_ARRAY;
 
         if( complete ){
-            portageList = portageService.listToJson(gameSystem.getPortageList());
+            portageList = portageService.listToJson(gameSystem.getPortageList(), complete);
             caracteristicList = caracteristicService.listToJson(gameSystem.getCaracteristicList());
         }
 

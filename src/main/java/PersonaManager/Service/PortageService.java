@@ -104,8 +104,8 @@ public class PortageService implements IPortageService {
     }
 
     @Override
-    public JsonArray listToJson(List<Portage> list) {
-        return portageFactory.listToJson(list, false);
+    public JsonArray listToJson(List<Portage> list, boolean complete) {
+        return portageFactory.listToJson(list, complete);
     }
 
     @Override
