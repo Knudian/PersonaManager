@@ -363,7 +363,7 @@ public class ApiController {
         try {
              this.apiResponse.addContent(Json.createObjectBuilder().add("humanList", humanService.getAll()).build());
         } catch (Exception e){
-            // do nothing
+            e.printStackTrace();
         }
 
         try {

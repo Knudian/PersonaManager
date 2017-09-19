@@ -3,11 +3,13 @@ package PersonaManager.Api;
 import PersonaManager.Model.MediaFile;
 import PersonaManager.Service.Interface.IMediaFileService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.json.Json;
@@ -51,34 +53,24 @@ public class UploadController {
         return model.toString();
     }
 
-    @PostMapping("/upload")
-    public String singleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes){
-        System.out.println("Received a file");
-        System.out.println(file.getName());
-        System.out.println(redirectAttributes.toString());
-        if( file.isEmpty() ){
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
-            return null;
-        }
+    @RequestMapping(
+            value="/upload",
+            method = RequestMethod.POST
+    )
+    public String submit(@RequestParam("file") MultipartFile file, ModelMap modelMap){
+        modelMap.addAttribute("file", file);
+        return "Obi wan Kenobi was here";
+    }
 
-        try {
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOAD_FOLDER + file.getOriginalFilename());
-            Files.write(path, bytes);
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(100000);
+        return new CommonsMultipartResolver();
+    }
 
-            redirectAttributes.addFlashAttribute("message", "File uploaded");
-
-            MediaFile mediaFile = new MediaFile();
-            mediaFile.setFilename(path.toString());
-            mediaFile.setUploadTime(new Timestamp(System.currentTimeMillis()));
-
-            iMediaFileService.save(mediaFile);
-
-            return fileUploadedResponse(mediaFile);
-
-        } catch (IOException e) {
-            return exceptionResponse(e);
-        }
-
+    @Bean
+    public StandardServletMultipartResolver standardServletMultipartResolver(){
+        return new StandardServletMultipartResolver();
     }
 }
