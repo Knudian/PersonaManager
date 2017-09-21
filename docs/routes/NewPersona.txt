@@ -1,5 +1,0 @@
-Création d'un nouveau personnage
-Formulaire
- selon le systeme de jeu et l'univers
-
-$ oh boy. ça,c'est la fonction probablement la plus compliquée du lot.

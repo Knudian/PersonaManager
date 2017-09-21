@@ -1,4 +1,0 @@
-Accueil du site
-- Affichage des dernières infos du site (dernière MAJ)
-
-$recupérer les dernières informations

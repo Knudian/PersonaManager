@@ -1,8 +1,0 @@
-Informations sur un Univers de jeu précis
-Liste des Système de jeu dans lequel cet Univers est supporté
-
-Liens vers:
-- Informations sur un système de jeu dans lequel cet univers est supporté (SystemInfo)
-- Formulaire de proposition d'un nouvel univers de jeu (UniverseNew)
-
-$ récupération des informations liées au système de jeu

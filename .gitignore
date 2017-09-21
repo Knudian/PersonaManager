@@ -1,6 +1,4 @@
 # Created by .ignore support plugin (hsz.mobi)
-
-.idea/
-target
+/.idea/
 nbactions.xml
-*.iml
+PersonaManager.iml

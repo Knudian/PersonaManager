@@ -1,3 +1,0 @@
-
-
-- Créer les modèles d'objets JSON pour chacun des objets pouvant

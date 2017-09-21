@@ -1,3 +1,0 @@
-Affichage Informations du site
-
-$ recuperer le about en base
