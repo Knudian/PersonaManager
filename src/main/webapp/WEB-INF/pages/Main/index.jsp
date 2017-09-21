@@ -234,7 +234,34 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="portage"></div>
+                                <div role="tabpanel" class="tab-pane" id="portage">
+                                    <h2 class="page-header">Portage</h2>
+                                    <h3>Informations</h3>
+                                    <dl class="dl-horizontal">
+                                        <dt>Description</dt>
+                                        <dd>The application of a <code>gamesystem</code> on a <code>universe</code>.</dd>
+                                        <dt>Keyword</dt>
+                                        <dd><span><code>portage</code></span></dd>
+                                    </dl>
+                                    <h3>Attributes</h3>
+                                    <table class="table table-bordered table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Attribute</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr><td>id</td><td>Integer</td><td>The entity identifier</td></tr>
+                                        <tr><td>universe</td><td>Integer</td><td>A reference towards the <code>universe</code>.</td></tr>
+                                        <tr><td>gamesystem</td><td>Integer</td><td>A reference towards the <code>gamesystem</code>.</td></tr>
+                                        <tr><td>creationTime</td><td>Timestamp</td><td>The moment of the creation.</td></tr>
+                                        <tr><td>personaList</td><td>Array</td><td>The list of <code>persona</code> created with this <code>portage</code></td></tr>
+                                        <tr><td>caracteristicList</td><td>Array</td><td>The list of <code>caracteristicmodified</code> to use with this <code>portage</code>.</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div role="tabpanel" class="tab-pane" id="universe"></div>
                             </div>
                         </div>
