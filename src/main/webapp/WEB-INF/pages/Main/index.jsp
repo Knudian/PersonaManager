@@ -356,6 +356,7 @@
                                     <p>Change the <code>:keyword</code> to any of provided ones.</p>
                                     <p>Change the <code>:id</code> to the identifier value of the entity you want.</p>
                                     <p>The <code>/complete</code> part is optionnal. Using it will, in most cases, load a "not complete" representation of any linked entity within the one you want.</p>
+                                    <p>Replace <code>/complete</code> by <code>/all</code> to get a list of all publicly available entity of the requested type.</p>
                                 </div>
                                 <div role="tabpanel" class="tab-pane table-responsive" id="routeUpdate">
                                     <h2 class="page-header">Route for updating entities</h2>
