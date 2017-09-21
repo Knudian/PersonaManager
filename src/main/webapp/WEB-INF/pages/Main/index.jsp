@@ -94,7 +94,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="caracteristicmodified">
+                                <div role="tabpanel" class="tab-pane table-responsive" id="caracteristicmodified">
                                     <h2 class="page-header">CaracteristicModified</h2>
                                     <h3>Informations</h3>
                                     <dl class="dl-horizontal">
@@ -120,7 +120,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="gamesystem">
+                                <div role="tabpanel" class="tab-pane table-responsive" id="gamesystem">
                                     <h2 class="page-header">GameSystem</h2>
                                     <h3>Informations</h3>
                                     <dl class="dl-horizontal">
@@ -149,7 +149,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="persona">
+                                <div role="tabpanel" class="tab-pane table-responsive" id="persona">
                                     <h2 class="page-header">Persona</h2>
                                     <h3>Informations</h3>
                                     <dl class="dl-horizontal">
@@ -184,7 +184,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="personacaracteristic">
+                                <div role="tabpanel" class="tab-pane table-responsive" id="personacaracteristic">
                                     <h2 class="page-header">PersonaCaracteristic</h2>
                                     <h3>Informations</h3>
                                     <dl class="dl-horizontal">
@@ -209,7 +209,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="personatype">
+                                <div role="tabpanel" class="tab-pane table-responsive" id="personatype">
                                     <h2 class="page-header">PersonaType</h2>
                                     <h3>Informations</h3>
                                     <dl class="dl-horizontal">
@@ -234,7 +234,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="portage">
+                                <div role="tabpanel" class="tab-pane table-responsive" id="portage">
                                     <h2 class="page-header">Portage</h2>
                                     <h3>Informations</h3>
                                     <dl class="dl-horizontal">
@@ -262,13 +262,63 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="universe"></div>
+                                <div role="tabpanel" class="tab-pane table-responsive" id="universe">
+                                    <h2 class="page-header">Universe</h2>
+                                    <h3>Informations</h3>
+                                    <dl class="dl-horizontal">
+                                        <dt>Description</dt>
+                                        <dd>Definition of a <code>universe</code> in the application.</dd>
+                                        <dt>Keyword</dt>
+                                        <dd><span><code>universe</code></span></dd>
+                                    </dl>
+                                    <h3>Attributes</h3>
+                                    <table class="table table-bordered table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Attribute</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr><td>id</td><td>Integer</td><td>The entity identifier</td></tr>
+                                        <tr><td>name</td><td>String</td><td>The universe name</td></tr>
+                                        <tr><td>description</td><td>String</td><td>The universe description</td></tr>
+                                        <tr><td>media</td><td>String</td><td>The address of a description image, within our image repository.</td></tr>
+                                        <tr><td>creationTime</td><td>Timestamp</td><td>The moment of the creation.</td></tr>
+                                        <tr><td>portageList</td><td>Array</td><td>The list of <code>portage</code> using this <code>universe</code>.</td></tr>
+                                        <tr><td>personaTypeList</td><td>Array</td><td>The list of <code>personaType</code> that can be used.</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div role="tabpanel" class="tab-pane table-responsive" id="routeCreation">
+                                    <h2 class="page-header">Route for creating entities</h2>
+                                    <pre>POST /api/:keyword</pre>
+                                    <p>Change the <code>:keyword</code> to any of provided ones.</p>
+                                    <h4>Required attributes per entity</h4>
+                                    <p>The <code>media</code> is always optional.</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr><td>Entity keyword</td><td>Attributes</td></tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr><td>caracteristic</td><td>gamesystem, defaultLabel, type, min, max</td></tr>
+                                        <tr><td>caracteristicmodified</td><td>caracteristic, label</td></tr>
+                                        <tr><td>gamesystem</td><td>name, shortName, url, media</td></tr>
+                                        <tr><td>persona</td><td>type, owner, isPublic, firstName, lastName, description, gender, portage</td></tr>
+                                        <tr><td>personatype</td><td>name, universe</td></tr>
+                                        <tr><td>portage</td><td>gamesystem, universe</td></tr>
+                                        <tr><td>universe</td><td>name, description, media</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                         <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                             <ul class="nav nav-pills nav-stacked" role="tablist">
                                 <li role="presentation" class="active"><a href="#about" aria-controls="home" role="tab" data-toggle="tab">About</a></li>
                                 <li role="presentation"><a href="#apiOverview" aria-controls="apiOverview" role="tab" data-toggle="tab">The API</a></li>
+                                <!-- The Entities description buttons -->
                                 <li role="presentation"><a href="#entities" aria-controls="entities" role="tab" data-toggle="tab">Entities overview</a></li>
                                 <li role="presentation"><a href="#caracteristic" aria-controls="caracteristic" role="tab" data-toggle="tab">Entity : Caracteristic</a></li>
                                 <li role="presentation"><a href="#caracteristicmodified" aria-controls="caracteristicmodified" role="tab" data-toggle="tab">Entity : CaracteristicModifed</a></li>
@@ -278,6 +328,8 @@
                                 <li role="presentation"><a href="#personatype" aria-controls="personatype" role="tab" data-toggle="tab">Entity : PersonaType</a></li>
                                 <li role="presentation"><a href="#portage" aria-controls="portage" role="tab" data-toggle="tab">Entity : Portage</a></li>
                                 <li role="presentation"><a href="#universe" aria-controls="universe" role="tab" data-toggle="tab">Entity : Universe</a></li>
+                                <!-- The Routes description -->
+                                <li role="presentation"><a href="#routeCreation" aria-controls="routeCreation" role="tab" data-toggle="tab">Route : Creation</a></li>
                             </ul>
                         </div>
                     </div>
