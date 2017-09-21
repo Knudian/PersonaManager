@@ -209,7 +209,31 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div role="tabpanel" class="tab-pane" id="personatype"></div>
+                                <div role="tabpanel" class="tab-pane" id="personatype">
+                                    <h2 class="page-header">PersonaType</h2>
+                                    <h3>Informations</h3>
+                                    <dl class="dl-horizontal">
+                                        <dt>Description</dt>
+                                        <dd>The jobs and/or classes in use inside a <code>universe</code>.</dd>
+                                        <dt>Keyword</dt>
+                                        <dd><span><code>personatype</code></span></dd>
+                                    </dl>
+                                    <h3>Attributes</h3>
+                                    <table class="table table-bordered table-condensed">
+                                        <thead>
+                                        <tr>
+                                            <th>Attribute</th>
+                                            <th>Type</th>
+                                            <th>Description</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr><td>id</td><td>Integer</td><td>The entity identifier</td></tr>
+                                        <tr><td>name</td><td>String</td><td>The name of the job/class.</td></tr>
+                                        <tr><td>universe</td><td>Integer</td><td>A reference towards the <code>universe</code>.</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div role="tabpanel" class="tab-pane" id="portage"></div>
                                 <div role="tabpanel" class="tab-pane" id="universe"></div>
                             </div>
