@@ -37,7 +37,7 @@ public class CaracteristicFactory extends BaseFactory implements ICaracteristicF
                 .add("id", caracteristic.getId())
                 .add("gamesystem", gameSystem)
                 .add("type", caracteristic.getType().getKey())
-                .add("label", caracteristic.getDefaultLabel())
+                .add("defaultLabel", caracteristic.getDefaultLabel())
                 .add("min", caracteristic.getMinimum())
                 .add("max", caracteristic.getMaximum())
                 .build();

@@ -37,6 +37,7 @@ public class CaracteristicModifiedFactory extends BaseFactory implements ICaract
                 .add("id", caracteristicModified.getId())
                 .add("caracteristic", caracteristic)
                 .add("label", caracteristicModified.getLabel() == null ? JsonValue.NULL : Json.createValue(caracteristicModified.getLabel()))
+                .add("portage", caracteristicModified.getPortage().getId())
                 .build();
         return model;
     }

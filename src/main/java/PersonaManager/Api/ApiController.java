@@ -82,7 +82,7 @@ public class ApiController {
                     response = caracteristicService.getById(id, disableLazyLoading);
                     break;
                 case CARACTERISTIC_MODIFIED:
-                    response = caracteristicService.getById(id, disableLazyLoading);
+                    response = caracteristicModifiedService.getById(id, disableLazyLoading);
                     break;
                 case GAME_SYSTEM:
                     response = gameSystemService.getById(id, disableLazyLoading);

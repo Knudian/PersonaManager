@@ -62,7 +62,7 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
                 .add("portage", portage)
                 .add("gender", persona.getGender().getKey())
                 .add("caracteristics", caracteristicArray)
-                .add("description", (persona.getDescription() == null ? "" : persona.getDescription()))
+                .add("description", (persona.getDescription() == null ? JsonValue.NULL : Json.createValue(persona.getDescription())))
                 .build();
         return model;
     }
