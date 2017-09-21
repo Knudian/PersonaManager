@@ -32,7 +32,7 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
     @Override
     public JsonValue getById(long id, boolean complete) {
         PersonaCaracteristic personaCaracteristic = personaCaracteristicDAO.getById(id);
-        return personaCaracteristicFactory.toJson(personaCaracteristic);
+        return personaCaracteristicFactory.toJson(personaCaracteristic, complete);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
 
         }
 
-        return personaCaracteristicFactory.toJson(original);
+        return personaCaracteristicFactory.toJson(original, false);
     }
 
     @Override
@@ -81,6 +81,6 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
     public JsonValue patch(long id, String patchingValues) {
         PersonaCaracteristic personaCaracteristic = personaCaracteristicFactory.patch(getEntity(id), patchingValues);
 
-        return personaCaracteristicFactory.toJson(personaCaracteristicDAO.update(personaCaracteristic));
+        return personaCaracteristicFactory.toJson(personaCaracteristicDAO.update(personaCaracteristic), false);
     }
 }

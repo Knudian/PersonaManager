@@ -71,10 +71,9 @@ public class ApiController {
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     public String getOneById(@PathVariable(value="id") long id, @PathVariable(value="entity") String entity, @PathVariable(value="complete", required = false, name = "complete") String complete){
+        this.reset();
 
         boolean disableLazyLoading = ( complete != null && complete.equals("complete"));
-
-        this.reset();
 
         JsonValue response = JsonValue.EMPTY_JSON_OBJECT;
         try {
@@ -230,6 +229,9 @@ public class ApiController {
                     break;
                 case PERSONA:
                     response = personaService.patch(id, inputString);
+                    break;
+                case PERSONA_CARACTERISTIC:
+                    response = personaCaracteristicService.patch(id, inputString);
                     break;
                 default:
                     JsonObject model = Json.createObjectBuilder()

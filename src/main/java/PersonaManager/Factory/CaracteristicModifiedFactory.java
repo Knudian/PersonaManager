@@ -31,13 +31,22 @@ public class CaracteristicModifiedFactory extends BaseFactory implements ICaract
 
     @Override
     public JsonObject toJson(CaracteristicModified caracteristicModified) {
-
-        JsonValue portage = portageFactory.toJson(caracteristicModified.getPortage(), false);
         JsonValue caracteristic = caracteristicFactory.toJson(caracteristicModified.getCaracteristic(), false);
 
         JsonObject model = Json.createObjectBuilder()
                 .add("id", caracteristicModified.getId())
-                .add("portage", portage)
+                .add("caracteristic", caracteristic)
+                .add("label", caracteristicModified.getLabel() == null ? JsonValue.NULL : Json.createValue(caracteristicModified.getLabel()))
+                .build();
+        return model;
+    }
+
+    @Override
+    public JsonObject toInnerJson(CaracteristicModified caracteristicModified){
+
+        JsonValue caracteristic = caracteristicFactory.toJson(caracteristicModified.getCaracteristic(), false);
+
+        JsonObject model = Json.createObjectBuilder()
                 .add("caracteristic", caracteristic)
                 .add("label", caracteristicModified.getLabel() == null ? "null" : caracteristicModified.getLabel())
                 .build();

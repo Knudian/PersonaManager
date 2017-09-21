@@ -1,50 +1,88 @@
-<%@include file="includes/header.jsp"%>
-<!-- Main content. Do not use de <main/> tag -->
-<section class="row" class="homeContainer">
-    <div class="col-xs-offset-3 col-xs-6">
-        <h1 class="page-header">Role Playing game<hr/>Persona Manager</h1>
-    </div>
-</section>
-<section class="row">
-    <div class="col-xs-12">
-        <h3 class="page-header">Latest publicly shared personas</h3>
-    </div>
-    <div class="col-xs-2">
-        <a href="#" class="thumbnail">
-            <img src="https://gifyu.com/images/fa71237e429134040da85ffb0c598b78.png" class="img-responsive"/>
-            <h3 class="text-center">[persona.name]</h3>
-            <p class="text-center">
-                <a href="#" class="label label-primary">[Universe]</a>
-                <a href="#" class="label label-info">[GameSystem]</a>
-            </p>
-            <p class="text-center">
-                <a href="#" class="label label-default">[human]</a>
-            </p>
-        </a>
-    </div>
-</section>
-<section class="row">
-    <div class="col-xs-12">
-        <h3 class="page-header">Universe Statistics</h3>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <div class="row">
-                <div class="col-xs-3">Gilliam</div>
-                <div class="col-xs-9">
-                    <div class="progress">
-                        <div role="progressbar" class="progress-bar" aria-valuenow="19" aria-valuemin="0" aria-valuemax="100" style="width: 19%;">19</div>
-                    </div>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/functions" prefix = "fn" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Persona Manager</title>
+        <style>
+            main {
+                display : table-cell;
+                width: 100vw;
+                height: 100vh;
+                vertical-align: middle;
+            }
+            .center { text-align: center}
+        </style>
+        <link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
+    <body>
+        <main class="container-fluid">
+            <header class="row">
+                <div class="col-xs-12">
+                    <h1 class="center">Server is active, you can now use the API</h1>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-3">Combs</div>
-                <div class="col-xs-9">
-                    <div class="progress">
-                        <div role="progressbar" class="progress-bar" aria-valuenow="13" aria-valuemin="0" aria-valuemax="100" style="width: 13%;">13</div>
-                    </div>
+            </header>
+            <section class="row">
+                <div class="col-xs-offset-2 col-xs-8">
+                    <h3 class="page-header">Callable entites</h3>
+                    <hr/>
+                    <article class="row">
+                        <header class="col-xs-12"><code>caracteristic</code></header>
+                        <div class="col-xs-12">
+                            <p>A <code>gamesystem</code> sub-entity, representing a <code>persona</code> attribute within it.</p>
+                        </div>
+                    </article>
+                    <article class="row">
+                        <header class="col-xs-12"><code>caracteristicmodified</code></header>
+                        <div class="col-xs-12">
+                            <p>Extending <code>caracteristic</code>, it is a <code>portage</code> sub-entity, representing a <code>persona</code> attribute within it.</p>
+                        </div>
+                    </article>
+                    <article class="row">
+                        <header class="col-xs-12"><code>gamesystem</code></header>
+                        <div class="col-xs-12">
+                            <p>A base entity, describing a RPG system.</p>
+                        </div>
+                    </article>
+                    <article class="row">
+                        <header class="col-xs-12"><code>human</code></header>
+                        <div class="col-xs-12">
+                            <p>A base entity, representing a user</p>
+                        </div>
+                    </article>
+                    <article class="row">
+                        <header class="col-xs-12"><code>media</code></header>
+                        <div class="col-xs-12">
+                            <p>A base entity, representing an image uploaded on the server.</p>
+                        </div>
+                    </article>
+                    <article class="row">
+                        <header class="col-xs-12"><code>personacaracteristic</code></header>
+                        <div class="col-xs-12">
+                            <p>A <code>persona</code> sub-entity, representing the value of a <code>personacaracteristic</code>, for this <code>persona</code>.</p>
+                        </div>
+                    </article>
+                    <article class="row">
+                        <header class="col-xs-12"><code>persona</code></header>
+                        <div class="col-xs-12">
+                            <p>The representation of a RPG persona, inside an Universe, and within a GameSystem</p>
+                        </div>
+                    </article>
+                    <article class="row">
+                        <header class="col-xs-12"><code>personatype</code></header>
+                    </article>
+                    <article class="row">
+                        <header class="col-xs-12"><code>portage</code></header>
+                    </article>
+                    <article class="row">
+                        <header class="col-xs-12"><code>universe</code></header>
+                    </article>
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
+            </section>
+        </main>
+    </body>
+</html>

@@ -28,9 +28,11 @@ public class CaracteristicFactory extends BaseFactory implements ICaracteristicF
     @Override
     public JsonObject toJson(Caracteristic caracteristic, boolean complete) {
 
-        // Force the system to lazyLoad the gameSystem entity.
-        JsonValue gameSystem = gameSystemFactory.toJson(caracteristic.getGameSystem(), false);
-
+        JsonValue gameSystem = Json.createValue(caracteristic.getGameSystem().getId());
+        if( complete ){
+            gameSystem = gameSystemFactory.toJson(caracteristic.getGameSystem(), false);
+        }
+        
         JsonObject model = Json.createObjectBuilder()
                 .add("id", caracteristic.getId())
                 .add("gamesystem", gameSystem)

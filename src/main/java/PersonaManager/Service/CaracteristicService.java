@@ -46,7 +46,7 @@ public class CaracteristicService implements ICaracteristicService {
 
     @Override
     public JsonValue getById(long id, boolean complete) {
-        return caracteristicFactory.toJson(this.getEntity(id), false);
+        return caracteristicFactory.toJson(this.getEntity(id), complete);
     }
 
     @Override

@@ -17,4 +17,6 @@ public interface ICaracteristicModifiedFactory {
     public JsonArray getListOfIdToJson(List<CaracteristicModified> list);
 
     public CaracteristicModified patch(CaracteristicModified caracteristicModified, String patchingValues);
+
+    public JsonObject toInnerJson(CaracteristicModified caracteristicModified);
 }

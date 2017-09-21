@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface IPersonaCaracteristicFactory {
 
-    public JsonValue toJson(PersonaCaracteristic caracteristic);
+    public JsonValue toJson(PersonaCaracteristic caracteristic, boolean complete);
 
     public PersonaCaracteristic fromJson(String inputDatas);
 

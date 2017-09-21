@@ -1,5 +1,7 @@
 package PersonaManager.Factory;
 
+import PersonaManager.Factory.Interface.ICaracteristicFactory;
+import PersonaManager.Factory.Interface.ICaracteristicModifiedFactory;
 import PersonaManager.Factory.Interface.IPersonaCaracteristicFactory;
 import PersonaManager.Model.Persona;
 import PersonaManager.Model.PersonaCaracteristic;
@@ -20,19 +22,26 @@ public class PersonaCaracteristicFactory extends BaseFactory implements IPersona
 
     @Autowired
     private ICaracteristicModifiedService caracteristicModifiedService;
+    @Autowired
+    private ICaracteristicModifiedFactory caracteristicModifiedFactory;
 
     @Autowired
     private IPersonaService personaService;
 
     @Override
-    public JsonValue toJson(PersonaCaracteristic caracteristic) {
+    public JsonValue toJson(PersonaCaracteristic caracteristic, boolean complete) {
+
+        JsonValue c = Json.createValue(caracteristic.getCaracteristicModified().getId());
+
+        if ( complete ){
+            c = caracteristicModifiedFactory.toInnerJson(caracteristic.getCaracteristicModified());
+        }
 
         JsonObject model = Json.createObjectBuilder()
                 .add("id", caracteristic.getId())
                 .add("value", caracteristic.getValue())
-                .add("caracteristicMiD", caracteristic.getCaracteristicModified().getId())
+                .add("caracteristicMiD", c)
                 .build();
-
         return model;
     }
 
@@ -53,7 +62,7 @@ public class PersonaCaracteristicFactory extends BaseFactory implements IPersona
         }
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for(PersonaCaracteristic personaCaracteristic : list) {
-            builder.add(this.toJson(personaCaracteristic));
+            builder.add(this.toJson(personaCaracteristic, false));
         }
         return builder.build();
     }
