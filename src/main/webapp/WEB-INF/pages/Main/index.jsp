@@ -10,6 +10,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Persona Manager</title>
         <link rel="stylesheet" href="/resources/css/bootstrap.min.css"/>
+        <!--[if IE]><link rel="shortcut icon" href="/resources/img/favicon.ico"/><![endif]-->
+        <link rel="icon" href="/resources/img/favicon.png"/>
         <script src="/resources/js/jquery.js"></script>
         <script src="/resources/js/bootstrap.min.js"></script>
         <style>
@@ -25,6 +27,30 @@
                 <aside class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                     <div class="well well-lg">
                         <h1 class="text-primary text-center">Persona<br/>Manager</h1>
+                        <p>A course project built with passion by :</p>
+                        <ul>
+                            <li><a href="https://github.com/Fubuke" target="_blank">@Fubuke</a></li>
+                            <li><a href="https://github.com/Knudian" target="_blank">@Knudian</a></li>
+                        </ul>
+                        <p>
+                            Current version : <code>1.0.0-alpha</code>
+                        </p>
+                        <p>
+                            <a class="btn btn-sm btn-block btn-default" target="_blank" href="">Project Homepage</a>
+                        </p>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-xs-4 col-xs-offset-4">
+                            <img class="img-responsive" src="/resources/img/logo.svg" alt="Persona Manager Logo"/>
+                        </div>
                     </div>
                 </aside>
                 <main  class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
@@ -36,7 +62,7 @@
                                     <p>This application is a J2EE/Spring application, which aims to store <abbr title="Role Playing Games">RPG</abbr> persona.</p>
                                     <hr/>
                                     <h3>Datas stored</h3>
-                                    <p>A less as possible datas are stored. So, the application does not calculate anythings. It just stores.</p>
+                                    <p>A less as possible datas are stored. So, the application does not calculate anything. It just stores data.</p>
                                     <ul>
                                         <li><code>gamesystem</code> : a RPG rule set,</li>
                                         <li><code>universe</code> : a RPG background,</li>
@@ -307,7 +333,7 @@
                                     <pre>POST /api/:keyword</pre>
                                     <p>Change the <code>:keyword</code> to any of provided ones.</p>
                                     <p>As a response, you will get the result of a GET on your freshly created entity.</p>
-                                    <h4>Required attributes per entity</h4>
+                                    <h4 class="page-header">Required attributes per entity</h4>
                                     <p>The <code>media</code> is always optional.</p>
                                     <table class="table table-bordered">
                                         <thead>
@@ -337,7 +363,7 @@
                                     <p>Change the <code>:keyword</code> to any of provided ones.</p>
                                     <p>Change the <code>:id</code> to the identifier value of the entity you want to update.</p>
                                     <p>As a response, you will get the result of a GET on your freshly updated entity.</p>
-                                    <h4>Authorized attributes per entity</h4>
+                                    <h4 class="page-header">Authorized attributes per entity</h4>
                                     <p>All fields are optional, so you can send a post request, with just the id, even it's useless in itself.</p>
                                     <table class="table table-bordered">
                                         <thead>
