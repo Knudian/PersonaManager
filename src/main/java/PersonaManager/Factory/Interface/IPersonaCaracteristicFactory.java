@@ -12,7 +12,7 @@ public interface IPersonaCaracteristicFactory {
 
     public PersonaCaracteristic fromJson(String inputDatas);
 
-    public JsonArray listToJson(List<PersonaCaracteristic> list);
+    public JsonArray listToJson(List<PersonaCaracteristic> list, boolean complete);
 
     public PersonaCaracteristic patch(PersonaCaracteristic personaCaracteristic, String patchingValues);
 }

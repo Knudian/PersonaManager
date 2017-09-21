@@ -29,57 +29,65 @@
             <section class="row">
                 <div class="col-xs-offset-2 col-xs-8">
                     <h3 class="page-header">Callable entites</h3>
-                    <hr/>
                     <article class="row">
-                        <header class="col-xs-12"><code>caracteristic</code></header>
-                        <div class="col-xs-12">
+                        <header class="col-xs-4"><pre>caracteristic</pre></header>
+                        <div class="col-xs-8">
                             <p>A <code>gamesystem</code> sub-entity, representing a <code>persona</code> attribute within it.</p>
                         </div>
                     </article>
                     <article class="row">
-                        <header class="col-xs-12"><code>caracteristicmodified</code></header>
-                        <div class="col-xs-12">
+                        <header class="col-xs-4"><pre>caracteristicmodified</pre></header>
+                        <div class="col-xs-8">
                             <p>Extending <code>caracteristic</code>, it is a <code>portage</code> sub-entity, representing a <code>persona</code> attribute within it.</p>
                         </div>
                     </article>
                     <article class="row">
-                        <header class="col-xs-12"><code>gamesystem</code></header>
-                        <div class="col-xs-12">
+                        <header class="col-xs-4"><pre>gamesystem</pre></header>
+                        <div class="col-xs-8">
                             <p>A base entity, describing a RPG system.</p>
                         </div>
                     </article>
                     <article class="row">
-                        <header class="col-xs-12"><code>human</code></header>
-                        <div class="col-xs-12">
-                            <p>A base entity, representing a user</p>
+                        <header class="col-xs-4"><pre>human</pre></header>
+                        <div class="col-xs-8">
+                            <p>A base entity, representing a user.</p>
                         </div>
                     </article>
                     <article class="row">
-                        <header class="col-xs-12"><code>media</code></header>
-                        <div class="col-xs-12">
+                        <header class="col-xs-4"><pre>media</pre></header>
+                        <div class="col-xs-8">
                             <p>A base entity, representing an image uploaded on the server.</p>
                         </div>
                     </article>
                     <article class="row">
-                        <header class="col-xs-12"><code>personacaracteristic</code></header>
-                        <div class="col-xs-12">
+                        <header class="col-xs-4"><pre>personacaracteristic</pre></header>
+                        <div class="col-xs-8">
                             <p>A <code>persona</code> sub-entity, representing the value of a <code>personacaracteristic</code>, for this <code>persona</code>.</p>
                         </div>
                     </article>
                     <article class="row">
-                        <header class="col-xs-12"><code>persona</code></header>
-                        <div class="col-xs-12">
-                            <p>The representation of a RPG persona, inside an Universe, and within a GameSystem</p>
+                        <header class="col-xs-4"><pre>persona</pre></header>
+                        <div class="col-xs-8">
+                            <p>The representation of a RPG <code>persona</code>, inside an <code>universe</code>, and within a <code>gamesystem</code>.</p>
                         </div>
                     </article>
                     <article class="row">
-                        <header class="col-xs-12"><code>personatype</code></header>
+                        <header class="col-xs-4"><pre>personatype</pre></header>
+                        <div class="col-xs-8">
+                            <p>The <em>Class</em> of a <code>persona</code> in an <code>universe</code>.</p>
+                        </div>
                     </article>
                     <article class="row">
-                        <header class="col-xs-12"><code>portage</code></header>
+                        <header class="col-xs-4"><pre>portage</pre></header>
+                        <div class="col-xs-8">
+                            <p>The application of a <code>gamesystem</code> for an <code>universe</code>.</p>
+                        </div>
                     </article>
                     <article class="row">
-                        <header class="col-xs-12"><code>universe</code></header>
+                        <header class="col-xs-4"><pre>universe</pre></header>
+                        <div class="col-xs-8">
+                            <p>A base entity, representing some informations about a RPG Universe.</p>
+                        </div>
                     </article>
                 </div>
             </section>

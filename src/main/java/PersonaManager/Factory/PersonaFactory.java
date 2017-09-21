@@ -46,7 +46,7 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
 
         if( complete ){
             persona = personaService.getEntity(persona.getId(), true);
-            caracteristicArray = personaCaracteristicFactory.listToJson(persona.getCaracteristicList());
+            caracteristicArray = personaCaracteristicFactory.listToJson(persona.getCaracteristicList(), true);
         }
 
         JsonObject model = Json.createObjectBuilder()
@@ -75,7 +75,7 @@ public class PersonaFactory extends BaseFactory implements IPersonaFactory {
 
         if( complete ){
             persona = personaService.getEntity(persona.getId(), true);
-            caracteristicArray = personaCaracteristicFactory.listToJson(persona.getCaracteristicList());
+            caracteristicArray = personaCaracteristicFactory.listToJson(persona.getCaracteristicList(), true);
         }
 
         JsonValue universe = universeFactory.toJson(persona.getPortage().getUniverse(), false);

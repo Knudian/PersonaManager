@@ -56,13 +56,13 @@ public class PersonaCaracteristicFactory extends BaseFactory implements IPersona
     }
 
     @Override
-    public JsonArray listToJson(List<PersonaCaracteristic> list) {
+    public JsonArray listToJson(List<PersonaCaracteristic> list, boolean complete) {
         if( list.isEmpty()){
             return JsonValue.EMPTY_JSON_ARRAY;
         }
         JsonArrayBuilder builder = Json.createArrayBuilder();
         for(PersonaCaracteristic personaCaracteristic : list) {
-            builder.add(this.toJson(personaCaracteristic, false));
+            builder.add(this.toJson(personaCaracteristic, complete));
         }
         return builder.build();
     }
