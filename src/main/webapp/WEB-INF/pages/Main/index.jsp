@@ -57,6 +57,17 @@
                                     <p>We also make use a lot of the HTTP verbs, to differenciate each route.</p>
                                     <p>In the menu, you will find the different ways to use our application.</p>
                                     <p>If you have any problem with it, you are free to send us issues via Github.</p>
+                                    <h4 class="page-header">API's response</h4>
+                                    <p>The API is JSON based, so you will always have a HTTP 200 code for each request, except in case of server failure.</p>
+                                    <p>The response is always structured in the same way :</p>
+<pre>{
+    "requestTime": 0,
+    "response": [],
+    "errors": []
+}</pre>
+                                    <p><code>requestTime</code> is a Timestamp value indicating the moment the server sent back a response.</p>
+                                    <p><code>response</code> is an array containing the request content.</p>
+                                    <p><code>errors</code> is an array containing your request errors. Let's hope you won't have any.</p>
                                 </div>
                                 <div role="tabpanel" class="tab-pane" id="entities">
                                     <h2 class="page-header"><samp>The entities</samp></h2>
@@ -295,6 +306,7 @@
                                     <h2 class="page-header">Route for creating entities</h2>
                                     <pre>POST /api/:keyword</pre>
                                     <p>Change the <code>:keyword</code> to any of provided ones.</p>
+                                    <p>As a response, you will get the result of a GET on your freshly created entity.</p>
                                     <h4>Required attributes per entity</h4>
                                     <p>The <code>media</code> is always optional.</p>
                                     <table class="table table-bordered">
@@ -311,6 +323,44 @@
                                         <tr><td>universe</td><td>name, description, media</td></tr>
                                         </tbody>
                                     </table>
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="routeGet">
+                                    <h2 class="page-header">Route for getting an entity</h2>
+                                    <pre>GET /api/:keyword/:id/complete</pre>
+                                    <p>Change the <code>:keyword</code> to any of provided ones.</p>
+                                    <p>Change the <code>:id</code> to the identifier value of the entity you want.</p>
+                                    <p>The <code>/complete</code> part is optionnal. Using it will, in most cases, load a "not complete" representation of any linked entity within the one you want.</p>
+                                </div>
+                                <div role="tabpanel" class="tab-pane table-responsive" id="routeUpdate">
+                                    <h2 class="page-header">Route for updating entities</h2>
+                                    <pre>POST /api/:keyword/:id</pre>
+                                    <p>Change the <code>:keyword</code> to any of provided ones.</p>
+                                    <p>Change the <code>:id</code> to the identifier value of the entity you want to update.</p>
+                                    <p>As a response, you will get the result of a GET on your freshly updated entity.</p>
+                                    <h4>Authorized attributes per entity</h4>
+                                    <p>All fields are optional, so you can send a post request, with just the id, even it's useless in itself.</p>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr><td>Entity keyword</td><td>Attributes</td></tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr><td>caracteristic</td><td>defaultLabel, type, min, max</td></tr>
+                                        <tr><td>caracteristicmodified</td><td>label</td></tr>
+                                        <tr><td>gamesystem</td><td>name, shortName, url, media</td></tr>
+                                        <tr><td>persona</td><td>type, isPublic, firstName, lastName, description, gender</td></tr>
+                                        <tr><td>personatype</td><td>name</td></tr>
+                                        <tr><td>universe</td><td>name, description, media</td></tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane" id="routeDelete">
+                                    <h2 class="page-header">Route for deleting an entity</h2>
+                                    <pre>DELETE /api/:keyword/:id</pre>
+                                    <p>Change the <code>:keyword</code> to any of provided ones.</p>
+                                    <p>We use a data-cascade to delete related entities.</p>
+                                    <p>As a response, you will get a boolean value validating or not your request.</p>
+                                    <p>Change the <code>:id</code> to the identifier value of the entity you want.</p>
                                 </div>
                             </div>
                         </div>
@@ -329,129 +379,15 @@
                                 <li role="presentation"><a href="#portage" aria-controls="portage" role="tab" data-toggle="tab">Entity : Portage</a></li>
                                 <li role="presentation"><a href="#universe" aria-controls="universe" role="tab" data-toggle="tab">Entity : Universe</a></li>
                                 <!-- The Routes description -->
-                                <li role="presentation"><a href="#routeCreation" aria-controls="routeCreation" role="tab" data-toggle="tab">Route : Creation</a></li>
+                                <li role="presentation"><a href="#routeCreation" aria-controls="routeCreation" role="tab" data-toggle="tab">Route : Create an entity</a></li>
+                                <li role="presentation"><a href="#routeGet" aria-controls="routeGet" role="tab" data-toggle="tab">Route : Get an entity</a></li>
+                                <li role="presentation"><a href="#routeUpdate" aria-controls="routeUpdate" role="tab" data-toggle="tab">Route : Update an entity</a></li>
+                                <li role="presentation"><a href="#routeDelete" aria-controls="routeDelete" role="tab" data-toggle="tab">Route : Delete an entity</a></li>
                             </ul>
                         </div>
                     </div>
                 </main>
-                <header class="row">
-                    <div class="col-xs-12">
-                        <h1 class="center">Server is active, you can now use the API</h1>
-                    </div>
-                </header>
-                <section class="row">
-                    <div class="col-xs-offset-2 col-xs-8">
-                        <h3 class="page-header">Callable entites</h3>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>caracteristic</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>A <code>gamesystem</code> sub-entity, representing a <code>persona</code> attribute within it.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>caracteristicmodified</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>Extending <code>caracteristic</code>, it is a <code>portage</code> sub-entity, representing a <code>persona</code> attribute within it.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>gamesystem</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>A base entity, describing a RPG system.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>human</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>A base entity, representing a user.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>media</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>A base entity, representing an image uploaded on the server.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>personacaracteristic</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>A <code>persona</code> sub-entity, representing the value of a <code>personacaracteristic</code>, for this <code>persona</code>.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>persona</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>The representation of a RPG <code>persona</code>, inside an <code>universe</code>, and within a <code>gamesystem</code>.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>personatype</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>The <em>Class</em> of a <code>persona</code> in an <code>universe</code>.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>portage</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>The application of a <code>gamesystem</code> for an <code>universe</code>.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>universe</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>A base entity, representing some informations about a RPG Universe.</p>
-                            </div>
-                        </article>
-                    </div>
-                    <div class="col-xs-offset-2 col-xs-8">
-                        <h3 class="page-header">Possible routes</h3>
-                        <article class="row">
-                            <div class="col-xs-12">
-                                <p>All requests are presented : as <em><b>[HTTP VERB] [route]</b> [description]</em>.</p>
-                                <p>All reponses are Json object, structured as <samp>{"requestDate":0,"response":[],"error":[]}"</samp> where <samp>requestDate</samp> is the timestamp of your request, <samp>response</samp> an array containing your responsen and <samp>error</samp> an array all errors encounterd during the process.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>GET /api/:entity/:id[/complete] </samp></b></header>
-                            <div class="col-xs-8">
-                                <p>Returns an entity with the specified identifier.</p>
-                                <p><samp>entity</samp> is one of the keys given in the <em>callable</em> entity.</p>
-                                <p><samp>id</samp> is the identifier of the ressource you want to access.</p>
-                                <p><samp>complete</samp> is optional. If mentioned, and if the entity has list inside, all listed entities will be given as complete objects, and as lists of IDs instead.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>GET /api/:entity/all</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>Returns the list of all entities of the given type.</p>
-                                <p><samp>entity</samp> is one of the keys given in the <em>callable</em> entity.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>POST /api/:entity</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>Creates an entity with the specified attributes sent.</p>
-                                <p><samp>entity</samp> is one of the keys given in the <em>callable</em> entity.</p>
-                                <p>TODO : List all attributes possible per entity.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>POST /api/:entity/:id}</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>Updates an entity with the specified attributes sent.</p>
-                                <p><samp>entity</samp> is one of the keys given in the <em>callable</em> entity.</p>
-                                <p>TODO : List all allowed attributes per entity.</p>
-                            </div>
-                        </article>
-                        <article class="row">
-                            <header class="col-xs-4"><b><samp>DELETE /api/:entity/:id</samp></b></header>
-                            <div class="col-xs-8">
-                                <p>Deletes an entity with the specified attributes sent.</p>
-                                <p><samp>entity</samp> is one of the keys given in the <em>callable</em> entity.</p>
-                            </div>
-                        </article>
-                    </div>
-                </section>
-            </main>
+            </div>
+        </div>
     </body>
 </html>
