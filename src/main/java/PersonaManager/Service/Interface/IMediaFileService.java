@@ -4,16 +4,7 @@ import PersonaManager.Model.MediaFile;
 
 import javax.json.JsonValue;
 
-public interface IMediaFileService {
-
-    public Long create(String entityAsString);
-
-    public JsonValue getById(long id);
-
-    public Boolean delete(String entityAsString);
-
-    public MediaFile save(MediaFile mediaFile);
-
+public interface IMediaFileService extends IStandardService {
     public MediaFile getByFileName(String filename);
 
     public MediaFile getEntity(long id);

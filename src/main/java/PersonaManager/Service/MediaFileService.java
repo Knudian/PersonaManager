@@ -28,25 +28,9 @@ public class MediaFileService implements IMediaFileService {
     }
 
     @Override
-    public JsonValue getById(long id) {
+    public JsonValue getById(long id, boolean complete) {
         MediaFile mediaFile = mediaFileDAO.getById(id);
         return mediaFileFactory.toJson(mediaFile);
-    }
-
-    @Override
-    public Boolean delete(String entityAsString) {
-        try{
-            MediaFile mediaFile = mediaFileFactory.fromJson(entityAsString);
-            mediaFileDAO.delete(mediaFile);
-            return true;
-        } catch (Exception e){
-            return false;
-        }
-    }
-
-    @Override
-    public MediaFile save(MediaFile mediaFile) {
-        return mediaFileDAO.create(mediaFile);
     }
 
     @Override
@@ -57,5 +41,25 @@ public class MediaFileService implements IMediaFileService {
     @Override
     public MediaFile getByFileName(String filename) {
         return mediaFileDAO.getByFileName(filename);
+    }
+
+    @Override
+    public JsonValue update(String entityAsString, long id) {
+        return null;
+    }
+
+    @Override
+    public Boolean delete(long id) {
+        try {
+            mediaFileDAO.delete(this.getEntity(id));
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+        return null;
     }
 }

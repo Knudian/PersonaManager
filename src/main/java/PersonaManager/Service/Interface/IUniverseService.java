@@ -6,21 +6,11 @@ import javax.json.JsonValue;
 import javax.persistence.UniqueConstraint;
 import java.util.List;
 
-public interface IUniverseService {
-
-    public Long create(String entityAsString);
-
-    public JsonValue getById(long id, boolean complete);
-
-    public JsonValue update(String entityAsString, long id);
-
-    public Boolean delete(long id);
+public interface IUniverseService extends IStandardService {
 
     public JsonValue getAll(boolean complete);
 
     public Universe getEntity(long id, boolean complete);
-
-    public JsonValue patch(long id, String patchingValues);
 
     public JsonValue statististics();
 }

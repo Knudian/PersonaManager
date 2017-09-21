@@ -5,7 +5,7 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.List;
 
-public class BaseFactory {
+public abstract class BaseFactory {
 
     protected String write(JsonObject model){
         StringWriter stringWriter = new StringWriter();

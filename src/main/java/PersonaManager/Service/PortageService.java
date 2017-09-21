@@ -137,4 +137,9 @@ public class PortageService implements IPortageService {
         }
 
     }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+        return null;
+    }
 }

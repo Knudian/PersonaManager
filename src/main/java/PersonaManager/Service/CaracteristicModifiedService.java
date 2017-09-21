@@ -28,7 +28,7 @@ public class CaracteristicModifiedService implements ICaracteristicModifiedServi
     }
 
     @Override
-    public JsonValue getById(long id) {
+    public JsonValue getById(long id, boolean complete) {
         return caracteristicModifiedFactory.toJson(this.getEntity(id));
     }
 

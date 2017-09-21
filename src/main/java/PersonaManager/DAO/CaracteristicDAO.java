@@ -11,14 +11,9 @@ import java.io.Serializable;
 
 @Repository
 @Transactional
-public class CaracteristicDAO implements ICaracteristicDAO {
+public class CaracteristicDAO extends AbstractDAO implements ICaracteristicDAO {
 
-    public CaracteristicDAO(){}
-
-    @Autowired
-    protected SessionFactory sessionFactory;
-
-    private Serializable objectId;
+    public CaracteristicDAO(){ super();}
 
     @Override
     public Caracteristic create(Caracteristic caracteristic) {

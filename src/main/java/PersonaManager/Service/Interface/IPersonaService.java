@@ -7,15 +7,7 @@ import javax.json.JsonArray;
 import javax.json.JsonValue;
 import java.util.List;
 
-public interface IPersonaService {
-
-    public Long create(String entityAsString);
-
-    public JsonValue getById(long id, boolean complete);
-
-    public JsonValue update(String entityAsString, long id);
-
-    public Boolean delete(long id);
+public interface IPersonaService extends IStandardService {
 
     public JsonValue getLastPublicPersonnas(Integer quantity);
 
@@ -28,8 +20,6 @@ public interface IPersonaService {
     public Persona init(Persona persona);
 
     public void createMissingPersonaCaracteristic(Persona persona, List<CaracteristicModified> list);
-
-    public JsonValue patch(long id, String patchingValues);
 
     public JsonValue getPublicPersonasForPage(int page, int quantity);
 

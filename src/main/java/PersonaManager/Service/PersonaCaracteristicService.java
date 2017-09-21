@@ -30,7 +30,7 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
     }
 
     @Override
-    public JsonValue getById(long id) {
+    public JsonValue getById(long id, boolean complete) {
         PersonaCaracteristic personaCaracteristic = personaCaracteristicDAO.getById(id);
         return personaCaracteristicFactory.toJson(personaCaracteristic);
     }
@@ -53,12 +53,10 @@ public class PersonaCaracteristicService implements IPersonaCaracteristicService
     }
 
     @Override
-    public Boolean delete(String entityAsString) {
+    public Boolean delete(long id) {
         try {
-            PersonaCaracteristic personaCaracteristic = personaCaracteristicFactory.fromJson(entityAsString);
-            personaCaracteristicDAO.delete(personaCaracteristic);
+            personaCaracteristicDAO.delete(this.getEntity(id));
             return true;
-
         } catch (Exception e){
             return false;
         }

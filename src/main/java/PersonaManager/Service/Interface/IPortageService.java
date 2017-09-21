@@ -7,15 +7,7 @@ import javax.json.JsonArray;
 import javax.json.JsonValue;
 import java.util.List;
 
-public interface IPortageService {
-
-    public Long create(String entityAsString);
-
-    public JsonValue getById(long id, boolean complete);
-
-    public JsonValue update(String entityAsString, long id);
-
-    public Boolean delete(long id);
+public interface IPortageService extends IStandardService {
 
     public JsonValue getAll(boolean complete);
 

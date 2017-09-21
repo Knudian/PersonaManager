@@ -9,7 +9,7 @@ import javax.json.Json;
 import javax.json.JsonObject;
 import javax.json.JsonValue;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(value = "http://localhost:3000")
 @RestController
 public class ApiController {
 
@@ -80,10 +80,10 @@ public class ApiController {
         try {
             switch (entity) {
                 case CARACTERISTIC:
-                    response = caracteristicService.getById(id);
+                    response = caracteristicService.getById(id, disableLazyLoading);
                     break;
                 case CARACTERISTIC_MODIFIED:
-                    response = caracteristicService.getById(id);
+                    response = caracteristicService.getById(id, disableLazyLoading);
                     break;
                 case GAME_SYSTEM:
                     response = gameSystemService.getById(id, disableLazyLoading);
@@ -92,16 +92,16 @@ public class ApiController {
                     response = humanService.getById(id, disableLazyLoading);
                     break;
                 case MEDIA:
-                    response = mediaFileService.getById(id);
+                    response = mediaFileService.getById(id, disableLazyLoading);
                     break;
                 case PERSONA:
                     response = personaService.getById(id, disableLazyLoading);
                     break;
                 case PERSONA_TYPE:
-                    response = personaTypeService.getById(id);
+                    response = personaTypeService.getById(id, disableLazyLoading);
                     break;
                 case PERSONA_CARACTERISTIC:
-                    response = personaCaracteristicService.getById(id);
+                    response = personaCaracteristicService.getById(id, disableLazyLoading);
                     break;
                 case PORTAGE:
                     response = portageService.getById(id, disableLazyLoading);
@@ -160,8 +160,9 @@ public class ApiController {
     @RequestMapping(
             value="/api/{entity}",
             method = RequestMethod.POST,
+            consumes = "application/json;charset=UTF-8",
             produces = "application/json;charset=UTF-8")
-    public String postNew(@RequestParam(value = "entity") String inputString, @PathVariable(value="entity") String entity){
+    public String postNew(@RequestBody String inputString, @PathVariable(value="entity") String entity){
 
         this.reset();
         JsonValue response = JsonValue.EMPTY_JSON_OBJECT;
@@ -177,13 +178,13 @@ public class ApiController {
                     response = universeService.getById(universeService.create(inputString), false);
                     break;
                 case CARACTERISTIC:
-                    response = caracteristicService.getById(caracteristicService.create(inputString));
+                    response = caracteristicService.getById(caracteristicService.create(inputString), false);
                     break;
                 case PORTAGE:
                     response = portageService.getById(portageService.create(inputString), false);
                     break;
                 case PERSONA_TYPE:
-                    response = personaTypeService.getById(personaTypeService.create(inputString));
+                    response = personaTypeService.getById(personaTypeService.create(inputString), false);
                     break;
                 case PERSONA:
                     response = personaService.getById(personaService.create(inputString), false);
@@ -192,7 +193,6 @@ public class ApiController {
 
             this.apiResponse.addContent(response);
         } catch (NullPointerException e) {
-            e.printStackTrace();
             JsonObject model = Json.createObjectBuilder()
                     .add("code", "ITEM_CANNOT_BE_CREATED")
                     .add("entity", entity)

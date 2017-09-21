@@ -9,6 +9,7 @@ import PersonaManager.Model.GameSystem;
 import PersonaManager.Model.MediaFile;
 import PersonaManager.Model.Portage;
 import PersonaManager.Service.Interface.ICaracteristicService;
+import PersonaManager.Service.Interface.IGameSystemService;
 import PersonaManager.Service.Interface.IMediaFileService;
 import PersonaManager.Service.Interface.IPortageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class GameSystemFactory extends BaseFactory implements IGameSystemFactory
     private IPortageService portageService;
     @Autowired
     private ICaracteristicService caracteristicService;
+    @Autowired
+    private IGameSystemService gameSystemService;
 
     @Override
     public JsonObject toJson(GameSystem gameSystem, boolean complete) {
@@ -39,13 +42,16 @@ public class GameSystemFactory extends BaseFactory implements IGameSystemFactory
         JsonValue caracteristicList = JsonValue.EMPTY_JSON_ARRAY;
 
         if( complete ){
+
+            gameSystem = gameSystemService.getEntity(gameSystem.getId(), true);
+
             portageList = portageService.listToJson(gameSystem.getPortageList(), complete);
             caracteristicList = caracteristicService.listToJson(gameSystem.getCaracteristicList());
         }
 
         JsonValue media = JsonValue.NULL;
         if( gameSystem.getIllustration() != null){
-            media = mediaFileService.getById(gameSystem.getIllustration().getId());
+            media = mediaFileService.getById(gameSystem.getIllustration().getId(), true);
         }
 
         JsonObject model = Json.createObjectBuilder()

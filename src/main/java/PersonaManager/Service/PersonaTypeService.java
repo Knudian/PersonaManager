@@ -29,7 +29,7 @@ public class PersonaTypeService implements IPersonaTypeService {
     }
 
     @Override
-    public JsonValue getById(long id) {
+    public JsonValue getById(long id, boolean complete) {
         PersonaType personaType = personaTypeDAO.getById(id);
         return personaTypeFactory.toJson(personaType);
     }
@@ -65,5 +65,10 @@ public class PersonaTypeService implements IPersonaTypeService {
     @Override
     public PersonaType getEntity(long id) {
         return personaTypeDAO.getById(id);
+    }
+
+    @Override
+    public JsonValue patch(long id, String patchingValues) {
+        return null;
     }
 }
