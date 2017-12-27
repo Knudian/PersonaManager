@@ -33,10 +33,10 @@
                             <li><a href="https://github.com/Knudian" target="_blank">@Knudian</a></li>
                         </ul>
                         <p>
-                            Current version : <code>1.0.0-alpha</code>
+                            Current version : <code>1.0.0-alpha1</code>
                         </p>
                         <p>
-                            <a class="btn btn-sm btn-block btn-default" target="_blank" href="">Project Homepage</a>
+                            <a class="btn btn-sm btn-block btn-default" target="_blank" href="https://github.com/Knudian/PersonaManager/tree/master">Project Homepage</a>
                         </p>
                     </div>
                     <br/>
