@@ -3,7 +3,6 @@ package PersonaManager.Service;
 import PersonaManager.DAO.Interface.ICaracteristicDAO;
 import PersonaManager.Factory.Interface.ICaracteristicFactory;
 import PersonaManager.Model.Caracteristic;
-import PersonaManager.Model.EnumCaracType;
 import PersonaManager.Model.GameSystem;
 import PersonaManager.Model.Portage;
 import PersonaManager.Service.Interface.ICaracteristicService;
@@ -19,16 +18,18 @@ import java.util.List;
 @Service
 public class CaracteristicService implements ICaracteristicService {
 
-    @Autowired
-    private ICaracteristicDAO caracteristicDAO;
-    @Autowired
-    private ICaracteristicFactory caracteristicFactory;
-    @Autowired
-    private IPortageService portageService;
-    @Autowired
-    private IGameSystemService gameSystemService;
+    private final ICaracteristicDAO caracteristicDAO;
+    private final ICaracteristicFactory caracteristicFactory;
+    private final IPortageService portageService;
+    private final IGameSystemService gameSystemService;
 
-    public CaracteristicService(){}
+    @Autowired
+    public CaracteristicService(ICaracteristicDAO caracteristicDAO, ICaracteristicFactory caracteristicFactory, IPortageService portageService, IGameSystemService gameSystemService){
+        this.caracteristicDAO = caracteristicDAO;
+        this.caracteristicFactory = caracteristicFactory;
+        this.portageService = portageService;
+        this.gameSystemService = gameSystemService;
+    }
 
     @Override
     public Long create(String entityAsString) {

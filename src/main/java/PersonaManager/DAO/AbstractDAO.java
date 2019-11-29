@@ -16,7 +16,5 @@ public abstract class AbstractDAO {
 
     protected Serializable objectId;
 
-    public AbstractDAO(){
-    }
-
+    public AbstractDAO(){}
 }

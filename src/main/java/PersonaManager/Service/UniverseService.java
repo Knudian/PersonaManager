@@ -44,12 +44,12 @@ public class UniverseService implements IUniverseService {
         Universe updated  = universeFactory.fromJson(entityAsString);
 
         if ( !updated.equals(original) ){
-            if( updated.getName() != null){
+            if( updated.getName() != null)
                 original.setName(updated.getName());
-            }
-            if( updated.getDescription() != null){
+
+            if( updated.getDescription() != null)
                 original.setDescription(updated.getDescription());
-            }
+
 
             original.setIllustration(updated.getIllustration());
 

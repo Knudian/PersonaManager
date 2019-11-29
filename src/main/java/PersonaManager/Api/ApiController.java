@@ -15,8 +15,6 @@ public class ApiController {
 
     private ApiResponse apiResponse;
 
-    public ApiController(){ }
-
     // list of authorized entities
     private final String CARACTERISTIC          = "caracteristic";
     private final String CARACTERISTIC_MODIFIED = "caracteristicmodified";
@@ -29,37 +27,38 @@ public class ApiController {
     private final String PORTAGE                = "portage";
     private final String UNIVERSE               = "universe";
 
-    @Autowired
-    private IGameSystemService gameSystemService;
+    private final IGameSystemService gameSystemService;
+
+    private final IHumanService humanService;
+
+    private final IPersonaService personaService;
+
+    private final IPersonaTypeService personaTypeService;
+
+    private final IPortageService portageService;
+
+    private final IUniverseService universeService;
+
+    private final ICaracteristicService caracteristicService;
+
+    private final IMediaFileService mediaFileService;
+
+    private final IPersonaCaracteristicService personaCaracteristicService;
+
+    private final ICaracteristicModifiedService caracteristicModifiedService;
 
     @Autowired
-    private IHumanService humanService;
-
-    @Autowired
-    private IPersonaService personaService;
-
-    @Autowired
-    private IPersonaTypeService personaTypeService;
-
-    @Autowired
-    private IPortageService portageService;
-
-    @Autowired
-    private IUniverseService universeService;
-
-    @Autowired
-    private ICaracteristicService caracteristicService;
-
-    @Autowired
-    private IMediaFileService mediaFileService;
-
-    @Autowired
-    private IPersonaCaracteristicService personaCaracteristicService;
-
-    @Autowired
-    private ICaracteristicModifiedService caracteristicModifiedService;
-
-    private void reset(){
+    public ApiController(IGameSystemService gameSystemService, IHumanService humanService, IPersonaService personaService, IPersonaTypeService personaTypeService, IPortageService portageService, IUniverseService universeService, ICaracteristicService caracteristicService, IMediaFileService mediaFileService, IPersonaCaracteristicService personaCaracteristicService, ICaracteristicModifiedService caracteristicModifiedService){
+        this.gameSystemService = gameSystemService;
+        this.humanService = humanService;
+        this.personaService = personaService;
+        this.personaTypeService = personaTypeService;
+        this.portageService = portageService;
+        this.universeService = universeService;
+        this.caracteristicService = caracteristicService;
+        this.mediaFileService = mediaFileService;
+        this.personaCaracteristicService = personaCaracteristicService;
+        this.caracteristicModifiedService = caracteristicModifiedService;
         this.apiResponse = new ApiResponse();
     }
 
@@ -71,7 +70,6 @@ public class ApiController {
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     public String getOneById(@PathVariable(value="id") long id, @PathVariable(value="entity") String entity, @PathVariable(value="complete", required = false, name = "complete") String complete){
-        this.reset();
 
         boolean disableLazyLoading = ( complete != null && complete.equals("complete"));
 
@@ -127,7 +125,6 @@ public class ApiController {
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     public String getAll(@PathVariable(value="entity") String entity){
-        this.reset();
         JsonValue response = JsonValue.NULL;
         try {
             switch (entity) {
@@ -162,8 +159,6 @@ public class ApiController {
             consumes = "application/json;charset=UTF-8",
             produces = "application/json;charset=UTF-8")
     public String postNew(@RequestBody String inputString, @PathVariable(value="entity") String entity){
-
-        this.reset();
         JsonValue response = JsonValue.EMPTY_JSON_OBJECT;
         try {
             switch (entity) {
@@ -208,7 +203,6 @@ public class ApiController {
             method = RequestMethod.POST,
             produces = "application/json;charset=UTF-8")
     public String update(@RequestParam(value="entity") String inputString, @PathVariable(value="id") long id, @PathVariable(value="entity") String entity){
-        this.reset();
         JsonValue response = JsonValue.NULL;
         try {
             switch (entity) {
@@ -259,7 +253,6 @@ public class ApiController {
             method = RequestMethod.DELETE,
             produces = "application/json;charset=UTF-8")
     public String delete(@PathVariable(value="id") long id, @PathVariable(value="entity") String entity){
-        this.reset();
         Boolean status = false;
         try {
             switch (entity) {
@@ -305,8 +298,6 @@ public class ApiController {
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     public String getUniverseStatistics(){
-
-        this.reset();
         try {
             this.apiResponse.addContent(universeService.statististics());
         } catch (Exception e){
@@ -321,7 +312,6 @@ public class ApiController {
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     public String getLastPublicPersonas(@PathVariable(value="quantity") Integer quantity){
-        this.reset();
 
         try{
             this.apiResponse.addContent(personaService.getLastPublicPersonnas(quantity));
@@ -337,7 +327,6 @@ public class ApiController {
             method = RequestMethod.GET,
             produces = "application/json;charset=UTF-8")
     public String getDatasForHomePage() {
-        this.reset();
         try {
             this.apiResponse.addContent(Json.createObjectBuilder().add("personas", personaService.getLastPublicPersonnas(6)).build());
         } catch (Exception e){
@@ -384,7 +373,6 @@ public class ApiController {
             produces = "application/json;charset=UTF-8"
     )
     public String getPublicPersonasForPage(@PathVariable(value="page") int page, @PathVariable(value="quantity") int quantity){
-        this.reset();
         try {
             this.apiResponse.addContent(Json.createObjectBuilder().add("personaCount", personaService.getCountPublic()).build());
             this.apiResponse.addContent(personaService.getPublicPersonasForPage(page, quantity));

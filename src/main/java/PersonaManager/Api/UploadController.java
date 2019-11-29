@@ -6,19 +6,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.Timestamp;
+import java.util.Arrays;
 
 /**
  * @link https://www.mkyong.com/spring-mvc/spring-mvc-file-upload-example/
@@ -30,8 +28,12 @@ public class UploadController {
 
     private static String UPLOAD_FOLDER = "upload";
 
+    private final IMediaFileService iMediaFileService;
+
     @Autowired
-    private IMediaFileService iMediaFileService;
+    public UploadController(IMediaFileService iMediaFileService) {
+        this.iMediaFileService = iMediaFileService;
+    }
 
     private String fileUploadedResponse(MediaFile mediaFile){
         JsonObject model = Json.createObjectBuilder()
@@ -42,9 +44,10 @@ public class UploadController {
     }
 
     private String exceptionResponse(Exception e){
+        StackTraceElement[] content = e.getStackTrace();
         JsonObject model = Json.createObjectBuilder()
                 .add("message", e.getMessage())
-                .add("stack", e.getStackTrace().toString())
+                .add("stack", Arrays.toString(content))
                 .build();
         return buildResponse(model);
     }
